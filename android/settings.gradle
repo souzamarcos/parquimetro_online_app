@@ -1,0 +1,3 @@
+rootProject.name = 'parquimetro_online_app'
+
+include ':app'
