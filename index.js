@@ -2,9 +2,12 @@ import React, { Component } from 'react';
 import {
   AppRegistry,
 } from 'react-native';
-import App from './src/App'
-import { DrawerNavigator } from 'react-navigation';
+import { TabNavigator,TabBarBottom,DrawerNavigator } from 'react-navigation';
+
+import App from './src/App';
+import CompletarCadastro from './src/components/CompletarCadastro';
 import SecondScreen from './src/SecondScreen';
+
 
 class reactNavigationSample extends Component {
 
@@ -17,10 +20,35 @@ class reactNavigationSample extends Component {
     }
 }
   
-const SimpleApp = DrawerNavigator({
-    Home: { screen: App },
-    SecondScreen: { screen: SecondScreen }
-});
-
+const SimpleApp = new TabNavigator(
+    {
+        CompletarCadastro: {
+            screen: CompletarCadastro,
+            navigationOptions: {
+                tabBarVisible: false,
+                swipeEnabled: false,
+            }
+        },
+        Parquimetro: {
+            screen: SecondScreen,
+        },
+        Perfil: {
+            screen: SecondScreen,
+        },
+        Relatorio: {
+            screen: SecondScreen,
+        },
+        Perguntas: {
+            screen: SecondScreen,
+        },
+    },
+    {
+        tabBarOptions: {
+            activeTintColor: 'dodgerblue',
+        },
+        tabBarComponent: TabBarBottom,
+        tabBarPosition: 'bottom',
+    }
+);
 
 AppRegistry.registerComponent('parquimetro_online_app', () => SimpleApp);
