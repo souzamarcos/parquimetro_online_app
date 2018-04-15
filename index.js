@@ -5,8 +5,8 @@ import {
 import { TabNavigator,TabBarBottom,DrawerNavigator } from 'react-navigation';
 
 import App from './src/App';
+import TelaInicial from './src/components/TelaInicial';
 import CompletarCadastro from './src/components/CompletarCadastro';
-import SecondScreen from './src/SecondScreen';
 
 
 class reactNavigationSample extends Component {
@@ -22,6 +22,13 @@ class reactNavigationSample extends Component {
   
 const SimpleApp = new TabNavigator(
     {
+        TelaInicial: {
+            screen: TelaInicial,
+            navigationOptions: {
+                tabBarVisible: false,
+                swipeEnabled: false,
+            }
+        },
         CompletarCadastro: {
             screen: CompletarCadastro,
             navigationOptions: {
@@ -30,16 +37,16 @@ const SimpleApp = new TabNavigator(
             }
         },
         Parquimetro: {
-            screen: SecondScreen,
+            screen: TelaInicial,
         },
         Perfil: {
-            screen: SecondScreen,
+            screen: TelaInicial,
         },
         Relatorio: {
-            screen: SecondScreen,
+            screen: TelaInicial,
         },
         Perguntas: {
-            screen: SecondScreen,
+            screen: TelaInicial,
         },
     },
     {

@@ -6,7 +6,7 @@ import {
   StyleSheet,
   View
 } from 'react-native';
-import { button, buttonText} from '../styles/button';
+import { defaultStyles } from '../styles';
 
 export default class CompletarCadastro extends Component {
 
@@ -52,19 +52,15 @@ const styles = StyleSheet.create({
         borderRadius: 5,
     },
     cardTitle: {
-        fontSize: 25,
-        fontWeight: 'bold',
-        textAlign: 'center',
-        marginBottom: 20,
+        ...defaultStyles.textTitle
     },
     cardText: {
-        textAlign:'center',
-        marginBottom: 20,
+        ...defaultStyles.text
     },
     button: {
-        ...button
+        ...defaultStyles.button
     },
     buttonText:{
-        ...buttonText
+        ...defaultStyles.buttonText
     },
 });
