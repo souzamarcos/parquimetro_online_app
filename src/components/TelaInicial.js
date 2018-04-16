@@ -3,11 +3,15 @@ import {
   Text,
   TouchableHighlight,
   StyleSheet,
-  View
+  View,
 } from 'react-native';
 import { defaultStyles } from '../styles';
 
 export default class TelaInicial extends Component {
+
+    constructor(props){
+        super(props);
+    }
 
     render(){
         return (
@@ -20,7 +24,7 @@ export default class TelaInicial extends Component {
                 </Text>
                 <View style={styles.buttonTransparentGroup}>
                     <TouchableHighlight
-                        onPress={() => false}
+                        onPress={() => this.props.navigation.navigate('Cadastro')}
                         style={styles.buttonTransparentLeft}
                         underlayColor="rgba(0, 0, 0, 0.05)"
                     >
@@ -29,7 +33,7 @@ export default class TelaInicial extends Component {
                         </Text>
                     </TouchableHighlight>
                     <TouchableHighlight
-                        onPress={() => false}
+                        onPress={() => this.props.navigation.navigate('Login')}
                         style={styles.buttonTransparentRight}
                         underlayColor="rgba(0, 0, 0, 0.05)"
                     >

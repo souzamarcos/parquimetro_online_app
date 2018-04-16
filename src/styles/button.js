@@ -1,6 +1,7 @@
 import colors from './colors';
 
 export const button = {
+    width: '100%',
     paddingVertical: 15,
     paddingHorizontal: 15,
     backgroundColor: colors.buttonBackgroundColor,

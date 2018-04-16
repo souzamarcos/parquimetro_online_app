@@ -15,6 +15,7 @@ import {
     viewPaddingBig,
     viewPaddingSmall,
 } from './view';
+import { input } from './input';
 
 export const defaultStyles = { 
     //buton

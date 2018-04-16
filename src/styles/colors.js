@@ -1,5 +1,8 @@
 const colors = {
 
+    //input
+    inputBorderColor: '#5d5d5d',
+
     //button
     buttonBackgroundColor: '#5d5d5d',
     buttonTextColor: '#fff',
@@ -13,4 +16,5 @@ const colors = {
     //view
     viewBackgroundColor: '#fff',
 };
+
 export default colors; 
