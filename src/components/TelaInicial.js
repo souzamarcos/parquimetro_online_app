@@ -5,7 +5,7 @@ import {
   StyleSheet,
   View,
 } from 'react-native';
-import { defaultStyles } from '../styles';
+import { defaultStyles } from 'parquimetro-styles';
 
 export default class TelaInicial extends Component {
 

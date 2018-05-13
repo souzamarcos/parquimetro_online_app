@@ -9,7 +9,7 @@ import {
   KeyboardAvoidingView,
 } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
-import { defaultStyles } from '../styles';
+import { defaultStyles } from 'parquimetro-styles';
 
 export default class Cadastro extends Component {
 

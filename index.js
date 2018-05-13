@@ -2,16 +2,30 @@ import React, { Component } from 'react';
 import {
   AppRegistry,
 } from 'react-native';
-import { TabNavigator,TabBarBottom,DrawerNavigator } from 'react-navigation';
+import { TabView, TabNavigator,TabBarBottom,DrawerNavigator } from 'react-navigation';
 
 import App from './src/App';
-import TelaInicial from './src/components/TelaInicial';
-import Cadastro from './src/components/Cadastro';
-import Login from './src/components/Login';
-import CompletarCadastro from './src/components/CompletarCadastro';
+import TelaInicial from 'parquimetro-components/TelaInicial';
+import Cadastro from 'parquimetro-components/Cadastro';
+import Login from 'parquimetro-components/Login';
+import CompletarCadastro from 'parquimetro-components/CompletarCadastro';
+import Historico from 'parquimetro-components/Historico';
 
-const SimpleApp = new TabNavigator(
+const routesNameVisible = [
+    'Parquimetro',
+    'Perfil',
+    'Histórico',
+    'Perguntas'
+];
+
+const SimpleApp = TabNavigator(
     {
+        Historico: {
+            screen: Historico,
+            navigationOptions: {
+                swipeEnabled: false,
+            }
+        },
         TelaInicial: {
             screen: TelaInicial,
             navigationOptions: {
@@ -40,6 +54,7 @@ const SimpleApp = new TabNavigator(
                 swipeEnabled: false,
             }
         },
+        /////
         Parquimetro: {
             screen: TelaInicial,
         },
@@ -59,6 +74,15 @@ const SimpleApp = new TabNavigator(
         },
         tabBarComponent: TabBarBottom,
         tabBarPosition: 'bottom',
+        tabBarComponent: ({ navigation, ...props }) => (
+            <TabBarBottom 
+                {...props}
+                navigation={{
+                    ...navigation,
+                    state: { ...navigation.state, routes: navigation.state.routes.filter(r => routesNameVisible.indexOf(r.routeName) > -1 )}
+                }}
+            />
+        ),
     }
 );
 
