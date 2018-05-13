@@ -31,7 +31,7 @@ export default class MenuSuperior extends Component {
         if(this.state.open){
             return (
                 <View style={styles.list}>
-                    <View style={[styles.listItem, { borderBottomWidth: 1,}]}>
+                    <View style={styles.listItem}>
                         <Text style={styles.listItemText}>
                             Sobre
                         </Text>
@@ -56,7 +56,7 @@ export default class MenuSuperior extends Component {
                         style={styles.icon}>
                         <View style={styles.icon}>
                             <Text style={styles.title}>
-                                ...
+                                { this.props.texto }
                             </Text>
                         </View>
                     </TouchableHighlight>
@@ -79,12 +79,12 @@ const styles = StyleSheet.create({
         ...defaultStyles.textTitle,
     },
     list: {
-        borderWidth: 1,
+        //borderWidth: 1,
         borderRadius: 5,
         backgroundColor: '#fff',
         borderColor: '#5d5d5d',
-        borderBottomWidth: 1,
-        marginRight: 10
+        marginRight: 10,
+        elevation: 2
     },
     listItem: {
         minWidth: 130,

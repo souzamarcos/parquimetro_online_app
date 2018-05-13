@@ -14,7 +14,7 @@ import Historico from 'parquimetro-components/Historico';
 const routesNameVisible = [
     'Parquimetro',
     'Perfil',
-    'Histórico',
+    'Historico',
     'Perguntas'
 ];
 
@@ -72,7 +72,6 @@ const SimpleApp = TabNavigator(
         tabBarOptions: {
             activeTintColor: 'dodgerblue',
         },
-        tabBarComponent: TabBarBottom,
         tabBarPosition: 'bottom',
         tabBarComponent: ({ navigation, ...props }) => (
             <TabBarBottom 

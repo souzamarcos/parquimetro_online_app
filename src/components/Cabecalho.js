@@ -23,7 +23,7 @@ export default class Cabecalho extends Component {
                     </Text>
                 </View>
                 <View style={styles.topMenu}>
-                    <MenuSuperior />
+                    <MenuSuperior texto="..."/>
                 </View>
             </View>
         );
@@ -37,7 +37,6 @@ const styles = StyleSheet.create({
     },
     title: {
         ...defaultStyles.textTitle,
-        marginBottom: 30,
     },
     headerLine: {
         paddingVertical: 25,
