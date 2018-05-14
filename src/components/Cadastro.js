@@ -62,7 +62,7 @@ export default class Cadastro extends Component {
                         />
                     </View>
                     <TouchableHighlight
-                        onPress={() => false}
+                        onPress={() => this.props.navigation.navigate('TabScreen')}
                         style={styles.button}
                     >
                         <Text style={styles.buttonText}>
@@ -71,7 +71,7 @@ export default class Cadastro extends Component {
                     </TouchableHighlight>
                     <View style={styles.buttonTransparentGroup}>
                         <TouchableHighlight
-                            onPress={() => false}
+                            onPress={() => this.props.navigation.navigate('TabScreen')}
                             style={styles.buttonTransparentLeft}
                             underlayColor="rgba(0, 0, 0, 0.05)"
                         >
@@ -80,7 +80,7 @@ export default class Cadastro extends Component {
                             </Text>
                         </TouchableHighlight>
                         <TouchableHighlight
-                            onPress={() => false}
+                            onPress={() => this.props.navigation.navigate('TabScreen')}
                             style={styles.buttonTransparentRight}
                             underlayColor="rgba(0, 0, 0, 0.05)"
                         >
