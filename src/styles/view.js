@@ -1,19 +1,19 @@
 import colors from './colors';
 
-export const viewFull = {
+export const telaFull = {
     flex: 1,
     backgroundColor: colors.viewBackgroundColor,
 };
 
-export const viewCenter = {
+export const telaCentralizada = {
     justifyContent: 'center',
     alignItems: 'center',
 };
 
-export const viewPaddingBig = {
+export const telaPaddingGrande = {
     paddingHorizontal: '10%',
 };
 
-export const viewPaddingSmall = {
+export const telaPaddingPequeno = {
     paddingHorizontal: '5%',
 };

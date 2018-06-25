@@ -1,65 +1,52 @@
 import React, { Component } from 'react';
 import {
-  AppRegistry,
+    View, Text, Image, AppRegistry, StyleSheet, Header,
 } from 'react-native';
-import { TabView, TabNavigator, StackNavigator,TabBarBottom,DrawerNavigator } from 'react-navigation';
+import { createBottomTabNavigator, createStackNavigator, createMaterialTopTabNavigator } from 'react-navigation';
+import { createMaterialBottomTabNavigator } from 'react-navigation-material-bottom-tabs';
 
-import App from './src/App';
 import TelaInicial from 'parquimetro-components/TelaInicial';
 import Cadastro from 'parquimetro-components/Cadastro';
 import Login from 'parquimetro-components/Login';
 import CompletarCadastro from 'parquimetro-components/CompletarCadastro';
 import Historico from 'parquimetro-components/Historico';
-import Perfil from 'parquimetro-components/Perfil';
-
-const routesNameVisible = [
-    'Parquimetro',
-    'Perfil',
-    'Historico',
-    'Perguntas'
-];
-
-const TabScreenNavigator = TabNavigator(
+import PerfilCadastro from 'parquimetro-components/PerfilCadastro';
+import PerfilVeiculo from 'parquimetro-components/PerfilVeiculo';
+import PerfilPlaca from 'parquimetro-components/PerfilPlaca';
+import Cabecalho from 'parquimetro-components/Cabecalho';
+  
+const Perfil = createMaterialTopTabNavigator(
     {
-        // Visíveis
-        // Parquimetro: {
-        //     screen: Historico,
-        //     navigationOptions: {
-        //         swipeEnabled: false,
-        //     }
-        // },
+        PerfilCadastro: {
+            screen: PerfilCadastro,
+        },
+        PerfilVeiculo: {
+            screen: PerfilVeiculo,
+        },
+        PerfilPlaca: {
+            screen: PerfilPlaca,
+        },
+    },
+    {
+        swipeEnabled: false,
+        animationEnabled: false,
+    }
+);
+
+const TelaPrincipal = createBottomTabNavigator(
+    {
         Perfil: {
             screen: Perfil,
-            navigationOptions: {
-                swipeEnabled: false,
-            }
         },
         Historico: {
             screen: Historico,
-            navigationOptions: {
-                swipeEnabled: false,
-            }
         },
-        // Perguntas: {
-        //     screen: Historico,
-        //     navigationOptions: {
-        //         swipeEnabled: false,
-        //     }
-        // },
     },
     {
-            
-        tabBarOptions: {
-            activeTintColor: 'dodgerblue',
-        },
-        tabBarPosition: 'bottom',
-        tabBarComponent: TabBarBottom,
-        //initialRouteName: 'Perfil',
     }
 );
   
-const MainScreenNavigator = StackNavigator({
-    
+const Telas = createStackNavigator({
     TelaInicial: {
         screen: TelaInicial,
         navigationOptions: {
@@ -92,12 +79,15 @@ const MainScreenNavigator = StackNavigator({
             header: null
         }
     },
-    TabScreen: { 
-        screen: TabScreenNavigator,
-        navigationOptions : {
-            header: null
-        }
+    TelaPrincipal: { 
+        screen: TelaPrincipal,
     },
+},{
+    initialRouteName : 'TelaInicial',
+    navigationOptions: {
+        headerTitleStyle: { color: '#fff' },
+        header: (props) => <Cabecalho {...props} />,
+    }
 });
 
-AppRegistry.registerComponent('parquimetro_online_app', () => MainScreenNavigator);
+AppRegistry.registerComponent('parquimetro_online_app', () => Telas);

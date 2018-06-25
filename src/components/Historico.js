@@ -64,7 +64,7 @@ export default class Historico extends Component {
 
     render(){
         return (
-            <View style={styles.viewScreen}>
+            <View style={styles.tela}>
                 <View>
                     <View>
                         <Cabecalho titulo="Histórico"/>
@@ -93,8 +93,8 @@ export default class Historico extends Component {
 }
 
 const styles = StyleSheet.create({
-    viewScreen: {
-        ...defaultStyles.viewFull,
+    tela: {
+        ...defaultStyles.telaFull,
     },
     listaItem:{
         borderRadius: 10,

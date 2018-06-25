@@ -31,7 +31,7 @@ export default class Cadastro extends Component {
         return (
             <KeyboardAwareScrollView
                 resetScrollToCoords={{ x: 0, y: 0 }}
-                contentContainerStyle={styles.viewScreen}
+                contentContainerStyle={styles.tela}
                 scrollEnabled={false}              
             >
                 <View style={{ width: '100%' }}>
@@ -62,7 +62,7 @@ export default class Cadastro extends Component {
                         />
                     </View>
                     <TouchableHighlight
-                        onPress={() => this.props.navigation.navigate('TabScreen')}
+                        onPress={() => this.props.navigation.navigate('CompletarCadastro')}
                         style={styles.button}
                     >
                         <Text style={styles.buttonText}>
@@ -71,7 +71,7 @@ export default class Cadastro extends Component {
                     </TouchableHighlight>
                     <View style={styles.buttonTransparentGroup}>
                         <TouchableHighlight
-                            onPress={() => this.props.navigation.navigate('TabScreen')}
+                            onPress={() => this.props.navigation.navigate('CompletarCadastro')}
                             style={styles.buttonTransparentLeft}
                             underlayColor="rgba(0, 0, 0, 0.05)"
                         >
@@ -80,7 +80,7 @@ export default class Cadastro extends Component {
                             </Text>
                         </TouchableHighlight>
                         <TouchableHighlight
-                            onPress={() => this.props.navigation.navigate('TabScreen')}
+                            onPress={() => this.props.navigation.navigate('CompletarCadastro')}
                             style={styles.buttonTransparentRight}
                             underlayColor="rgba(0, 0, 0, 0.05)"
                         >
@@ -96,10 +96,10 @@ export default class Cadastro extends Component {
 }
 
 const styles = StyleSheet.create({
-    viewScreen: {
-        ...defaultStyles.viewFull,
-        ...defaultStyles.viewCenter,
-        ...defaultStyles.viewPaddingBig,
+    tela: {
+        ...defaultStyles.telaFull,
+        ...defaultStyles.telaCentralizada,
+        ...defaultStyles.telaPaddingGrande,
     },
     title: {
         ...defaultStyles.textTitle,

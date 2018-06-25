@@ -24,7 +24,7 @@ export default class CompletarCadastro extends Component {
                         Fulano, antes de começar precisamos de mais algumas informações
                     </Text>
                     <TouchableHighlight
-                        onPress={() => false}
+                        onPress={() => this.props.navigation.navigate('TabScreen')}
                         style={styles.button}
                     >
                         <Text style={styles.buttonText}>
@@ -52,10 +52,12 @@ const styles = StyleSheet.create({
         borderRadius: 5,
     },
     cardTitle: {
-        ...defaultStyles.textTitle
+        ...defaultStyles.textTitle,
+        marginBottom: 15
     },
     cardText: {
-        ...defaultStyles.text
+        ...defaultStyles.text,
+        marginBottom: 15
     },
     button: {
         ...defaultStyles.button

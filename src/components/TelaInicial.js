@@ -15,7 +15,7 @@ export default class TelaInicial extends Component {
 
     render(){
         return (
-            <View style={styles.viewScreen}>
+            <View style={styles.tela}>
                 <Text style={styles.title}>
                     Bem Vindo!
                 </Text>
@@ -48,10 +48,10 @@ export default class TelaInicial extends Component {
 }
 
 const styles = StyleSheet.create({
-    viewScreen: {
-        ...defaultStyles.viewFull,
-        ...defaultStyles.viewCenter,
-        ...defaultStyles.viewPaddingBig,
+    tela: {
+        ...defaultStyles.telaFull,
+        ...defaultStyles.telaCentralizada,
+        ...defaultStyles.telaPaddingGrande,
     },
     title: {
         ...defaultStyles.textTitle,

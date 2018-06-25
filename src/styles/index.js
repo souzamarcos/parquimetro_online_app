@@ -10,10 +10,10 @@ import {
  } from './button';
 import { text, textTitle } from './text';
 import { 
-    viewFull,
-    viewCenter,
-    viewPaddingBig,
-    viewPaddingSmall,
+    telaFull,
+    telaCentralizada,
+    telaPaddingGrande,
+    telaPaddingPequeno,
 } from './view';
 import { input } from './input';
 
@@ -32,8 +32,8 @@ export const defaultStyles = {
     textTitle,
 
     //view
-    viewFull,
-    viewCenter,
-    viewPaddingBig,
-    viewPaddingSmall,
+    telaFull,
+    telaCentralizada,
+    telaPaddingGrande,
+    telaPaddingPequeno,
  };
