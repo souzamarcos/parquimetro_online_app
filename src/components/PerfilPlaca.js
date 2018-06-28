@@ -5,15 +5,34 @@ import {
     StyleSheet,
 } from 'react-native';
 import { defaultStyles } from 'parquimetro-styles';
+import { withNavigationFocus } from 'react-navigation';
+import { connect } from 'react-redux';
+import { alteraTitulo } from 'parquimetro-actions/AppActions';
 
-export default class PerfilPlaca extends Component {
+class PerfilPlaca extends Component {
   
+    constructor(props){
+        super(props);
+    }
+    
+    componentWillMount(){
+        if(this.props.isFocused){
+            this.props.alteraTitulo('Placa');
+        }
+    }
+    
+    componentWillReceiveProps(nextProps){
+        if(nextProps.isFocused){
+            this.props.alteraTitulo('Placa');
+        }
+    }
+
     render() {
-      return (
-        <View style={styles.tela}>
-            <Text>PerfilPlaca</Text>
-        </View>
-      );
+        return (
+            <View style={styles.tela}>
+                <Text>PerfilPlaca</Text>
+            </View>
+        );
     }
   }
   
@@ -22,3 +41,5 @@ const styles = StyleSheet.create({
         ...defaultStyles.telaFull,
     },
 });
+
+export default connect(null, {alteraTitulo})(withNavigationFocus(PerfilPlaca));

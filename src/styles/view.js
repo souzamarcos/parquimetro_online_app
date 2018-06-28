@@ -2,7 +2,7 @@ import colors from './colors';
 
 export const telaFull = {
     flex: 1,
-    backgroundColor: colors.viewBackgroundColor,
+    backgroundColor: colors.telaBackgroundColor,
 };
 
 export const telaCentralizada = {

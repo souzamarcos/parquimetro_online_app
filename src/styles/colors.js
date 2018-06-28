@@ -1,5 +1,8 @@
 const colors = {
 
+    principal: '#3075e5',
+    secundaria: '#fff',
+
     //input
     inputBorderColor: '#5d5d5d',
 
@@ -13,8 +16,8 @@ const colors = {
     //text
     textColor: '#5d5d5d',
 
-    //view
-    viewBackgroundColor: '#fff',
+    //tela
+    telaBackgroundColor: '#fff',
 };
 
 export default colors; 

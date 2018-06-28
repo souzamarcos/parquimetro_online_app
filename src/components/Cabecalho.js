@@ -8,10 +8,13 @@ import {
   Image,
 } from 'react-native';
 import { defaultStyles } from 'parquimetro-styles';
+import colors from 'parquimetro-styles/colors';
 import MenuSuperior from 'parquimetro-components/MenuSuperior';
+import { connect } from 'react-redux';
+import { alteraTitulo } from 'parquimetro-actions/AppActions';
 
-export default class Cabecalho extends Component {
-
+class Cabecalho extends Component {
+    
     renderTitulo(){
         if(this.props.titulo){
             return (
@@ -30,8 +33,9 @@ export default class Cabecalho extends Component {
     }
 
     render(){
+
         return (
-            <View style={{ width: '100%' }}>
+            <View style={styles.tela}>
                 <View style={styles.headerLine}>
                     {this.renderTitulo()}
                 </View>
@@ -45,8 +49,8 @@ export default class Cabecalho extends Component {
 
 const styles = StyleSheet.create({
     tela: {
-        ...defaultStyles.telaFull,
-        ...defaultStyles.telaPaddingPequeno,
+        width: '100%',
+        backgroundColor: colors.telaBackgroundColor
     },
     title: {
         ...defaultStyles.textTitle,
@@ -66,3 +70,16 @@ const styles = StyleSheet.create({
         top: 0,
     }
 });
+
+const mapStateToProps = state => (
+    {
+        titulo: state.AppReducer.titulo,
+    }
+);
+
+export default connect(
+    mapStateToProps, 
+    { 
+        alteraTitulo,
+    })
+(Cabecalho)

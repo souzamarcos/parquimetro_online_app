@@ -4,14 +4,16 @@ import {
     Text, 
     StyleSheet, 
     ListView, 
-    ListViewDataSource, 
     TouchableHighlight,
     Picker
 } from 'react-native';
 import { defaultStyles } from 'parquimetro-styles';
-import Cabecalho from 'parquimetro-components/Cabecalho';
+import { withNavigationFocus } from 'react-navigation';
 
-export default class Historico extends Component {
+import { connect } from 'react-redux';
+import { alteraTitulo } from 'parquimetro-actions/AppActions';
+
+class Historico extends Component {
 
     constructor() {
         super();
@@ -37,6 +39,18 @@ export default class Historico extends Component {
             ordem: "1",
             dataSource: ds.cloneWithRows(transacoes),
         };
+    }
+
+    componentWillMount(){
+        if(this.props.isFocused){
+            this.props.alteraTitulo('Histórico');
+        }
+    }
+    
+    componentWillReceiveProps(nextProps){
+        if(nextProps.isFocused){
+            this.props.alteraTitulo('Histórico');
+        }
     }
 
     renderRow(transacao) {
@@ -66,19 +80,14 @@ export default class Historico extends Component {
         return (
             <View style={styles.tela}>
                 <View>
-                    <View>
-                        <Cabecalho titulo="Histórico"/>
-                    </View>
-                    <View>
-                        <Picker  style={{alignSelf: 'flex-end', width: 130}}
-                            selectedValue={this.state.ordem}
-                            onValueChange={(itemValue, itemIndex) => this.setState({ordem: itemValue})}>
-                            <Picker.Item label="Recentes" value="1" />
-                            <Picker.Item label="Antigos" value="2" />
-                            <Picker.Item label="Baratos" value="3" />
-                            <Picker.Item label="Caros" value="4" />
-                        </Picker>
-                    </View>
+                    <Picker  style={{alignSelf: 'flex-end', width: 130}}
+                        selectedValue={this.state.ordem}
+                        onValueChange={(itemValue, itemIndex) => this.setState({ordem: itemValue})}>
+                        <Picker.Item label="Recentes" value="1" />
+                        <Picker.Item label="Antigos" value="2" />
+                        <Picker.Item label="Baratos" value="3" />
+                        <Picker.Item label="Caros" value="4" />
+                    </Picker>
                 </View>
                 <View style={{ flex: 1}}>
                     <ListView
@@ -130,3 +139,5 @@ const styles = StyleSheet.create({
         color: '#b8c5db'
     }
 });
+
+export default connect(null, {alteraTitulo})(withNavigationFocus(Historico));
