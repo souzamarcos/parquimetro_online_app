@@ -51,7 +51,7 @@ const styles = StyleSheet.create({
     tela: {
         ...defaultStyles.telaFull,
         ...defaultStyles.telaCentralizada,
-        ...defaultStyles.telaPaddingGrande,
+        ...defaultStyles.telaPaddingHorizontalGrande,
     },
     title: {
         ...defaultStyles.textTitle,

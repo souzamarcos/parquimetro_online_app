@@ -1,8 +1,8 @@
-import colors from './colors';
+import cores from './cores';
 
 export const telaFull = {
     flex: 1,
-    backgroundColor: colors.telaBackgroundColor,
+    backgroundColor: cores.telaBackgroundColor,
 };
 
 export const telaCentralizada = {
@@ -10,10 +10,28 @@ export const telaCentralizada = {
     alignItems: 'center',
 };
 
-export const telaPaddingGrande = {
+export const telaPaddingHorizontalGrande = {
     paddingHorizontal: '10%',
 };
 
-export const telaPaddingPequeno = {
+export const telaPaddingVerticalGrande = {
+    paddingVertical: '10%',
+};
+
+export const telaPaddingHorizontalPequeno = {
     paddingHorizontal: '5%',
+};
+
+export const telaPaddingVerticalPequeno = {
+    paddingVertical: '5%',
+};
+
+export const telaPaddingGrande = {
+    ...telaPaddingHorizontalGrande,
+    ...telaPaddingVerticalGrande
+};
+
+export const telaPaddingPequeno = {
+    ...telaPaddingHorizontalPequeno,
+    ...telaPaddingVerticalPequeno
 };

@@ -1,47 +1,49 @@
 import React, { Component } from 'react';
-import { 
-    View, 
-    Text, 
-    StyleSheet,
+import {
+  Text,
+  StyleSheet,
+  View,
 } from 'react-native';
 import { defaultStyles } from 'parquimetro-styles';
+
 import { withNavigationFocus } from 'react-navigation';
 
 import { connect } from 'react-redux';
 import { alteraTitulo } from 'parquimetro-actions/AppActions';
 
-class PerfilCadastro extends Component {
+class Parquimetro extends Component {
 
     constructor(props){
         super(props);
-        
     }
 
     componentWillMount(){
         if(this.props.isFocused){
-            this.props.alteraTitulo('Pesoal');
+            this.props.alteraTitulo('');
         }
     }
     
     componentWillReceiveProps(nextProps){
         if(nextProps.isFocused){
-            this.props.alteraTitulo('Pesoal');
+            this.props.alteraTitulo('');
         }
     }
 
-    render() {
+    render(){
         return (
             <View style={styles.tela}>
-                <Text>PerfilCadastro</Text>
+                <Text>
+                    Parquimetro
+                </Text>
             </View>
         );
     }
-  }
-  
+}
+
 const styles = StyleSheet.create({
     tela: {
         ...defaultStyles.telaFull,
-    },
+    }
 });
 
-export default connect(null, {alteraTitulo})(withNavigationFocus(PerfilCadastro));
+export default connect(null, {alteraTitulo})(withNavigationFocus(Parquimetro));

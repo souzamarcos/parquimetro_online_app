@@ -12,6 +12,10 @@ import { text, textTitle } from './text';
 import { 
     telaFull,
     telaCentralizada,
+    telaPaddingHorizontalGrande,
+    telaPaddingHorizontalPequeno,
+    telaPaddingVerticalGrande,
+    telaPaddingVerticalPequeno,
     telaPaddingGrande,
     telaPaddingPequeno,
 } from './view';
@@ -34,6 +38,10 @@ export const defaultStyles = {
     //view
     telaFull,
     telaCentralizada,
+    telaPaddingHorizontalGrande,
+    telaPaddingHorizontalPequeno,
+    telaPaddingVerticalGrande,
+    telaPaddingVerticalPequeno,
     telaPaddingGrande,
     telaPaddingPequeno,
  };

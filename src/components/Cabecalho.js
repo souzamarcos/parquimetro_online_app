@@ -8,7 +8,7 @@ import {
   Image,
 } from 'react-native';
 import { defaultStyles } from 'parquimetro-styles';
-import colors from 'parquimetro-styles/colors';
+import cores from 'parquimetro-styles/cores';
 import MenuSuperior from 'parquimetro-components/MenuSuperior';
 import { connect } from 'react-redux';
 import { alteraTitulo } from 'parquimetro-actions/AppActions';
@@ -17,18 +17,24 @@ class Cabecalho extends Component {
     
     renderTitulo(){
         if(this.props.titulo){
-            return (
-                <Text style={styles.title}>
-                    { this.props.titulo }
-                </Text>
-            );
-        }
-        if(this.props.imagem){
-            return (
-                <Image 
-                    style={styles.image}
-                    source={this.props.imagem} />
-            );
+            switch(this.props.titulo){
+                case 'Pessoal':
+                case 'Veículo':
+                case 'Cartão':
+                    return (
+                        <Image 
+                            style={styles.image}
+                            source={require('parquimetro-imgs/icone.png')} />
+                    );
+                    break;
+                default:
+                    return (
+                        <Text style={styles.title}>
+                            { this.props.titulo }
+                        </Text>
+                    );
+            }
+            
         }
     }
 
@@ -50,7 +56,7 @@ class Cabecalho extends Component {
 const styles = StyleSheet.create({
     tela: {
         width: '100%',
-        backgroundColor: colors.telaBackgroundColor
+        backgroundColor: cores.telaBackgroundColor
     },
     title: {
         ...defaultStyles.textTitle,

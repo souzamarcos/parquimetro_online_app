@@ -1,10 +1,11 @@
-const colors = {
+const cores = {
 
     principal: '#3075e5',
     secundaria: '#fff',
 
-    //input
-    inputBorderColor: '#5d5d5d',
+    cinza: '#bcbcbc',
+    azul: '#5d5d5d',
+    verde: '#5d5d5d',
 
     //button
     buttonBackgroundColor: '#5d5d5d',
@@ -20,4 +21,4 @@ const colors = {
     telaBackgroundColor: '#fff',
 };
 
-export default colors; 
+export default cores; 

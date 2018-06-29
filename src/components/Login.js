@@ -10,6 +10,7 @@ import {
 } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { defaultStyles } from 'parquimetro-styles';
+import { cores } from 'parquimetro-styles/cores';
 
 export default class Cadastro extends Component {
 
@@ -41,17 +42,19 @@ export default class Cadastro extends Component {
                     <View>
                         <TextInput
                             placeholder="E-mail"
+                            textContentType="username"
                             style={styles.input}
                             onChangeText={(email) => this.setState({email})}
                             value={this.state.email}
-                            underlineColorAndroid="#5d5d5d"
+                            underlineColorAndroid={cores.cinza}
                         />
                         <TextInput
                             placeholder="Senha"
+                            textContentType="password"
                             style={styles.input}
                             onChangeText={(senha) => this.setState({senha})}
                             value={this.state.senha}
-                            underlineColorAndroid="#5d5d5d"
+                            underlineColorAndroid={cores.cinza}
                         />
                         <View style={{ flexDirection: 'row', justifyContent: 'flex-end' }}>
                             <Text style={styles.text}>
@@ -97,7 +100,7 @@ const styles = StyleSheet.create({
     tela: {
         ...defaultStyles.telaFull,
         ...defaultStyles.telaCentralizada,
-        ...defaultStyles.telaPaddingGrande,
+        ...defaultStyles.telaPaddingHorizontalGrande,
     },
     title: {
         ...defaultStyles.textTitle,

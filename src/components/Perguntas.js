@@ -1,45 +1,49 @@
 import React, { Component } from 'react';
-import { 
-    View, 
-    Text, 
-    StyleSheet,
+import {
+  Text,
+  StyleSheet,
+  View,
 } from 'react-native';
 import { defaultStyles } from 'parquimetro-styles';
+
 import { withNavigationFocus } from 'react-navigation';
+
 import { connect } from 'react-redux';
 import { alteraTitulo } from 'parquimetro-actions/AppActions';
 
-class PerfilPlaca extends Component {
-  
+class Perguntas extends Component {
+
     constructor(props){
         super(props);
     }
-    
+
     componentWillMount(){
         if(this.props.isFocused){
-            this.props.alteraTitulo('Placa');
+            this.props.alteraTitulo('Dúvidas Frequentes');
         }
     }
     
     componentWillReceiveProps(nextProps){
         if(nextProps.isFocused){
-            this.props.alteraTitulo('Placa');
+            this.props.alteraTitulo('Dúvidas Frequentes');
         }
     }
 
-    render() {
+    render(){
         return (
             <View style={styles.tela}>
-                <Text>PerfilPlaca</Text>
+                <Text>
+                    Perguntas
+                </Text>
             </View>
         );
     }
-  }
-  
+}
+
 const styles = StyleSheet.create({
     tela: {
         ...defaultStyles.telaFull,
-    },
+    }
 });
 
-export default connect(null, {alteraTitulo})(withNavigationFocus(PerfilPlaca));
+export default connect(null, {alteraTitulo})(withNavigationFocus(Perguntas));

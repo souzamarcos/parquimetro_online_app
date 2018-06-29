@@ -1,7 +1,8 @@
-import colors from './colors';
+import cores from './cores';
 
 export const input = {
     width: '100%',
-    height: 40,
-    borderColor: colors.inputBorderColor,
+    height: 60,
+    fontSize: 80,
+    borderColor: cores.cinza,
 };

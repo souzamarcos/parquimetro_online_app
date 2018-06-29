@@ -1,16 +1,16 @@
-import colors from './colors';
+import cores from './cores';
 
 export const button = {
     width: '100%',
     paddingVertical: 15,
     paddingHorizontal: 15,
-    backgroundColor: colors.buttonBackgroundColor,
+    backgroundColor: cores.buttonBackgroundColor,
     borderRadius: 30,
     borderWidth: 1,
-    borderColor: colors.buttonBorderColor,
+    borderColor: cores.buttonBorderColor,
 };
 export const buttonText = {
-    color: colors.buttonTextColor,
+    color: cores.buttonTextColor,
     textAlign:'center',
     fontSize: 16
 };
@@ -18,10 +18,10 @@ export const buttonText = {
 export const buttonTransparent = {
     flex: 1,
     padding: 20,
-    backgroundColor: colors.buttonTransparentBackgroundColor,
+    backgroundColor: cores.buttonTransparentBackgroundColor,
     borderRadius: 5,
     borderWidth: 1,
-    borderColor: colors.buttonTransparentBorderColor,
+    borderColor: cores.buttonTransparentBorderColor,
 };
 
 export const buttonTransparentLeft = {
@@ -42,7 +42,7 @@ export const buttonTransparentGroup = {
 };
 
 export const buttonTransparentText = {
-    color: colors.textColor,
+    color: cores.textColor,
     textAlign:'center',
     fontSize: 16
 };
