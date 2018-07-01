@@ -1,18 +1,18 @@
 const cores = {
 
-    principal: '#3075e5',
-    secundaria: '#fff',
+    azul: '#3075e5',
 
     cinza: '#bcbcbc',
-    azul: '#5d5d5d',
-    verde: '#5d5d5d',
+    verde: '#12cc67',
 
-    //button
-    buttonBackgroundColor: '#5d5d5d',
-    buttonTextColor: '#fff',
-    buttonBorderColor: 'transparent',
-    buttonTransparentBackgroundColor: 'transparent',
-    buttonTransparentBorderColor: '#000',
+    branco: '#fff',
+
+    //botao
+    botaoBackgroundColor: '#5d5d5d',
+    botaoTextColor: '#fff',
+    botaoBorderColor: 'transparent',
+    botaoTransparentBackgroundColor: 'transparent',
+    botaoTransparentBorderColor: '#000',
 
     //text
     textColor: '#5d5d5d',

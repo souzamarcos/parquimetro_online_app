@@ -1,14 +1,11 @@
 import React, { Component } from 'react';
 import {
   Text,
-  TextInput,
-  TouchableHighlight,
   StyleSheet,
   View,
   Image,
 } from 'react-native';
 import { defaultStyles } from 'parquimetro-styles';
-import cores from 'parquimetro-styles/cores';
 import MenuSuperior from 'parquimetro-components/MenuSuperior';
 import { connect } from 'react-redux';
 import { alteraTitulo } from 'parquimetro-actions/AppActions';
@@ -41,7 +38,7 @@ class Cabecalho extends Component {
     render(){
 
         return (
-            <View style={styles.tela}>
+            <View style={[styles.tela, {backgroundColor: this.props.backgroundColor}]}>
                 <View style={styles.headerLine}>
                     {this.renderTitulo()}
                 </View>
@@ -56,7 +53,6 @@ class Cabecalho extends Component {
 const styles = StyleSheet.create({
     tela: {
         width: '100%',
-        backgroundColor: cores.telaBackgroundColor
     },
     title: {
         ...defaultStyles.textTitle,

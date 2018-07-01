@@ -1,13 +1,17 @@
 
 import { 
-    button, 
-    buttonText,
-    buttonTransparent,
-    buttonTransparentLeft,
-    buttonTransparentRight,
-    buttonTransparentGroup,
-    buttonTransparentText,
- } from './button';
+    botao, 
+    botaoAzul,
+    botaoVerde,
+    botaoText,
+    botaoAzulText,
+    botaoVerdeText,
+    botaoTransparent,
+    botaoTransparentLeft,
+    botaoTransparentRight,
+    botaoTransparentGroup,
+    botaoTransparentText,
+ } from './botao';
 import { text, textTitle } from './text';
 import { 
     telaFull,
@@ -23,13 +27,17 @@ import { input } from './input';
 
 export const defaultStyles = { 
     //buton
-    button, 
-    buttonText,
-    buttonTransparent,
-    buttonTransparentLeft,
-    buttonTransparentRight,
-    buttonTransparentGroup,
-    buttonTransparentText,
+    botao, 
+    botaoAzul,
+    botaoVerde,
+    botaoText,
+    botaoAzulText,
+    botaoVerdeText,
+    botaoTransparent,
+    botaoTransparentLeft,
+    botaoTransparentRight,
+    botaoTransparentGroup,
+    botaoTransparentText,
 
     //text
     text,

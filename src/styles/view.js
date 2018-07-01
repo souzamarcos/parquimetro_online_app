@@ -11,19 +11,19 @@ export const telaCentralizada = {
 };
 
 export const telaPaddingHorizontalGrande = {
-    paddingHorizontal: '10%',
+    paddingHorizontal: 30,
 };
 
 export const telaPaddingVerticalGrande = {
-    paddingVertical: '10%',
+    paddingVertical: 30,
 };
 
 export const telaPaddingHorizontalPequeno = {
-    paddingHorizontal: '5%',
+    paddingHorizontal: 15,
 };
 
 export const telaPaddingVerticalPequeno = {
-    paddingVertical: '5%',
+    paddingVertical: 15,
 };
 
 export const telaPaddingGrande = {

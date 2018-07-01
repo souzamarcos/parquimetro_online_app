@@ -149,12 +149,12 @@ const styles = StyleSheet.create({
     veiculoTextoNumero: {
         fontWeight: 'bold',
         fontSize: 18,
-        color: cores.principal
+        color: cores.azul
     },
     veiculoTextoDeletar: {
         fontWeight: 'bold',
         fontSize: 18,
-        color: cores.principal,
+        color: cores.azul,
         textAlign: 'right'
     }
 });

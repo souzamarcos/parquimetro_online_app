@@ -168,12 +168,12 @@ const styles = StyleSheet.create({
     cartaoTextoNumero: {
         fontWeight: 'bold',
         fontSize: 18,
-        color: cores.principal
+        color: cores.azul
     },
     cartaoTextoDeletar: {
         fontWeight: 'bold',
         fontSize: 18,
-        color: cores.principal,
+        color: cores.azul,
         textAlign: 'right'
     }
 });

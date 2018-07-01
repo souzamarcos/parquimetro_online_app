@@ -1,7 +1,6 @@
-import React, { Component } from 'react';
-
+import React from 'react';
 import { createBottomTabNavigator, createStackNavigator, createMaterialTopTabNavigator } from 'react-navigation';
-import { createMaterialBottomTabNavigator } from 'react-navigation-material-bottom-tabs';
+import _ from 'lodash';
 import cores from 'parquimetro-styles/cores';
 
 //telas
@@ -43,10 +42,10 @@ const Perfil = createMaterialTopTabNavigator(
         animationEnabled: false,
         tabBarOptions: {
             labelStyle: {
-                color: cores.principal,
+                color: cores.azul,
             },
             indicatorStyle: {
-                backgroundColor: cores.principal,
+                backgroundColor: cores.azul,
             },
             style: {
               backgroundColor: cores.telaBackgroundColor,
@@ -107,9 +106,24 @@ const Navigation = createStackNavigator({
     },
 },{
     initialRouteName : 'TelaPrincipal',
-    navigationOptions: {
-        header: <Cabecalho />,
+    navigationOptions: ({ navigation }) => {
+        let tabBarVisible = true;
+        let indexAtual = navigation.state.index;
+        let telaAtual = navigation.state.routeName;
+        let indexParquimetro = _.findIndex(navigation.state.routes, function(r) { return r.key == 'Parquimetro'; });
+        
+        if (telaAtual == 'TelaPrincipal'
+        &&  indexAtual == indexParquimetro) {
+          tabBarVisible = false;
+        }
+        
+        console.log('passou aqui', indexParquimetro)
+        return {
+            header: tabBarVisible? <Cabecalho backgroundColor="#fff" />: null,
+        };
     }
 });
+
+
 
 export default Navigation;
