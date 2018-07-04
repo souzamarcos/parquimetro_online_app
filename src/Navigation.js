@@ -117,7 +117,6 @@ const Navigation = createStackNavigator({
           tabBarVisible = false;
         }
         
-        console.log('passou aqui', indexParquimetro)
         return {
             header: tabBarVisible? <Cabecalho backgroundColor="#fff" />: null,
         };
