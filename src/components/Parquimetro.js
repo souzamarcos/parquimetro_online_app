@@ -26,28 +26,14 @@ class Parquimetro extends Component {
         super(props);
 
         this.state = {
+            telaContagemCor: '#4988ef',
             cartao: null,
             veiculo: null,
             sessao: null,
-            concluirSessao: false,
-            telaContagemCor: '#4988ef',
-            contador: BackgroundTimer.setInterval(() => {
-                if(!_.isEmpty(this.state.sessao)){
-                    let duracaoPercorrida = duration(Moment().diff(this.state.sessao.horaInicio));
-                    let duracaoMaxima = duration(3, 'hours');
-                    let tempoPercorrido = Moment.utc(duracaoPercorrida.as('milliseconds'));
-                    let tempoMaximo = Moment.utc(duracaoMaxima.as('milliseconds'));
-                    let duracaoSobrando = duration(tempoMaximo.diff(tempoPercorrido));
-                    let tempoSobrando = Moment.utc(duracaoSobrando.as('milliseconds'));
-                    // let horas = tempoSobrando.get('hours');
-                    // let minutos = tempoSobrando.get('minutes');
-                    
-                    this.state.sessao.tempoSobrando = tempoSobrando.format('HH:mm:ss');
-                    console.log('tic', this.state.sessao.tempoSobrando );
-                }
-            }, 1000)
+            exibirResumoSessao: false,
+            textoProgresso: "00:00",
+            porcentagemContador: 0,
         }
-        // BackgroundTimer.clearInterval(this.state.contador);
     }
 
     componentWillMount(){
@@ -91,12 +77,16 @@ class Parquimetro extends Component {
 
         this.setState({
             sessao: {
+                valorAtual: 0.00,
                 tempoSobrando: null,
+                exibirResumoSessao: false,
                 parquimetro: {
                     id: 1,
-                    descricao: 'Avenida Paulo de Frontin'
+                    descricao: 'Avenida Paulo de Frontin',
+                    tempoMaximoMinutos: 240,
+                    precoMinuto: 0.0416666667
                 },
-                horaInicio: Moment().subtract(_.random(0,2), 'hours'),
+                horaInicio: Moment(),
                 cartao: {
                     id: 1,
                     numero: '****.****.****.1111'
@@ -105,30 +95,178 @@ class Parquimetro extends Component {
                     id: 1,
                     placa: 'abc-1234'
                 },
+            },
+        });
+
+        BackgroundTimer.runBackgroundTimer(() => { 
+            //corrigir contador
+            if(!_.isEmpty(this.state.sessao)){
+                let duracaoPercorrida = duration(Moment().diff(this.state.sessao.horaInicio));
+                let tempoPercorrido = Moment.utc(duracaoPercorrida.as('milliseconds'));
+               
+                let tempoMaximoMinutos = this.state.sessao.parquimetro.tempoMaximoMinutos;
+                let minutosPercorridos = duracaoPercorrida.as('minutes');
+                let porcentagemContador = (minutosPercorridos / tempoMaximoMinutos) * 100;
+
+                let textoProgresso = tempoPercorrido != null ? tempoPercorrido.format('HH:mm') : ""
+                
+                let valorAtual = _.round(this.state.sessao.parquimetro.precoMinuto * minutosPercorridos, 2);
+                
+                this.setState({
+                    porcentagemContador,
+                    textoProgresso,
+                    sessao: {
+                        ...this.state.sessao,
+                        valorAtual
+                    }
+                });
+
+                if(porcentagemContador>=100){
+                    //parar contador
+                    BackgroundTimer.stopBackgroundTimer();
+                }
+                
+            }
+        }, 1000);
+    }
+
+    exibirResumoSessao(){
+        this.setState({
+            sessao: {
+                ...this.state.sessao,
+                exibirResumoSessao: true
             }
         });
     }
 
-    pararSessao(){
-        return false;
+    confirmarConclusaoSessao(){
+        Alert.alert(
+            'Aviso',
+            'Deseja realmente finalizar a sessão? Esta ação não pode ser desfeita',
+            [
+                {text: 'Não' },
+                {text: 'Sim', onPress: () => this.concluirSessao(),}
+            ],
+            { cancelable: true }
+        );
+        return;
+    }
+
+    cancelarConclusaoSessao(){
+        this.setState({
+            sessao: {
+                ...this.state.sessao,
+                exibirResumoSessao: false
+            }
+        });
+    }
+
+    concluirSessao(){
+        Alert.alert(
+            'Aviso',
+            'Sessão concluída com sucesso!',
+            [
+                {text: 'OK'}
+            ],
+            { cancelable: false }
+        );
+        //pausar o timer
+        BackgroundTimer.stopBackgroundTimer();
+
+        this.setState({
+            cartao: null,
+            veiculo: null,
+            sessao: null,
+            exibirResumoSessao: false,
+            textoProgresso: "00:00",
+            porcentagemContador: 0,
+        });
     }
 
     renderTela(){
         if(!_.isEmpty(this.state.sessao)){
+            if(this.state.sessao.exibirResumoSessao){
+                //tela resumo
+                return (
+                    <View style={[styles.telaResumo, { backgroundColor: this.state.telaContagemCor}]}>
+                        <Cabecalho style={styles.cabecalho}/>
+                        <View style={styles.telaResumoConteudo}>
+                            <Text style={{ textAlign: 'center', fontWeight: 'bold', fontSize: 16, color: '#fff', paddingVertical: 20,}}>
+                                valor total
+                            </Text>
+                            <Text style={styles.telaResumoValor}>
+                                R$ {this.state.sessao.valorAtual.toString().replace('.',',')}
+                            </Text>
+                            <Text style={styles.telaResumoCartao}>
+                                Visa: { this.state.sessao.cartao.numero } 
+                            </Text>
+                            <View style={styles.telaResumoItens}>
+                                <View style={{ flex: 1 }}>
+                                    <Text style={styles.telaResumoItemTitulo}>
+                                        tempo
+                                    </Text>
+                                    <Text style={styles.telaResumoItemvalor}>
+                                        {this.state.textoProgresso}
+                                    </Text>
+                                </View>
+                                <View style={{ flex: 1 }}>
+                                    <Text style={styles.telaResumoItemTitulo}>
+                                        veículo
+                                    </Text>
+                                    <Text style={styles.telaResumoItemvalor}>
+                                        {this.state.sessao.veiculo.placa}
+                                    </Text>
+                                </View>
+                                <View style={{ flex: 1 }}>
+                                    <Text style={styles.telaResumoItemTitulo}>
+                                        data
+                                    </Text>
+                                    <Text style={styles.telaResumoItemvalor}>
+                                        {this.state.sessao.horaInicio.format('DD/MM/YYYY')}
+                                    </Text>
+                                </View>
+                            </View>
+                            <Text style={styles.telaResumoCartao}>
+                                Avenida Paulo de Frontin
+                            </Text>
+                            <View>
+                                <TouchableHighlight
+                                    onPress={() => this.confirmarConclusaoSessao()}
+                                    style={styles.botaoBranco}
+                                >
+                                    <Text style={[styles.botaoVerdeText, {color: this.state.telaContagemCor}]}>
+                                        Concluir
+                                    </Text>
+                                </TouchableHighlight>
+                                <TouchableHighlight
+                                    onPress={() => this.cancelarConclusaoSessao()}
+                                    style={{ marginTop: 10,}}
+                                >
+                                    <Text style={[styles.botaoCancelarText, {color: '#fff'}]}>
+                                        Voltar
+                                    </Text>
+                                </TouchableHighlight>
+                            </View>
+                        </View>
+                    </View>
+                );
+            }
+
+            //tela Contagem
             return (
                 <View style={[styles.telaContagem, { backgroundColor: this.state.telaContagemCor}]}>
                     <Cabecalho style={styles.cabecalho}/>
                     <View style={styles.telaContagemInformacao}>
                         <View style={styles.circuloProgresso}>
                             <ProgressCircle
-                                percent={0}
+                                percent={this.state.porcentagemContador}
                                 borderWidth={8}
                                 color="#fff"
                                 shadowColor={ Color(this.state.telaContagemCor).lighten(0.2).string() } //adicionando a mesma cor da tela com mais branco
                                 bgColor={this.state.telaContagemCor}
                                 radius={100}
                             >
-                                <Text style={styles.circuloProgressoTexto}>03:00</Text>
+                                <Text style={styles.circuloProgressoTexto}>{this.state.textoProgresso}</Text>
                             </ProgressCircle>
                         </View>
                         <Text style={styles.textoContagem}>
@@ -143,10 +281,10 @@ class Parquimetro extends Component {
                     </View>
                     <View style={styles.telaContagemParteBotao}>
                         <TouchableHighlight
-                            onPress={() => this.pararSessao()}
-                            style={styles.botaoVerde}
+                            onPress={() => this.exibirResumoSessao()}
+                            style={styles.botaoBranco}
                         >
-                            <Text style={styles.botaoText}>
+                            <Text style={[styles.botaoVerdeText, {color: this.state.telaContagemCor}]}>
                                 Parar
                             </Text>
                         </TouchableHighlight>
@@ -168,7 +306,7 @@ class Parquimetro extends Component {
                             bgColor={this.state.telaContagemCor}
                             radius={100}
                         >
-                            <Text style={styles.circuloProgressoTexto}>03:00</Text>
+                            <Text style={styles.circuloProgressoTexto}>{this.state.textoProgresso}</Text>
                         </ProgressCircle>
                     </View>
                     <Text style={styles.textoRua}>
@@ -197,7 +335,7 @@ class Parquimetro extends Component {
                             onPress={() => this.iniciarSessao()}
                             style={styles.botaoVerde}
                         >
-                            <Text style={styles.botaoText}>
+                            <Text style={styles.botaoVerdeText}>
                                 Iniciar
                             </Text>
                         </TouchableHighlight>
@@ -225,6 +363,14 @@ const styles = StyleSheet.create({
         flexGrow: 1,
         paddingBottom: 20
     },
+    telaResumo: {
+        flexGrow: 1,
+        paddingBottom: 20,
+    },
+    telaResumoConteudo: {
+        ...defaultStyles.telaPaddingHorizontalGrande,
+        justifyContent: 'space-between',
+    },
     telaContagemInformacao: {
         ...defaultStyles.telaPaddingHorizontalGrande,
     },
@@ -232,6 +378,38 @@ const styles = StyleSheet.create({
         ...defaultStyles.telaPaddingHorizontalGrande,
         flex: 1,
         justifyContent: 'center',
+    },
+    telaResumoValor: {
+        textAlign: 'center',
+        fontWeight: 'bold',
+        fontSize: 50,
+        color: '#fff',
+        paddingVertical: 10,
+    },
+    telaResumoCartao: {
+        textAlign: 'center',
+        fontSize: 20,
+        color: '#fff',
+        paddingVertical: 20,
+    },
+    telaResumoItemTitulo: {
+        textAlign: 'center',
+        fontWeight: 'bold',
+        fontSize: 14,
+        color: '#fff',
+    },
+    telaResumoItemvalor: {
+        textAlign: 'center',
+        fontSize: 14,
+        color: '#fff',
+    },
+    telaResumoItens: {
+        flexDirection: 'row', 
+        paddingVertical: 20,
+        paddingVertical: 20,
+    },
+    telaResumoBotoes: {
+        paddingVertical: 20,
     },
     cabecalho: {
         backgroundColor: 'transparent'
@@ -267,17 +445,26 @@ const styles = StyleSheet.create({
         fontSize: 20,
     },
     blocoBranco: {
-        backgroundColor: '#fff',
         ...defaultStyles.telaPaddingPequeno,
+        backgroundColor: '#fff',
         borderRadius: 7,
     },
     botaoVerde: {
         ...defaultStyles.botaoVerde,
         marginTop: 10
     },
-    botaoText:{
+    botaoVerdeText:{
         ...defaultStyles.botaoAzulText,
-    }
+    },
+    botaoCancelarText: {
+        ...defaultStyles.botaoAzulText,
+        paddingVertical: 15,
+        paddingHorizontal: 15,
+    },
+    botaoBranco: {
+        ...defaultStyles.botaoBranco,
+        marginTop: 10
+    },
 });
 
 export default connect(null, {alteraTitulo})(withNavigationFocus(Parquimetro));

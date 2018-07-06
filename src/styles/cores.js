@@ -4,7 +4,7 @@ const cores = {
 
     cinza: '#bcbcbc',
     verde: '#12cc67',
-
+    preto: '#000',
     branco: '#fff',
 
     //botao

@@ -20,6 +20,12 @@ export const botaoVerde = {
     backgroundColor: cores.verde,
 };
 
+export const botaoBranco = {
+    ...botao,
+    backgroundColor: cores.branco,
+};
+
+
 export const botaoText = {
     color: cores.botaoTextColor,
     textAlign:'center',
