@@ -48,7 +48,7 @@ const Perfil = createMaterialTopTabNavigator(
                 backgroundColor: cores.azul,
             },
             style: {
-              backgroundColor: cores.telaBackgroundColor,
+                backgroundColor: cores.telaBackgroundColor,
             },
         }
     }
@@ -62,6 +62,7 @@ const TelaPrincipal = createBottomTabNavigator(
         Perguntas: Perguntas,
     },
     {
+        initialRouteName : 'Perguntas',
     }
 );
   
@@ -108,17 +109,26 @@ const Navigation = createStackNavigator({
     initialRouteName : 'TelaPrincipal',
     navigationOptions: ({ navigation }) => {
         let tabBarVisible = true;
+        let backgroundColor = '#fff';
         let indexAtual = navigation.state.index;
         let telaAtual = navigation.state.routeName;
         let indexParquimetro = _.findIndex(navigation.state.routes, function(r) { return r.key == 'Parquimetro'; });
+        let indexPerguntas = _.findIndex(navigation.state.routes, function(r) { return r.key == 'Perguntas'; });
         
-        if (telaAtual == 'TelaPrincipal'
-        &&  indexAtual == indexParquimetro) {
-          tabBarVisible = false;
+        if (telaAtual == 'TelaPrincipal')
+        {
+            if(indexAtual == indexParquimetro) 
+            {
+                tabBarVisible = false;
+            }
+            if(indexAtual == indexPerguntas)
+            {
+                backgroundColor = '#e6ebee';
+            }
         }
         
         return {
-            header: tabBarVisible? <Cabecalho backgroundColor="#fff" />: null,
+            header: tabBarVisible? <Cabecalho backgroundColor={backgroundColor} />: null,
         };
     }
 });

@@ -3,7 +3,12 @@ import {
   Text,
   StyleSheet,
   View,
+  ListView,
+  ScrollView,
+  TouchableHighlight
 } from 'react-native';
+import Pergunta from 'parquimetro-components/Pergunta';
+
 import { defaultStyles } from 'parquimetro-styles';
 
 import { withNavigationFocus } from 'react-navigation';
@@ -15,12 +20,38 @@ class Perguntas extends Component {
 
     constructor(props){
         super(props);
+
+        this.state = {
+            perguntas: []
+        }
     }
 
     componentWillMount(){
         if(this.props.isFocused){
             this.props.alteraTitulo('Dúvidas Frequentes');
         }
+        this.criaFonteDados([
+                {
+                    titulo: 'Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet ?',
+                    descricao: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
+                    ativa: false,
+                },
+                {
+                    titulo: 'Lorem ipsum dolor sit amet ?',
+                    descricao: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
+                    ativa: false,
+                },
+                {
+                    titulo: 'Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet ?',
+                    descricao: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididun Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. v Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.t ut labore et dolore magna aliqua.',
+                    ativa: false,
+                },
+                {
+                    titulo: 'Lorem ipsum dolor sit amet ?',
+                    descricao: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
+                    ativa: false,
+                },
+            ]);
     }
     
     componentWillReceiveProps(nextProps){
@@ -29,13 +60,28 @@ class Perguntas extends Component {
         }
     }
 
-    render(){
+    criaFonteDados(conversas) {
+        const ds = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 });
+
+        this.dataSource = ds.cloneWithRows(conversas);
+    }
+
+    renderRow(pergunta){
         return (
-            <View style={styles.tela}>
-                <Text>
-                    Perguntas
-                </Text>
-            </View>
+            <Pergunta pergunta={pergunta} />
+        );
+    }
+
+    render() {
+        return (
+            <ScrollView style={styles.tela}>
+                <ListView
+
+                    renderRow={this.renderRow}
+                    dataSource={this.dataSource}
+                    //style={styles.list}
+                    />
+            </ScrollView>
         );
     }
 }
@@ -43,6 +89,8 @@ class Perguntas extends Component {
 const styles = StyleSheet.create({
     tela: {
         ...defaultStyles.telaFull,
+        ...defaultStyles.telaPaddingHorizontalPequeno,
+        backgroundColor: '#e6ebee'
     }
 });
 
