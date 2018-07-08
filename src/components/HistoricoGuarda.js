@@ -3,9 +3,12 @@ import {
     View, 
     StyleSheet, 
     ListView, 
-    Picker
+    Picker,
+    Text,
+    Modal,
+    TouchableHighlight
 } from 'react-native';
-import HistoricoItem from 'parquimetro-components/HistoricoItem';
+import HistoricoGuardaItem from 'parquimetro-components/HistoricoGuardaItem';
 import { defaultStyles } from 'parquimetro-styles';
 import cores from 'parquimetro-styles/cores';
 import { withNavigationFocus } from 'react-navigation';
@@ -13,33 +16,45 @@ import { withNavigationFocus } from 'react-navigation';
 import { connect } from 'react-redux';
 import { alteraTitulo } from 'parquimetro-actions/AppActions';
 
-class Historico extends Component {
+class HistoricoGuarda extends Component {
 
     constructor(props) {
         super(props);
         const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
 
-        let transacoes = [];
+        let consultas = [];
         for(let i = 0; i< 5; i++){
-            transacoes.push({
-                uid: i,
-                dataDia: '06',
-                dataMes: 'Abril',
-                rua: 'Av. Antônio de Almeida - Volta Redonda - RJ',
-                bairro: 'Vila Santa Cecília',
-                duracao: '22',
-                valor: 2.35,
-                placa: 'ABC-4513',
-                cartaoBandeira: 'Mastercard',
-                cartao: '**** **** **** 5413',
-                horaInicio: '12:00',
-                horaFim: '12:22'
-            });
+            if(i%2==0){
+                consultas.push({
+                    data: '06 Abril - 12:32',
+                    placa: 'ABC-4513',
+                    sessao: {
+                        uid: i,
+                        dataDia: '06',
+                        dataMes: 'Abril',
+                        rua: 'Av. Antônio de Almeida - Volta Redonda - RJ',
+                        bairro: 'Vila Santa Cecília',
+                        duracao: '22',
+                        valor: 2.35,
+                        placa: 'ABC-4513',
+                        cartaoBandeira: 'Mastercard',
+                        cartao: '**** **** **** 5413',
+                        horaInicio: '12:00',
+                        horaFim: '12:22'
+                    }
+                });
+            }else{
+                consultas.push({
+                    data: '06 Abril - 12:32',
+                    placa: 'ABC-3333',
+                    sessao: null,
+                });
+            }
         }
 
         this.state = {
             ordem: "1",
-            dataSource: ds.cloneWithRows(transacoes),
+            dataSource: ds.cloneWithRows(consultas),
         };
     }
 
@@ -55,9 +70,9 @@ class Historico extends Component {
         }
     }
 
-    renderRow(sessao) {
+    renderRow(consulta) {
         return (
-            <HistoricoItem sessao={sessao} />
+            <HistoricoGuardaItem consulta={consulta} />
         );
     }
 
@@ -94,4 +109,4 @@ const styles = StyleSheet.create({
     },
 });
 
-export default connect(null, {alteraTitulo})(withNavigationFocus(Historico));
+export default connect(null, {alteraTitulo})(withNavigationFocus(HistoricoGuarda));

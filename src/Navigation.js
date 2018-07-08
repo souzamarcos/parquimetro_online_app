@@ -9,6 +9,7 @@ import Cadastro from 'parquimetro-components/Cadastro';
 import Login from 'parquimetro-components/Login';
 import CompletarCadastro from 'parquimetro-components/CompletarCadastro';
 import Historico from 'parquimetro-components/Historico';
+import HistoricoGuarda from 'parquimetro-components/HistoricoGuarda';
 import Parquimetro from 'parquimetro-components/Parquimetro';
 import PerfilPessoal from 'parquimetro-components/PerfilPessoal';
 import PerfilVeiculo from 'parquimetro-components/PerfilVeiculo';

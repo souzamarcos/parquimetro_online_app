@@ -5,9 +5,10 @@ import {
   View,
   TouchableHighlight,
 } from 'react-native';
+import _ from 'lodash';
 import cores from 'parquimetro-styles/cores';
 
-class HistoricoItem extends Component {
+class HistoricoGuardaItem extends Component {
 
     constructor(props){
         super(props);
@@ -36,27 +37,23 @@ class HistoricoItem extends Component {
                         <View style={{ flexDirection: 'row', alignItems: 'center'}}>
                             <View style={{ flex: 1}}>
                                 <View style={{ flexDirection: 'row', alignItems: 'center'}}>
-                                    <Text style={styles.data}>{this.props.sessao.dataDia} </Text>
-                                    <Text style={styles.data}>{this.props.sessao.dataMes} </Text>
-                                    <Text style={styles.duracao}>{this.props.sessao.duracao}</Text>
+                                    <Text style={styles.data}>{this.props.consulta.data} </Text>
                                 </View>
-                                <Text style={styles.tituloTexto}>{this.props.sessao.bairro}</Text>
+                                <Text style={styles.tituloTexto}>{this.props.consulta.placa}</Text>
                             </View>
                             <View style={{paddingLeft: 15}}>
-                                <Text style={styles.valor}>R$ {this.props.sessao.valor}</Text>
+                                <Text style={styles.valor}>{_.isEmpty(this.props.consulta.sessao) ? 'Ruim': 'Bom'}</Text>
                             </View>
                         </View>
                     </View>
                 </TouchableHighlight>
-                {this.state.expandido ? 
+                {this.state.expandido && !_.isEmpty(this.props.consulta.sessao) ? 
                     (
                         <View style={styles.detalhes}>
-                            <Text style={styles.rua}>{this.props.sessao.rua}</Text>
-                            <Text style={styles.horario}>{this.props.sessao.horaInicio} - {this.props.sessao.horaFim}</Text>
-                            <Text style={styles.pagamentoLabel}>Pagamento:</Text>
-                            <Text style={styles.cartao}>{this.props.sessao.cartao}</Text>
+                            <Text style={styles.rua}>{this.props.consulta.sessao.rua}</Text>
+                            <Text style={styles.horario}>{this.props.consulta.sessao.horaInicio} - {this.props.consulta.sessao.horaFim}</Text>
                             <Text style={styles.veiculoLabel}>Veículo:</Text>
-                            <Text style={styles.veiculo}>{this.props.sessao.placa}</Text>
+                            <Text style={styles.veiculo}>{this.props.consulta.sessao.placa}</Text>
                         </View>
                     ) : null
                 }
@@ -114,4 +111,4 @@ const styles = StyleSheet.create({
     }
 });
 
-export default HistoricoItem;
+export default HistoricoGuardaItem;
