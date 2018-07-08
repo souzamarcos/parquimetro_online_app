@@ -6,6 +6,7 @@ import {
   Image,
 } from 'react-native';
 import { defaultStyles } from 'parquimetro-styles';
+import cores from 'parquimetro-styles/cores';
 import MenuSuperior from 'parquimetro-components/MenuSuperior';
 import { connect } from 'react-redux';
 import { alteraTitulo } from 'parquimetro-actions/AppActions';
@@ -53,9 +54,12 @@ class Cabecalho extends Component {
 const styles = StyleSheet.create({
     tela: {
         width: '100%',
+        zIndex: 10,
+        overflow: 'visible'
     },
     title: {
         ...defaultStyles.textTitle,
+        color: cores.azul,
     },
     image: {
         width: 100,

@@ -62,7 +62,7 @@ const TelaPrincipal = createBottomTabNavigator(
         Perguntas: Perguntas,
     },
     {
-        initialRouteName : 'Perguntas',
+        initialRouteName : 'Historico',
     }
 );
   
@@ -114,6 +114,7 @@ const Navigation = createStackNavigator({
         let telaAtual = navigation.state.routeName;
         let indexParquimetro = _.findIndex(navigation.state.routes, function(r) { return r.key == 'Parquimetro'; });
         let indexPerguntas = _.findIndex(navigation.state.routes, function(r) { return r.key == 'Perguntas'; });
+        let indexHistorico = _.findIndex(navigation.state.routes, function(r) { return r.key == 'Historico'; });
         
         if (telaAtual == 'TelaPrincipal')
         {
@@ -121,7 +122,8 @@ const Navigation = createStackNavigator({
             {
                 tabBarVisible = false;
             }
-            if(indexAtual == indexPerguntas)
+            if(indexAtual == indexPerguntas
+            || indexAtual == indexHistorico)
             {
                 backgroundColor = '#e6ebee';
             }
@@ -129,6 +131,10 @@ const Navigation = createStackNavigator({
         
         return {
             header: tabBarVisible? <Cabecalho backgroundColor={backgroundColor} />: null,
+            headerStyle: {
+                zIndex: 10,
+                overflow: 'visible'
+            }
         };
     }
 });

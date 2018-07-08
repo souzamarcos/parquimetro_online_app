@@ -1,12 +1,11 @@
 import React, { Component } from 'react';
 import { 
     View, 
-    Text, 
     StyleSheet, 
     ListView, 
-    TouchableHighlight,
     Picker
 } from 'react-native';
+import HistoricoItem from 'parquimetro-components/HistoricoItem';
 import { defaultStyles } from 'parquimetro-styles';
 import { withNavigationFocus } from 'react-navigation';
 
@@ -15,8 +14,8 @@ import { alteraTitulo } from 'parquimetro-actions/AppActions';
 
 class Historico extends Component {
 
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
         const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
 
         let transacoes = [];
@@ -25,8 +24,10 @@ class Historico extends Component {
                 uid: i,
                 dataDia: '06',
                 dataMes: 'Abril',
-                local: 'Av. Antônio de Almeida - Volta Redonda - RJ',
-                duracao: '22min',
+                rua: 'Av. Antônio de Almeida - Volta Redonda - RJ',
+                bairro: 'Vila Santa Cecília',
+                duracao: '22',
+                valor: 2.35,
                 placa: 'ABC-4513',
                 cartaoBandeira: 'Mastercard',
                 cartao: '**** **** **** 5413',
@@ -53,26 +54,9 @@ class Historico extends Component {
         }
     }
 
-    renderRow(transacao) {
+    renderRow(sessao) {
         return (
-            <TouchableHighlight
-                onPress={ ()=> false }
-                style={{ marginHorizontal: 10, marginBottom: 10, borderRadius: 10}}
-            >
-                <View style={styles.listaItem}>
-                    <View style={styles.listaItemDate}>
-                        <Text style={{ fontSize: 30, color: '#fff' }}>{transacao.dataDia}</Text>
-                        <Text style={{ fontSize: 18, color: '#fff' }}>{transacao.dataMes}</Text>
-                    </View>
-                    <View style={styles.listaItemInfo}>
-                        <Text style={styles.listaItemDuracao}>{transacao.duracao}</Text>
-                        <Text style={styles.listaItemLocal}>{transacao.local}</Text>
-                        <Text style={styles.listaItemInfoComum}>{transacao.placa}</Text>
-                        <Text style={styles.listaItemInfoComum}>{transacao.cartaoBandeira}: {transacao.cartao}</Text>
-                        <Text style={styles.listaItemInfoComum}>{transacao.horaInicio} - {transacao.horaFim}</Text>
-                    </View>
-                </View>
-            </TouchableHighlight>
+            <HistoricoItem sessao={sessao} />
         );
     }
 
@@ -104,40 +88,9 @@ class Historico extends Component {
 const styles = StyleSheet.create({
     tela: {
         ...defaultStyles.telaFull,
+        ...defaultStyles.telaPaddingHorizontalPequeno,
+        backgroundColor: '#e6ebee'
     },
-    listaItem:{
-        borderRadius: 10,
-        flexDirection: 'row',
-        backgroundColor: '#8b9bb5'
-    },
-    listaItemDate: {
-        alignItems: 'center',
-        justifyContent: 'center',
-        backgroundColor: '#626e82',
-        borderBottomLeftRadius: 10,
-        borderTopLeftRadius: 10,
-        paddingHorizontal: 30
-    },
-    listaItemInfo: {
-        paddingHorizontal: 20,
-        paddingVertical: 10
-    },
-    listaItemDuracao: {
-        borderRadius: 10,
-        fontSize: 12,
-        backgroundColor: '#fff',
-        color: '#8b9bb5',
-        alignSelf: 'flex-start',
-        paddingHorizontal: 5,
-    },
-    listaItemLocal: {
-        fontSize: 16,
-        color: '#fff'
-    },
-    listaItemInfoComum: {
-        fontSize: 13,
-        color: '#b8c5db'
-    }
 });
 
 export default connect(null, {alteraTitulo})(withNavigationFocus(Historico));

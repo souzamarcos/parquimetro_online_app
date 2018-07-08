@@ -4,11 +4,7 @@ import {
   StyleSheet,
   View,
   TouchableHighlight,
-  Animated,
-  LayoutAnimation,
-  PanResponder
 } from 'react-native';
-import { defaultStyles } from 'parquimetro-styles';
 import cores from 'parquimetro-styles/cores';
 
 class Pergunta extends Component {

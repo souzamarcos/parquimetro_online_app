@@ -8,7 +8,6 @@ export const text = {
 
 export const textTitle = {
     fontSize: 25,
-    fontWeight: 'bold',
     textAlign: 'center',
     color: cores.textColor,
 };
