@@ -4,14 +4,11 @@ import {
     botaoAzul,
     botaoVerde,
     botaoBranco,
+    botaoVermelho,
     botaoText,
     botaoAzulText,
     botaoVerdeText,
-    botaoTransparent,
-    botaoTransparentLeft,
-    botaoTransparentRight,
-    botaoTransparentGroup,
-    botaoTransparentText,
+    botaoVermelhoText,
  } from './botao';
 import { text, textTitle } from './text';
 import { 
@@ -32,14 +29,11 @@ export const defaultStyles = {
     botaoAzul,
     botaoVerde,
     botaoBranco,
+    botaoVermelho,
     botaoText,
     botaoAzulText,
     botaoVerdeText,
-    botaoTransparent,
-    botaoTransparentLeft,
-    botaoTransparentRight,
-    botaoTransparentGroup,
-    botaoTransparentText,
+    botaoVermelhoText,
 
     //text
     text,

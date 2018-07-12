@@ -6,12 +6,9 @@ import {
   View,
 } from 'react-native';
 import { defaultStyles } from 'parquimetro-styles';
+import cores from 'parquimetro-styles/cores';
 
 export default class TelaInicial extends Component {
-
-    constructor(props){
-        super(props);
-    }
 
     render(){
         return (
@@ -22,26 +19,24 @@ export default class TelaInicial extends Component {
                 <Text style={styles.text}>
                     Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
                 </Text>
-                <View style={styles.buttonTransparentGroup}>
-                    <TouchableHighlight
-                        onPress={() => this.props.navigation.navigate('Cadastro')}
-                        style={styles.buttonTransparentLeft}
-                        underlayColor="rgba(0, 0, 0, 0.05)"
-                    >
-                        <Text style={styles.buttonTransparentText}>
-                            Cadastro
-                        </Text>
-                    </TouchableHighlight>
-                    <TouchableHighlight
-                        onPress={() => this.props.navigation.navigate('Login')}
-                        style={styles.buttonTransparentRight}
-                        underlayColor="rgba(0, 0, 0, 0.05)"
-                    >
-                        <Text style={styles.buttonTransparentText}>
-                            Login
-                        </Text>
-                    </TouchableHighlight>
-                </View>
+                <TouchableHighlight
+                    onPress={() => this.props.navigation.navigate('Login')}
+                    style={styles.botaoVerde}
+                    underlayColor="rgba(0, 0, 0, 0.05)"
+                >
+                    <Text style={styles.botaoVerdeText}>
+                        Login
+                    </Text>
+                </TouchableHighlight>
+                <TouchableHighlight
+                    onPress={() => this.props.navigation.navigate('Cadastro')}
+                    style={styles.botaoAzul}
+                    underlayColor="rgba(0, 0, 0, 0.05)"
+                >
+                    <Text style={styles.botaoAzulText}>
+                        Cadastro
+                    </Text>
+                </TouchableHighlight>
             </View>
         );
     }
@@ -55,23 +50,24 @@ const styles = StyleSheet.create({
     },
     title: {
         ...defaultStyles.textTitle,
+        color: cores.azul,
         marginBottom: 30,
     },
     text: {
         ...defaultStyles.text,
         marginBottom: 30,
     },
-    buttonTransparentLeft: {
-        ...defaultStyles.buttonTransparentLeft,
+    botaoVerde: {
+        ...defaultStyles.botaoVerde,
+        marginBottom: 20,
     },
-    buttonTransparentRight: {
-        ...defaultStyles.buttonTransparentRight,
+    botaoVerdeText: {
+        ...defaultStyles.botaoVerdeText,
     },
-    buttonTransparentGroup: {
-        ...defaultStyles.buttonTransparentGroup,
-        marginTop: 30,
+    botaoAzul: {
+        ...defaultStyles.botaoAzul,
     },
-    buttonTransparentText: {
-        ...defaultStyles.buttonTransparentText,
+    botaoAzulText: {
+        ...defaultStyles.botaoAzulText,
     },
 });

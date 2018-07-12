@@ -107,7 +107,7 @@ const Navigation = createStackNavigator({
         }
     },
 },{
-    initialRouteName : 'TelaPrincipal',
+    initialRouteName : 'Login',
     navigationOptions: ({ navigation }) => {
         let tabBarVisible = true;
         let backgroundColor = '#fff';

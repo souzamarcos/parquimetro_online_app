@@ -6,6 +6,7 @@ const cores = {
     verde: '#12cc67',
     preto: '#000',
     branco: '#fff',
+    vermelho: '#f44a39',
 
     //botao
     botaoBackgroundColor: '#5d5d5d',

@@ -10,20 +10,19 @@ import {
 } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { defaultStyles } from 'parquimetro-styles';
-import { cores } from 'parquimetro-styles/cores';
+import cores from 'parquimetro-styles/cores';
 
-export default class Cadastro extends Component {
+import { connect } from 'react-redux';
+import { modificaEmail, modificaSenha, autenticarUsuario } from 'parquimetro-actions/AutenticacaoActions';
 
-    constructor(props){
-        super(props);
+class Login extends Component {
 
-        this.state = {
-            nome: '',
-            email: '',
-            senha: '',
-        };
+    _autenticarUsuario() {
+        const { email, senha } = this.props;
+
+        this.props.autenticarUsuario({ email, senha });
     }
-
+    
     componentDidMount() {
         Keyboard.dismiss();
     }
@@ -44,52 +43,51 @@ export default class Cadastro extends Component {
                             placeholder="E-mail"
                             textContentType="username"
                             style={styles.input}
-                            onChangeText={(email) => this.setState({email})}
-                            value={this.state.email}
+                            onChangeText={(email) => this.props.modificaEmail(email)}
+                            value={this.props.email}
                             underlineColorAndroid={cores.cinza}
                         />
                         <TextInput
                             placeholder="Senha"
-                            textContentType="password"
+                            secureTextEntry={true}
                             style={styles.input}
-                            onChangeText={(senha) => this.setState({senha})}
-                            value={this.state.senha}
+                            onChangeText={(senha) => this.props.modificaSenha(senha)}
+                            value={this.props.senha}
                             underlineColorAndroid={cores.cinza}
                         />
-                        <View style={{ flexDirection: 'row', justifyContent: 'flex-end' }}>
+                        <View style={{ flexDirection: 'row', justifyContent: 'flex-end', marginBottom: 20 }}>
                             <Text style={styles.text}>
                                 Esqueceu sua senha?
                             </Text>
                         </View>
                     </View>
                     <TouchableHighlight
-                        onPress={() => this.props.navigation.navigate('Perfil')}
-                        style={styles.button}
+                        onPress={() => this._autenticarUsuario()}
+                        style={styles.botaoVerde}
+                        underlayColor="rgba(0, 0, 0, 0.05)"
                     >
-                        <Text style={styles.buttonText}>
+                        <Text style={styles.botaoVerdeText}>
                             Entrar
                         </Text>
                     </TouchableHighlight>
-                    <View style={styles.buttonTransparentGroup}>
-                        <TouchableHighlight
-                            onPress={() => this.props.navigation.navigate('Perfil')}
-                            style={styles.buttonTransparentLeft}
-                            underlayColor="rgba(0, 0, 0, 0.05)"
-                        >
-                            <Text style={styles.buttonTransparentText}>
-                                Google
-                            </Text>
-                        </TouchableHighlight>
-                        <TouchableHighlight
-                            onPress={() => this.props.navigation.navigate('Perfil')}
-                            style={styles.buttonTransparentRight}
-                            underlayColor="rgba(0, 0, 0, 0.05)"
-                        >
-                            <Text style={styles.buttonTransparentText}>
-                                Facebook
-                            </Text>
-                        </TouchableHighlight>
-                    </View>
+                    <TouchableHighlight
+                        onPress={() => this.props.navigation.navigate('Perfil')}
+                        style={styles.botaoAzul}
+                        underlayColor="rgba(0, 0, 0, 0.05)"
+                    >
+                        <Text style={styles.botaoAzulText}>
+                            Facebook
+                        </Text>
+                    </TouchableHighlight>
+                    <TouchableHighlight
+                        onPress={() => this.props.navigation.navigate('Perfil')}
+                        style={styles.botaoVermelho}
+                        underlayColor="rgba(0, 0, 0, 0.05)"
+                    >
+                        <Text style={styles.botaoVermelhoText}>
+                            Google
+                        </Text>
+                    </TouchableHighlight>
                 </View>
             </KeyboardAwareScrollView>
         );
@@ -104,29 +102,43 @@ const styles = StyleSheet.create({
     },
     title: {
         ...defaultStyles.textTitle,
+        color: cores.azul,
         marginBottom: 30,
     },
     input: {
         ...defaultStyles.input,
     },
-    button: {
-        ...defaultStyles.button,
-        marginTop: 30
+    botaoVerde: {
+        ...defaultStyles.botaoVerde,
+        marginBottom: 20,
     },
-    buttonText: {
-        ...defaultStyles.buttonText,
+    botaoVerdeText: {
+        ...defaultStyles.botaoVerdeText,
     },
-    buttonTransparentLeft: {
-        ...defaultStyles.buttonTransparentLeft,
+    botaoAzul: {
+        ...defaultStyles.botaoAzul,
+        marginBottom: 20,
     },
-    buttonTransparentRight: {
-        ...defaultStyles.buttonTransparentRight,
+    botaoAzulText: {
+        ...defaultStyles.botaoAzulText,
     },
-    buttonTransparentGroup: {
-        ...defaultStyles.buttonTransparentGroup,
-        marginTop: 30,
+    botaoVermelho: {
+        ...defaultStyles.botaoVermelho,
+        marginBottom: 20,
     },
-    buttonTransparentText: {
-        ...defaultStyles.buttonTransparentText,
+    botaoVermelhoText: {
+        ...defaultStyles.botaoVermelhoText,
     },
 });
+
+
+const mapStateToProps = state => (
+    {
+        email: state.AutenticacaoReducer.email,
+        senha: state.AutenticacaoReducer.senha,
+        erroLogin: state.AutenticacaoReducer.erroLogin,
+        loadingLogin: state.AutenticacaoReducer.loadingLogin
+    }
+)
+
+export default connect(mapStateToProps, { modificaEmail, modificaSenha, autenticarUsuario })(Login);

@@ -25,6 +25,10 @@ export const botaoBranco = {
     backgroundColor: cores.branco,
 };
 
+export const botaoVermelho = {
+    ...botao,
+    backgroundColor: cores.vermelho,
+};
 
 export const botaoText = {
     color: cores.botaoTextColor,
@@ -42,34 +46,7 @@ export const botaoVerdeText = {
     color: cores.branco,
 };
 
-export const botaoTransparent = {
-    flex: 1,
-    padding: 20,
-    backgroundColor: cores.botaoTransparentBackgroundColor,
-    borderRadius: 5,
-    borderWidth: 1,
-    borderColor: cores.botaoTransparentBorderColor,
-};
-
-export const botaoTransparentLeft = {
-    ...botaoTransparent,
-    borderBottomRightRadius: 0,
-    borderTopRightRadius: 0,
-    borderRightWidth: 0,
-};
-
-export const botaoTransparentRight = {
-    ...botaoTransparent,
-    borderBottomLeftRadius: 0,
-    borderTopLeftRadius: 0,
-};
-
-export const botaoTransparentGroup = {
-    flexDirection: 'row',
-};
-
-export const botaoTransparentText = {
-    color: cores.textColor,
-    textAlign:'center',
-    fontSize: 16
+export const botaoVermelhoText = {
+    ...botaoText,
+    color: cores.branco,
 };
