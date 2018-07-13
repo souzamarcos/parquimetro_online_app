@@ -1,5 +1,6 @@
 import { Alert } from 'react-native';
 import axios from 'axios';
+import NavigationService from 'parquimetro/NavigationService';
 
 //setando url padrão
 const Api = axios.create({
@@ -14,7 +15,7 @@ Api.interceptors.response.use((response) => {
     //não autorizado
     if (error.response.status === 401) {
         console.log('Não autorizado. Deslogando...');
-        //redirecionar para login
+        NavigationService.navigate('Login');
     }else {
         Alert.alert(
             'Aviso',

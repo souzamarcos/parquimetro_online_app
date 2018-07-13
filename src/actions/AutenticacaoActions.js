@@ -1,4 +1,5 @@
-import { NavigationActions } from 'react-navigation';
+import { AsyncStorage } from "react-native"
+import _ from 'lodash';
 import API  from 'parquimetro/Api';
 import { 
     MODIFICA_EMAIL,
@@ -10,6 +11,7 @@ import {
     LOGIN_EM_ANDAMENTO ,
     CADASTRO_EM_ANDAMENTO
 } from './types';
+import NavigationService from 'parquimetro/NavigationService';
 
 export const modificaEmail = (texto) => {
     return {
@@ -56,7 +58,6 @@ export const autenticarUsuario = ({ email, senha }) => {
 
     return dispatch => {
         dispatch({ type: LOGIN_EM_ANDAMENTO });
-        console.log('usuario/login');
         API.post('usuario/login', {
             usuario: {
                 email,
@@ -64,25 +65,28 @@ export const autenticarUsuario = ({ email, senha }) => {
             }
         })
             .then(retorno => {
-                console.log(retorno);
-                loginUsuarioSucesso(retorno, dispatch)
+                if(_.isEmpty(retorno.data.usuario)){
+                    loginUsuarioErro(retorno.data.message, dispatch);
+                }else{
+                    loginUsuarioSucesso(retorno.data.usuario, dispatch)
+                }
             })
     }
 }
 
 const loginUsuarioSucesso = (usuario, dispatch) => {
+    
     dispatch ({
         type: LOGIN_USUARIO_SUCESSO,
         payload: usuario
     });
 
-    NavigationActions.navigate({ routeName: 'TelaPrincipal' });
-    dispatch(NavigationActions.navigate({ routeName: 'TelaPrincipal' }));
+    NavigationService.navigate('Parquimetro');
 }
 
-const loginUsuarioErro = (erro, dispatch) => {
+const loginUsuarioErro = (mensagem, dispatch) => {
     dispatch ({
         type: LOGIN_USUARIO_ERRO,
-        payload: erro.message
+        payload: mensagem
     });
 }

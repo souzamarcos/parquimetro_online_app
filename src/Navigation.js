@@ -63,7 +63,7 @@ const TelaPrincipal = createBottomTabNavigator(
         Perguntas: Perguntas,
     },
     {
-        initialRouteName : 'Historico',
+        initialRouteName : 'Parquimetro',
     }
 );
   

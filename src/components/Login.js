@@ -39,6 +39,7 @@ class Login extends Component {
                         Bem vindo de volta!
                     </Text>
                     <View>
+                        <Text style={styles.mensagemErro}>{this.props.erroLogin}</Text>
                         <TextInput
                             placeholder="E-mail"
                             textContentType="username"
@@ -111,6 +112,11 @@ const styles = StyleSheet.create({
     botaoVerde: {
         ...defaultStyles.botaoVerde,
         marginBottom: 20,
+    },
+    mensagemErro: {
+        color: 'red',
+        fontSize: 14,
+        marginBottom: 10
     },
     botaoVerdeText: {
         ...defaultStyles.botaoVerdeText,
