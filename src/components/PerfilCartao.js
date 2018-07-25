@@ -11,6 +11,8 @@ import cores from 'parquimetro-styles/cores';
 import { withNavigationFocus } from 'react-navigation';
 import { connect } from 'react-redux';
 import { alteraTitulo } from 'parquimetro-actions/AppActions';
+import { carregarCartoes } from 'parquimetro-actions/CartoesActions';
+
 
 class PerfilCartao extends Component {
   
@@ -28,6 +30,7 @@ class PerfilCartao extends Component {
         if(this.props.isFocused){
             this.props.alteraTitulo('Cartão');
         }
+        this.props.carregarCartoes();
     }
     
     componentWillReceiveProps(nextProps){
@@ -39,7 +42,11 @@ class PerfilCartao extends Component {
     render() {
         return (
             <ScrollView style={styles.tela}>
-                <View  style={styles.cartao}>
+                <Text>{this.props.cartoes.length}</Text>
+                <Text>{this.props.carregandoCartoes}</Text>
+                <Text>{this.props.erro}</Text>
+                
+                {/* <View  style={styles.cartao}>
                     <View style={styles.cartaoCabecalho}>
                         <View style={{ flex: 1}}>
                             <Text style={styles.cartaoTextoNumero}>
@@ -143,7 +150,7 @@ class PerfilCartao extends Component {
                         value={this.state.validade}
                         underlineColorAndroid={cores.cinza}
                     />
-                </View>
+                </View> */}
             </ScrollView>
         );
     }
@@ -178,4 +185,13 @@ const styles = StyleSheet.create({
     }
 });
 
-export default connect(null, {alteraTitulo})(withNavigationFocus(PerfilCartao));
+
+const mapStateToProps = state => (
+    {
+        cartoes: state.CartoesReducer.cartoes,
+        carregandoCartoes: state.CartoesReducer.carregandoCartoes,
+        erro: state.CartoesReducer.erro,
+    }
+)
+
+export default connect(mapStateToProps, { alteraTitulo, carregarCartoes })(withNavigationFocus(PerfilCartao));

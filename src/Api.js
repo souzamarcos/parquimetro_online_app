@@ -1,6 +1,8 @@
 import { Alert } from 'react-native';
+import _ from 'lodash';
 import axios from 'axios';
 import NavigationService from 'parquimetro/NavigationService';
+import Store from 'parquimetro/Store';
 
 //setando url padrão
 const Api = axios.create({
@@ -25,9 +27,20 @@ Api.interceptors.response.use((response) => {
             ],
             { cancelable: false }
         );
+        console.log(error.response);
     }
 
     return Promise.reject(error.response);
 });
+
+Store.subscribe(() => {
+    const { usuarioLogado } =  Store.getState().AutenticacaoReducer;
+
+
+    Api.defaults.headers.common['Authorization'] = _.isEmpty(usuarioLogado) ? null : `${usuarioLogado.token}`;
+
+});
+
+
 
 export default Api;
