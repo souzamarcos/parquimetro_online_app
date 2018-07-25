@@ -1,17 +1,17 @@
 import React, { Component } from 'react';
+import _ from 'lodash';
 import { 
-    View, 
-    Text, 
+    ListView,
     StyleSheet,
-    TextInput,
     ScrollView,
 } from 'react-native';
 import { defaultStyles } from 'parquimetro-styles';
-import cores from 'parquimetro-styles/cores';
 import { withNavigationFocus } from 'react-navigation';
 import { connect } from 'react-redux';
 import { alteraTitulo } from 'parquimetro-actions/AppActions';
 import { carregarCartoes } from 'parquimetro-actions/CartoesActions';
+import Cartao from 'parquimetro-components/Cartao';
+
 
 
 class PerfilCartao extends Component {
@@ -25,132 +25,47 @@ class PerfilCartao extends Component {
             validade: '',
         };
     }
+
+    componentDidMount(){
+        const { navigation } = this.props;
+        this.subscriptions = [ // evento para detectar se o component está focado para alterar o título 
+            navigation.addListener('didFocus', () =>{
+                this.props.alteraTitulo('Cartão');
+            }),
+        ];
+    }
     
     componentWillMount(){
-        if(this.props.isFocused){
-            this.props.alteraTitulo('Cartão');
-        }
         this.props.carregarCartoes();
+        this.criaFonteDados([]);
     }
     
     componentWillReceiveProps(nextProps){
-        if(nextProps.isFocused){
-            this.props.alteraTitulo('Cartão');
-        }
+        this.criaFonteDados(nextProps.cartoes);
+    }
+
+    componentWillUnmount() {
+        // remove eventos
+        this.subscriptions.forEach(sub => sub.remove());
+    }
+
+    criaFonteDados(cartoes) {
+        const ds = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 });
+
+        this.dataSource = ds.cloneWithRows(cartoes);
+    }
+
+    renderRow(cartao){
+        return <Cartao cartao={cartao} />
     }
 
     render() {
         return (
             <ScrollView style={styles.tela}>
-                <Text>{this.props.cartoes.length}</Text>
-                <Text>{this.props.carregandoCartoes}</Text>
-                <Text>{this.props.erro}</Text>
-                
-                {/* <View  style={styles.cartao}>
-                    <View style={styles.cartaoCabecalho}>
-                        <View style={{ flex: 1}}>
-                            <Text style={styles.cartaoTextoNumero}>
-                                Cartão 1
-                            </Text>
-                        </View>
-                        <View style={{ flex: 1}}>
-                            <Text style={styles.cartaoTextoDeletar}>
-                                Deletar
-                            </Text>
-                        </View>
-                    </View>
-                    <TextInput
-                        placeholder="Número"
-                        style={styles.input}
-                        onChangeText={(numero) => this.setState({numero})}
-                        value={this.state.numero}
-                        underlineColorAndroid={cores.cinza}
+                <ListView
+                    renderRow={this.renderRow}
+                    dataSource={this.dataSource}
                     />
-                    <TextInput
-                        placeholder="Bandeira"
-                        style={styles.input}
-                        onChangeText={(bandeira) => this.setState({bandeira})}
-                        value={this.state.bandeira}
-                        underlineColorAndroid={cores.cinza}
-                    />
-                    <TextInput
-                        placeholder="Validade"
-                        style={styles.input}
-                        onChangeText={(validade) => this.setState({validade})}
-                        value={this.state.validade}
-                        underlineColorAndroid={cores.cinza}
-                    />
-                </View>
-                <View  style={styles.cartao}>
-                    <View style={styles.cartaoCabecalho}>
-                        <View style={{ flex: 1}}>
-                            <Text style={styles.cartaoTextoNumero}>
-                                Cartão 2
-                            </Text>
-                        </View>
-                        <View style={{ flex: 1}}>
-                            <Text style={styles.cartaoTextoDeletar}>
-                                Deletar
-                            </Text>
-                        </View>
-                    </View>
-                    <TextInput
-                        placeholder="Número"
-                        style={styles.input}
-                        onChangeText={(numero) => this.setState({numero})}
-                        value={this.state.numero}
-                        underlineColorAndroid={cores.cinza}
-                    />
-                    <TextInput
-                        placeholder="Bandeira"
-                        style={styles.input}
-                        onChangeText={(bandeira) => this.setState({bandeira})}
-                        value={this.state.bandeira}
-                        underlineColorAndroid={cores.cinza}
-                    />
-                    <TextInput
-                        placeholder="Validade"
-                        style={styles.input}
-                        onChangeText={(validade) => this.setState({validade})}
-                        value={this.state.validade}
-                        underlineColorAndroid={cores.cinza}
-                    />
-                </View>
-                <View  style={styles.cartao}>
-                    <View style={styles.cartaoCabecalho}>
-                        <View style={{ flex: 1}}>
-                            <Text style={styles.cartaoTextoNumero}>
-                                Cartão 3
-                            </Text>
-                        </View>
-                        <View style={{ flex: 1}}>
-                            <Text style={styles.cartaoTextoDeletar}>
-                                Deletar
-                            </Text>
-                        </View>
-                    </View>
-                    <TextInput
-                        placeholder="Número"
-                        style={styles.input}
-                        onChangeText={(numero) => this.setState({numero})}
-                        value={this.state.numero}
-                        underlineColorAndroid={cores.cinza}
-                    />
-                    <TextInput
-                        placeholder="Bandeira"
-                        style={styles.input}
-                        onChangeText={(bandeira) => this.setState({bandeira})}
-                        value={this.state.bandeira}
-                        underlineColorAndroid={cores.cinza}
-                    />
-                    <TextInput
-                        placeholder="Validade"
-                        style={styles.input}
-                        onChangeText={(validade) => this.setState({validade})}
-                        value={this.state.validade}
-                        underlineColorAndroid={cores.cinza}
-                    />
-                </View> */}
             </ScrollView>
         );
     }
@@ -160,38 +75,20 @@ const styles = StyleSheet.create({
     tela: {
         ...defaultStyles.telaFull,
         ...defaultStyles.telaPaddingPequeno,
-    },
-    input: {
-        ...defaultStyles.input,
-    },
-    cartao: {
-        marginBottom: 20
-    },
-    cartaoCabecalho: {
-        flexDirection: 'row',
-        marginBottom: 10,
-        paddingHorizontal: 5
-    },
-    cartaoTextoNumero: {
-        fontWeight: 'bold',
-        fontSize: 18,
-        color: cores.azul
-    },
-    cartaoTextoDeletar: {
-        fontWeight: 'bold',
-        fontSize: 18,
-        color: cores.azul,
-        textAlign: 'right'
     }
 });
 
 
-const mapStateToProps = state => (
-    {
-        cartoes: state.CartoesReducer.cartoes,
+const mapStateToProps = state => {
+    const cartoes = _.map(state.CartoesReducer.cartoes, (item, index) =>{
+        return {...item, index: index + 1};
+    });
+
+    return {
+        cartoes,
         carregandoCartoes: state.CartoesReducer.carregandoCartoes,
         erro: state.CartoesReducer.erro,
     }
-)
+};
 
-export default connect(mapStateToProps, { alteraTitulo, carregarCartoes })(withNavigationFocus(PerfilCartao));
+export default connect(mapStateToProps, { alteraTitulo, carregarCartoes })(PerfilCartao);
