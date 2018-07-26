@@ -1,8 +1,8 @@
 import { Alert } from 'react-native';
 import _ from 'lodash';
 import axios from 'axios';
-import NavigationService from 'parquimetro/NavigationService';
-import Store from 'parquimetro/Store';
+import NavigationService from './NavigationService';
+import Store from './Store';
 
 //setando url padrão
 const Api = axios.create({

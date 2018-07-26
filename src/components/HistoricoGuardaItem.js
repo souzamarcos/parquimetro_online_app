@@ -6,7 +6,7 @@ import {
   TouchableHighlight,
 } from 'react-native';
 import _ from 'lodash';
-import cores from 'parquimetro-styles/cores';
+import cores from '../styles/cores';
 
 class HistoricoGuardaItem extends Component {
 

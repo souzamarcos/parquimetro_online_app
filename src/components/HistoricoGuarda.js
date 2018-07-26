@@ -4,17 +4,14 @@ import {
     StyleSheet, 
     ListView, 
     Picker,
-    Text,
-    Modal,
-    TouchableHighlight
 } from 'react-native';
-import HistoricoGuardaItem from 'parquimetro-components/HistoricoGuardaItem';
-import { defaultStyles } from 'parquimetro-styles';
-import cores from 'parquimetro-styles/cores';
+import HistoricoGuardaItem from './HistoricoGuardaItem';
+import { defaultStyles } from '../styles';
+import cores from '../styles/cores';
 import { withNavigationFocus } from 'react-navigation';
 
 import { connect } from 'react-redux';
-import { alteraTitulo } from 'parquimetro-actions/AppActions';
+import { alteraTitulo } from '../actions/AppActions';
 
 class HistoricoGuarda extends Component {
 

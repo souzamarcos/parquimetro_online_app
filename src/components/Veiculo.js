@@ -9,49 +9,42 @@ import {
 import { defaultStyles } from '../styles';
 import cores from '../styles/cores';
 
-class Cartao  extends Component {
+class Veiculo  extends Component {
 
     render(){
         return (
             <TouchableHighlight
                 onPress={() => false}
-                style={styles.cartao}
+                style={styles.veiculo}
                 underlayColor="rgba(0, 0, 0, 0.05)"
             >
                 <View>
-                    <View style={styles.cartaoCabecalho}>
+                    <View style={styles.veiculoCabecalho}>
                         <View style={{ flex: 1}}>
-                            <Text style={styles.cartaoTextoNumero}>
-                                Cartão {this.props.cartao.index}
+                            <Text style={styles.veiculoTextoNumero}>
+                                Veículo {this.props.veiculo.index}
                             </Text>
                         </View>
                         <View style={{ flex: 1}}>
-                            <Text style={styles.cartaoTextoDeletar}>
+                            <Text style={styles.veiculoTextoDeletar}>
                                 Deletar
                             </Text>
                         </View>
                     </View>
                     <TextInput
-                        placeholder="Número"
+                        placeholder="Placa"
                         style={styles.input}
-                        value={this.props.cartao.numero}
+                        value={this.props.veiculo.placa.toUpperCase()}
                         underlineColorAndroid={cores.cinza}
                         editable={false}
                     />
                     <TextInput
-                        placeholder="Bandeira"
+                        placeholder="Apelido"
                         style={styles.input}
-                        value={this.props.cartao.bandeira}
+                        value={this.props.veiculo.descricao}
                         underlineColorAndroid={cores.cinza}
                         editable={false}
                     />
-                    {/* <TextInput
-                        placeholder="Validade"
-                        style={styles.input}
-                        onChangeText={(validade) => this.setState({validade})}
-                        value={this.state.validade}
-                        underlineColorAndroid={cores.cinza}
-                    /> */}
                 </View>
             </TouchableHighlight>
         );
@@ -59,27 +52,23 @@ class Cartao  extends Component {
 }
 
 const styles = StyleSheet.create({
-    tela: {
-        ...defaultStyles.telaFull,
-        ...defaultStyles.telaPaddingPequeno,
-    },
     input: {
         ...defaultStyles.input,
     },
-    cartao: {
+    veiculo: {
         marginBottom: 20
     },
-    cartaoCabecalho: {
+    veiculoCabecalho: {
         flexDirection: 'row',
         marginBottom: 10,
         paddingHorizontal: 5
     },
-    cartaoTextoNumero: {
+    veiculoTextoNumero: {
         fontWeight: 'bold',
         fontSize: 18,
         color: cores.azul
     },
-    cartaoTextoDeletar: {
+    veiculoTextoDeletar: {
         fontWeight: 'bold',
         fontSize: 18,
         color: cores.azul,
@@ -87,4 +76,4 @@ const styles = StyleSheet.create({
     }
 });
 
-export default Cartao;
+export default Veiculo;

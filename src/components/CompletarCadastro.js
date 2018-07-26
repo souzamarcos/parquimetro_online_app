@@ -6,7 +6,7 @@ import {
   StyleSheet,
   View
 } from 'react-native';
-import { defaultStyles } from 'parquimetro-styles';
+import { defaultStyles } from '../styles';
 
 export default class CompletarCadastro extends Component {
 

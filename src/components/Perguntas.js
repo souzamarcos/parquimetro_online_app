@@ -1,20 +1,17 @@
 import React, { Component } from 'react';
 import {
-  Text,
   StyleSheet,
-  View,
   ListView,
   ScrollView,
-  TouchableHighlight
 } from 'react-native';
-import Pergunta from 'parquimetro-components/Pergunta';
+import Pergunta from './Pergunta';
 
-import { defaultStyles } from 'parquimetro-styles';
+import { defaultStyles } from '../styles';
 
 import { withNavigationFocus } from 'react-navigation';
 
 import { connect } from 'react-redux';
-import { alteraTitulo } from 'parquimetro-actions/AppActions';
+import { alteraTitulo } from '../actions/AppActions';
 
 class Perguntas extends Component {
 

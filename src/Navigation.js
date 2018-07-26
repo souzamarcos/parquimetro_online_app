@@ -1,21 +1,21 @@
 import React from 'react';
 import { createBottomTabNavigator, createStackNavigator, createMaterialTopTabNavigator } from 'react-navigation';
 import _ from 'lodash';
-import cores from 'parquimetro-styles/cores';
+import cores from './styles/cores';
 
 //telas
-import TelaInicial from 'parquimetro-components/TelaInicial';
-import Cadastro from 'parquimetro-components/Cadastro';
-import Login from 'parquimetro-components/Login';
-import CompletarCadastro from 'parquimetro-components/CompletarCadastro';
-import Historico from 'parquimetro-components/Historico';
-import HistoricoGuarda from 'parquimetro-components/HistoricoGuarda';
-import Parquimetro from 'parquimetro-components/Parquimetro';
-import PerfilPessoal from 'parquimetro-components/PerfilPessoal';
-import PerfilVeiculo from 'parquimetro-components/PerfilVeiculo';
-import PerfilCartao from 'parquimetro-components/PerfilCartao';
-import Perguntas from 'parquimetro-components/Perguntas';
-import Cabecalho from 'parquimetro-components/Cabecalho';
+import TelaInicial from './components/TelaInicial';
+import Cadastro from './components/Cadastro';
+import Login from './components/Login';
+import CompletarCadastro from './components/CompletarCadastro';
+import Historico from './components/Historico';
+import HistoricoGuarda from './components/HistoricoGuarda';
+import Parquimetro from './components/Parquimetro';
+import PerfilPessoal from './components/PerfilPessoal';
+import PerfilVeiculo from './components/PerfilVeiculo';
+import PerfilCartao from './components/PerfilCartao';
+import Perguntas from './components/Perguntas';
+import Cabecalho from './components/Cabecalho';
   
 const Perfil = createMaterialTopTabNavigator(
     {

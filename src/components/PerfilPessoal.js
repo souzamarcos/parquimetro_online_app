@@ -1,17 +1,16 @@
 import React, { Component } from 'react';
 import { 
     View, 
-    Text, 
     StyleSheet,
     TextInput,
     ScrollView,
 } from 'react-native';
-import { defaultStyles } from 'parquimetro-styles';
-import cores from 'parquimetro-styles/cores';
+import { defaultStyles } from '../styles';
+import cores from '../styles/cores';
 import { withNavigationFocus } from 'react-navigation';
 
 import { connect } from 'react-redux';
-import { alteraTitulo } from 'parquimetro-actions/AppActions';
+import { alteraTitulo } from '../actions/AppActions';
 
 class PerfilPessoal extends Component {
 

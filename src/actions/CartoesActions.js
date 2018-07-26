@@ -1,35 +1,36 @@
-import _ from 'lodash';
-import API  from 'parquimetro/Api';
+import API  from '../Api';
 import { 
-    CARREGAR_VEICULO_EM_ANDAMENTO,
-    CARREGAR_VEICULO_SUCESSO,
-    CARREGAR_VEICULO_ERRO,
+    CARREGAR_CARTAO_EM_ANDAMENTO,
+    CARREGAR_CARTAO_SUCESSO,
+    CARREGAR_CARTAO_ERRO,
 } from './types';
 
 export const carregarCartoes = () => {
 
-    return dispatch => {
-        dispatch({ type: CARREGAR_VEICULO_EM_ANDAMENTO });
-        API.get('cartao',{})
-            .then(retorno => {
-                carregarCartoesSucesso(retorno.data, dispatch);
-            })
-            .catch(erro => {
-                carregarCartoesErro(erro, dispatch);
-            });
+    return async dispatch => {
+        dispatch({ type: CARREGAR_CARTAO_EM_ANDAMENTO });
+        try
+        {
+            const retorno = await API.get('cartao',{});
+            carregarCartoesSucesso(retorno.data, dispatch);
+        }
+        catch(erro)
+        {
+            carregarCartoesErro(erro.message, dispatch);
+        }
     }
 }
 
 export const carregarCartoesSucesso = (cartoes, dispatch) => {
     dispatch({
-        type: CARREGAR_VEICULO_SUCESSO,
+        type: CARREGAR_CARTAO_SUCESSO,
         payload: cartoes
     });
 }
 
 export const carregarCartoesErro = (erro) => {
     dispatch({
-        type: CARREGAR_VEICULO_ERRO,
+        type: CARREGAR_CARTAO_ERRO,
         payload: erro
     });
 }

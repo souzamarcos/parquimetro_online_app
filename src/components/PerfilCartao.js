@@ -5,12 +5,11 @@ import {
     StyleSheet,
     ScrollView,
 } from 'react-native';
-import { defaultStyles } from 'parquimetro-styles';
-import { withNavigationFocus } from 'react-navigation';
+import { defaultStyles } from '../styles';
 import { connect } from 'react-redux';
-import { alteraTitulo } from 'parquimetro-actions/AppActions';
-import { carregarCartoes } from 'parquimetro-actions/CartoesActions';
-import Cartao from 'parquimetro-components/Cartao';
+import { alteraTitulo } from '../actions/AppActions';
+import { carregarCartoes } from '../actions/CartoesActions';
+import Cartao from './Cartao';
 
 
 
@@ -18,12 +17,6 @@ class PerfilCartao extends Component {
   
     constructor(props){
         super(props);
-        
-        this.state = {
-            numero: '',
-            bandeira: '',
-            validade: '',
-        };
     }
 
     componentDidMount(){

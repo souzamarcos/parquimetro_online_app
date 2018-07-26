@@ -1,8 +1,8 @@
 import { 
-    CARREGAR_VEICULO_EM_ANDAMENTO,
-    CARREGAR_VEICULO_SUCESSO,
-    CARREGAR_VEICULO_ERRO,
-} from 'parquimetro-actions/types';
+    CARREGAR_CARTAO_EM_ANDAMENTO,
+    CARREGAR_CARTAO_SUCESSO,
+    CARREGAR_CARTAO_ERRO,
+} from '../actions/types';
 
 const INITIAL_STATE = {
     cartoes: [],
@@ -12,11 +12,11 @@ const INITIAL_STATE = {
 
 export default (state = INITIAL_STATE, action) => {
     switch(action.type) {
-        case CARREGAR_VEICULO_EM_ANDAMENTO:
+        case CARREGAR_CARTAO_EM_ANDAMENTO:
             return { ...state, carregandoCartoes: true, erro: null }
-        case CARREGAR_VEICULO_SUCESSO:
+        case CARREGAR_CARTAO_SUCESSO:
             return { ...state, cartoes: action.payload , arregandoCartoes: false, erro: null }
-        case CARREGAR_VEICULO_ERRO:
+        case CARREGAR_CARTAO_ERRO:
             return { ...state, erro: action.payload , arregandoCartoes: false }
         
         default:

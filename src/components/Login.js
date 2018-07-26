@@ -6,14 +6,13 @@ import {
   StyleSheet,
   View,
   Keyboard,
-  KeyboardAvoidingView,
 } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
-import { defaultStyles } from 'parquimetro-styles';
-import cores from 'parquimetro-styles/cores';
+import { defaultStyles } from '../styles';
+import cores from '../styles/cores';
 
 import { connect } from 'react-redux';
-import { modificaEmail, modificaSenha, autenticarUsuario } from 'parquimetro-actions/AutenticacaoActions';
+import { modificaEmail, modificaSenha, autenticarUsuario } from '../actions/AutenticacaoActions';
 
 class Login extends Component {
 

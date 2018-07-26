@@ -7,7 +7,7 @@ import {
     LOGIN_USUARIO_ERRO,
     LOGIN_EM_ANDAMENTO,
     CADASTRO_EM_ANDAMENTO,
-} from 'parquimetro-actions/types';
+} from '../actions/types';
 
 const INITIAL_STATE = {
     usuarioLogado: null,

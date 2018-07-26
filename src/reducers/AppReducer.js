@@ -1,6 +1,6 @@
 import { 
     ALTERA_TITULO,
-} from 'parquimetro-actions/types';
+} from '../actions/types';
 
 const INITIAL_STATE = {
     titulo: 'Pessoal',

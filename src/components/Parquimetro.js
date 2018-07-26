@@ -12,12 +12,12 @@ import BackgroundTimer from 'react-native-background-timer';
 import _ from 'lodash';
 import Color from 'color';
 import Moment, { duration } from 'moment';
-import { defaultStyles } from 'parquimetro-styles';
+import { defaultStyles } from '../styles';
 import ProgressCircle from 'react-native-progress-circle';
-import Cabecalho from 'parquimetro-components/Cabecalho';
+import Cabecalho from './Cabecalho';
 import { withNavigationFocus } from 'react-navigation';
 import { connect } from 'react-redux';
-import { alteraTitulo } from 'parquimetro-actions/AppActions';
+import { alteraTitulo } from '../actions/AppActions';
 
 
 class Parquimetro extends Component {

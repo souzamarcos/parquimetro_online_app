@@ -5,11 +5,11 @@ import {
   View,
   Image,
 } from 'react-native';
-import { defaultStyles } from 'parquimetro-styles';
-import cores from 'parquimetro-styles/cores';
-import MenuSuperior from 'parquimetro-components/MenuSuperior';
+import { defaultStyles } from '../styles';
+import cores from '../styles/cores';
+import MenuSuperior from './MenuSuperior';
 import { connect } from 'react-redux';
-import { alteraTitulo } from 'parquimetro-actions/AppActions';
+import { alteraTitulo } from '../actions/AppActions';
 
 class Cabecalho extends Component {
     
@@ -17,14 +17,23 @@ class Cabecalho extends Component {
         if(this.props.titulo){
             switch(this.props.titulo){
                 case 'Pessoal':
+                    return (
+                        <Image 
+                            style={styles.image}
+                            source={require('../imgs/icone_pessoal.png')} />
+                    );
                 case 'Veículo':
+                    return (
+                        <Image 
+                            style={styles.image}
+                            source={require('../imgs/icone_placa.png')} />
+                    );
                 case 'Cartão':
                     return (
                         <Image 
                             style={styles.image}
-                            source={require('parquimetro-imgs/icone.png')} />
+                            source={require('../imgs/icone_cartao.png')} />
                     );
-                    break;
                 default:
                     return (
                         <Text style={styles.title}>

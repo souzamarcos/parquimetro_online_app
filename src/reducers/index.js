@@ -1,10 +1,13 @@
 import { combineReducers } from 'redux';
-import AppReducer from 'parquimetro-reducers/AppReducer';
-import AutenticacaoReducer from 'parquimetro-reducers/AutenticacaoReducer';
-import CartoesReducer from 'parquimetro-reducers/CartoesReducer';
+import AppReducer from './AppReducer';
+import AutenticacaoReducer from './AutenticacaoReducer';
+import CartoesReducer from './CartoesReducer';
+import VeiculosReducer from './VeiculosReducer';
+
 
 export default combineReducers({
     AppReducer,
     AutenticacaoReducer,
-    CartoesReducer
+    CartoesReducer,
+    VeiculosReducer
 });

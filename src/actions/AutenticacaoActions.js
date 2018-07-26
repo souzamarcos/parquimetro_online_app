@@ -1,6 +1,5 @@
-import { AsyncStorage } from "react-native"
 import _ from 'lodash';
-import API  from 'parquimetro/Api';
+import API  from '../Api';
 import { 
     MODIFICA_EMAIL,
     MODIFICA_SENHA,
@@ -11,7 +10,7 @@ import {
     LOGIN_EM_ANDAMENTO ,
     CADASTRO_EM_ANDAMENTO
 } from './types';
-import NavigationService from 'parquimetro/NavigationService';
+import NavigationService from '../NavigationService';
 
 export const modificaEmail = (texto) => {
     return {
@@ -56,21 +55,24 @@ const cadastroUsuarioErro = (erro, dispatch) => {
 
 export const autenticarUsuario = ({ email, senha }) => {
 
-    return dispatch => {
+    return async dispatch => {
         dispatch({ type: LOGIN_EM_ANDAMENTO });
-        API.post('usuario/login', {
-            usuario: {
-                email,
-                password: senha
-            }
-        })
-            .then(retorno => {
-                if(_.isEmpty(retorno.data.usuario)){
-                    loginUsuarioErro(retorno.data.message, dispatch);
-                }else{
-                    loginUsuarioSucesso(retorno.data.usuario, dispatch)
+        try
+        {
+            const retorno = await API.post('usuario/login', {
+                usuario: {
+                    email,
+                    password: senha
                 }
             })
+
+            if(_.isEmpty(retorno.data.usuario)){
+                loginUsuarioErro(retorno.data.message, dispatch);
+            }else{
+                loginUsuarioSucesso(retorno.data.usuario, dispatch)
+            }
+        }
+        catch (erro){}
     }
 }
 

@@ -11,6 +11,11 @@ export const  LOGIN_USUARIO_ERRO = "login_usuario_erro";
 export const  LOGIN_EM_ANDAMENTO = "login_em_andamento";
 export const  CADASTRO_EM_ANDAMENTO = "cadastro_em_andamento";
 
+// cartao
+export const  CARREGAR_CARTAO_EM_ANDAMENTO = "carregar_cartao_em_andamento";
+export const  CARREGAR_CARTAO_SUCESSO = "carregar_cartao_sucesso";
+export const  CARREGAR_CARTAO_ERRO = "carregar_cartao_erro";
+
 // veiculo
 export const  CARREGAR_VEICULO_EM_ANDAMENTO = "carregar_veiculo_em_andamento";
 export const  CARREGAR_VEICULO_SUCESSO = "carregar_veiculo_sucesso";

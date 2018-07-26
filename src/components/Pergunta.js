@@ -5,7 +5,7 @@ import {
   View,
   TouchableHighlight,
 } from 'react-native';
-import cores from 'parquimetro-styles/cores';
+import cores from '../styles/cores';
 
 class Pergunta extends Component {
 

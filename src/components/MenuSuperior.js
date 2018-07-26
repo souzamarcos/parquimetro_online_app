@@ -1,14 +1,11 @@
 import React, { Component } from 'react';
 import {
   Text,
-  TextInput,
   TouchableHighlight,
   StyleSheet,
   View,
-  Keyboard,
-  KeyboardAvoidingView,
 } from 'react-native';
-import { defaultStyles } from 'parquimetro-styles';
+import { defaultStyles } from '../styles';
 
 export default class MenuSuperior extends Component {
 

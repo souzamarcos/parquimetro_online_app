@@ -1,130 +1,62 @@
 import React, { Component } from 'react';
+import _ from 'lodash';
 import { 
-    View, 
-    Text, 
+    ListView,
     StyleSheet,
-    TextInput,
     ScrollView,
 } from 'react-native';
-import { defaultStyles } from 'parquimetro-styles';
-import cores from 'parquimetro-styles/cores';
-import { withNavigationFocus } from 'react-navigation';
+import { defaultStyles } from '../styles';
 import { connect } from 'react-redux';
-import { alteraTitulo } from 'parquimetro-actions/AppActions';
+import { alteraTitulo } from '../actions/AppActions';
+import { carregarVeiculos } from '../actions/VeiculosActions';
+import Veiculo from './Veiculo';
 
 class PerfilVeiculo extends Component {
 
     constructor(props){
         super(props);
+    }
 
-        this.state = {
-            placa: '',
-            apelido: '',
-        };
+    componentDidMount(){
+        const { navigation } = this.props;
+        this.subscriptions = [ // evento para detectar se o component está focado para alterar o título 
+            navigation.addListener('didFocus', () =>{
+                this.props.alteraTitulo('Veículo');
+            }),
+        ];
     }
 
     componentWillMount(){
-        if(this.props.isFocused){
-            this.props.alteraTitulo('Veículo');
-        }
+        this.props.carregarVeiculos();
+        this.criaFonteDados([]);
     }
     
     componentWillReceiveProps(nextProps){
-        if(nextProps.isFocused){
-            this.props.alteraTitulo('Veículo');
-        }
+        this.criaFonteDados(nextProps.veiculos);
     }
-    
+
+    componentWillUnmount() {
+        // remove eventos
+        this.subscriptions.forEach(sub => sub.remove());
+    }
+
+    criaFonteDados(veiculos) {
+        const ds = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 });
+
+        this.dataSource = ds.cloneWithRows(veiculos);
+    }
+
+    renderRow(veiculo){
+        return <Veiculo veiculo={veiculo} />
+    }
 
     render() {
-        //achar um jeito melhor de fazer isso fora do render
-        
         return (
             <ScrollView  style={styles.tela}>
-                <View  style={styles.veiculo}>
-                    <View style={styles.veiculoCabecalho}>
-                        <View style={{ flex: 1}}>
-                            <Text style={styles.veiculoTextoNumero}>
-                                Veículo 1
-                            </Text>
-                        </View>
-                        <View style={{ flex: 1}}>
-                            <Text style={styles.veiculoTextoDeletar}>
-                                Deletar
-                            </Text>
-                        </View>
-                    </View>
-                    <TextInput
-                        placeholder="Apelido"
-                        style={styles.input}
-                        onChangeText={(apelido) => this.setState({apelido})}
-                        value={this.state.apelido}
-                        underlineColorAndroid={cores.cinza}
+                <ListView
+                    renderRow={this.renderRow}
+                    dataSource={this.dataSource}
                     />
-                    <TextInput
-                        placeholder="Placa"
-                        style={styles.input}
-                        onChangeText={(placa) => this.setState({placa})}
-                        value={this.state.placa}
-                        underlineColorAndroid={cores.cinza}
-                    />
-                </View>
-                <View  style={styles.veiculo}>
-                    <View style={styles.veiculoCabecalho}>
-                        <View style={{ flex: 1}}>
-                            <Text style={styles.veiculoTextoNumero}>
-                                Veículo 2
-                            </Text>
-                        </View>
-                        <View style={{ flex: 1}}>
-                            <Text style={styles.veiculoTextoDeletar}>
-                                Deletar
-                            </Text>
-                        </View>
-                    </View>
-                    <TextInput
-                        placeholder="Apelido"
-                        style={styles.input}
-                        onChangeText={(apelido) => this.setState({apelido})}
-                        value={this.state.apelido}
-                        underlineColorAndroid={cores.cinza}
-                    />
-                    <TextInput
-                        placeholder="Placa"
-                        style={styles.input}
-                        onChangeText={(placa) => this.setState({placa})}
-                        value={this.state.placa}
-                        underlineColorAndroid={cores.cinza}
-                    />
-                </View>
-                <View  style={styles.veiculo}>
-                    <View style={styles.veiculoCabecalho}>
-                        <View style={{ flex: 1}}>
-                            <Text style={styles.veiculoTextoNumero}>
-                                Veículo 3
-                            </Text>
-                        </View>
-                        <View style={{ flex: 1}}>
-                            <Text style={styles.veiculoTextoDeletar}>
-                                Deletar
-                            </Text>
-                        </View>
-                    </View>
-                    <TextInput
-                        placeholder="Apelido"
-                        style={styles.input}
-                        onChangeText={(apelido) => this.setState({apelido})}
-                        value={this.state.apelido}
-                        underlineColorAndroid={cores.cinza}
-                    />
-                    <TextInput
-                        placeholder="Placa"
-                        style={styles.input}
-                        onChangeText={(placa) => this.setState({placa})}
-                        value={this.state.placa}
-                        underlineColorAndroid={cores.cinza}
-                    />
-                </View>
             </ScrollView >
         );
     }
@@ -135,28 +67,18 @@ const styles = StyleSheet.create({
         ...defaultStyles.telaFull,
         ...defaultStyles.telaPaddingPequeno,
     },
-    input: {
-        ...defaultStyles.input,
-    },
-    veiculo: {
-        marginBottom: 20
-    },
-    veiculoCabecalho: {
-        flexDirection: 'row',
-        marginBottom: 10,
-        paddingHorizontal: 5
-    },
-    veiculoTextoNumero: {
-        fontWeight: 'bold',
-        fontSize: 18,
-        color: cores.azul
-    },
-    veiculoTextoDeletar: {
-        fontWeight: 'bold',
-        fontSize: 18,
-        color: cores.azul,
-        textAlign: 'right'
-    }
 });
 
-export default connect(null, {alteraTitulo})(withNavigationFocus(PerfilVeiculo));
+const mapStateToProps = state => {
+    const veiculos = _.map(state.VeiculosReducer.veiculos, (item, index) =>{
+        return {...item, index: index + 1};
+    });
+
+    return {
+        veiculos,
+        carregandoVeiculos: state.VeiculosReducer.carregandoVeiculos,
+        erro: state.VeiculosReducer.erro,
+    }
+};
+
+export default connect(mapStateToProps, { alteraTitulo, carregarVeiculos })(PerfilVeiculo);

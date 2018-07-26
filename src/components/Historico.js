@@ -5,13 +5,13 @@ import {
     ListView, 
     Picker
 } from 'react-native';
-import HistoricoItem from 'parquimetro-components/HistoricoItem';
-import { defaultStyles } from 'parquimetro-styles';
-import cores from 'parquimetro-styles/cores';
+import HistoricoItem from './HistoricoItem';
+import { defaultStyles } from '../styles';
+import cores from '../styles/cores';
 import { withNavigationFocus } from 'react-navigation';
 
 import { connect } from 'react-redux';
-import { alteraTitulo } from 'parquimetro-actions/AppActions';
+import { alteraTitulo } from '../actions/AppActions';
 
 class Historico extends Component {
 
