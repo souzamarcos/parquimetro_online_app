@@ -71,7 +71,7 @@ class Login extends Component {
                         </Text>
                     </TouchableHighlight>
                     <TouchableHighlight
-                        onPress={() => this.props.navigation.navigate('Perfil')}
+                        onPress={() => this.props.navigation.push('FormVeiculo')}
                         style={styles.botaoAzul}
                         underlayColor="rgba(0, 0, 0, 0.05)"
                     >

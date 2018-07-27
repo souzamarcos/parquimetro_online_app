@@ -1,5 +1,5 @@
 import React from 'react';
-import { createBottomTabNavigator, createStackNavigator, createMaterialTopTabNavigator } from 'react-navigation';
+import { createBottomTabNavigator, createStackNavigator, Header, createMaterialTopTabNavigator } from 'react-navigation';
 import _ from 'lodash';
 import cores from './styles/cores';
 
@@ -16,6 +16,7 @@ import PerfilVeiculo from './components/PerfilVeiculo';
 import PerfilCartao from './components/PerfilCartao';
 import Perguntas from './components/Perguntas';
 import Cabecalho from './components/Cabecalho';
+import FormVeiculo from './components/FormVeiculo';
   
 const Perfil = createMaterialTopTabNavigator(
     {
@@ -102,41 +103,47 @@ const Navigation = createStackNavigator({
     },
     TelaPrincipal: { 
         screen: TelaPrincipal,
+        navigationOptions: (props) => {
+            const { navigation } = props;
+    
+            let tabBarVisible = true;
+            let backgroundColor = '#fff';
+            let indexAtual = navigation.state.index;
+            let telaAtual = navigation.state.routeName;
+            let indexParquimetro = _.findIndex(navigation.state.routes, function(r) { return r.key == 'Parquimetro'; });
+            let indexPerguntas = _.findIndex(navigation.state.routes, function(r) { return r.key == 'Perguntas'; });
+            let indexHistorico = _.findIndex(navigation.state.routes, function(r) { return r.key == 'Historico'; });
+            
+            if (telaAtual == 'TelaPrincipal')
+            {
+                if(indexAtual == indexParquimetro) 
+                {
+                    tabBarVisible = false;
+                }
+                if(indexAtual == indexPerguntas
+                || indexAtual == indexHistorico)
+                {
+                    backgroundColor = '#e6ebee';
+                }
+            }
+            
+            return {
+                header: tabBarVisible? <Cabecalho backgroundColor={backgroundColor} />: null,
+            };
+        }
+    },
+    FormVeiculo: {
+        screen: FormVeiculo,
         navigationOptions: {
+            title: 'Veículo',
             swipeEnabled: false,
+            tabBarVisible: true,
         }
     },
 },{
     initialRouteName : 'Login',
-    navigationOptions: ({ navigation }) => {
-        let tabBarVisible = true;
-        let backgroundColor = '#fff';
-        let indexAtual = navigation.state.index;
-        let telaAtual = navigation.state.routeName;
-        let indexParquimetro = _.findIndex(navigation.state.routes, function(r) { return r.key == 'Parquimetro'; });
-        let indexPerguntas = _.findIndex(navigation.state.routes, function(r) { return r.key == 'Perguntas'; });
-        let indexHistorico = _.findIndex(navigation.state.routes, function(r) { return r.key == 'Historico'; });
+    navigationOptions: {
         
-        if (telaAtual == 'TelaPrincipal')
-        {
-            if(indexAtual == indexParquimetro) 
-            {
-                tabBarVisible = false;
-            }
-            if(indexAtual == indexPerguntas
-            || indexAtual == indexHistorico)
-            {
-                backgroundColor = '#e6ebee';
-            }
-        }
-        
-        return {
-            header: tabBarVisible? <Cabecalho backgroundColor={backgroundColor} />: null,
-            headerStyle: {
-                zIndex: 10,
-                overflow: 'visible'
-            }
-        };
     }
 });
 

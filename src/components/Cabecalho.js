@@ -19,19 +19,19 @@ class Cabecalho extends Component {
                 case 'Pessoal':
                     return (
                         <Image 
-                            style={styles.image}
+                            style={styles.imagem}
                             source={require('../imgs/icone_pessoal.png')} />
                     );
                 case 'Veículo':
                     return (
                         <Image 
-                            style={styles.image}
+                            style={styles.imagem}
                             source={require('../imgs/icone_placa.png')} />
                     );
                 case 'Cartão':
                     return (
                         <Image 
-                            style={styles.image}
+                            style={styles.imagem}
                             source={require('../imgs/icone_cartao.png')} />
                     );
                 default:
@@ -49,7 +49,7 @@ class Cabecalho extends Component {
 
         return (
             <View style={[styles.tela, {backgroundColor: this.props.backgroundColor}]}>
-                <View style={styles.headerLine}>
+                <View style={styles.imagemContainer}>
                     {this.renderTitulo()}
                 </View>
                 <View style={styles.topMenu}>
@@ -70,11 +70,11 @@ const styles = StyleSheet.create({
         ...defaultStyles.textTitle,
         color: cores.azul,
     },
-    image: {
+    imagem: {
         width: 100,
         height: 100,
     },
-    headerLine: {
+    imagemContainer: {
         paddingVertical: 25,
         justifyContent: 'center',
         alignItems: 'center',

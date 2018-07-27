@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import _ from 'lodash';
 import { 
+    View,
+    Text,
+    TouchableHighlight,
     ListView,
     StyleSheet,
     ScrollView,
@@ -57,6 +60,17 @@ class PerfilVeiculo extends Component {
                     renderRow={this.renderRow}
                     dataSource={this.dataSource}
                     />
+                <View style={styles.botoesContainer}>
+                    <TouchableHighlight
+                        onPress={() => this.props.navigation.navigate('FormVeiculo')}
+                        style={styles.botaoAzul}
+                        underlayColor="rgba(0, 0, 0, 0.05)"
+                    >
+                        <Text style={styles.botaoAzulText}>
+                            Adicionar
+                        </Text>
+                    </TouchableHighlight>
+                </View>
             </ScrollView >
         );
     }
@@ -66,6 +80,17 @@ const styles = StyleSheet.create({
     tela: {
         ...defaultStyles.telaFull,
         ...defaultStyles.telaPaddingPequeno,
+    },
+    botoesContainer: {
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    botaoAzul: {
+        ...defaultStyles.botaoAzul,
+        marginBottom: 25,
+    },
+    botaoAzulText: {
+        ...defaultStyles.botaoAzulText,
     },
 });
 

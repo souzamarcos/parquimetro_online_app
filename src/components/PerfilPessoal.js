@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
 import { 
     View, 
+    Text,
     StyleSheet,
     TextInput,
     ScrollView,
+    TouchableHighlight,
 } from 'react-native';
 import { defaultStyles } from '../styles';
 import cores from '../styles/cores';
@@ -71,6 +73,17 @@ class PerfilPessoal extends Component {
                         underlineColorAndroid={cores.cinza}
                     />
                 </View>
+                <View style={styles.botoesContainer}>
+                    <TouchableHighlight
+                        onPress={() => false}
+                        style={styles.botaoVerde}
+                        underlayColor="rgba(0, 0, 0, 0.05)"
+                    >
+                        <Text style={styles.botaoVerdeText}>
+                            Salvar
+                        </Text>
+                    </TouchableHighlight>
+                </View>
             </ScrollView >
         );
     }
@@ -83,6 +96,17 @@ const styles = StyleSheet.create({
     },
     input: {
         ...defaultStyles.input,
+    },
+    botoesContainer: {
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    botaoVerde: {
+        ...defaultStyles.botaoVerde,
+        marginVertical: 25,
+    },
+    botaoVerdeText: {
+        ...defaultStyles.botaoVerdeText,
     },
 });
 
