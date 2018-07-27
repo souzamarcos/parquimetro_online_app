@@ -55,11 +55,13 @@ class PerfilVeiculo extends Component {
 
     render() {
         return (
-            <ScrollView  style={styles.tela}>
-                <ListView
-                    renderRow={this.renderRow}
-                    dataSource={this.dataSource}
-                    />
+            <View style={styles.tela}>
+                <ScrollView  style={{flexGrow: 1}}>
+                    <ListView
+                        renderRow={this.renderRow}
+                        dataSource={this.dataSource}
+                        />
+                </ScrollView >
                 <View style={styles.botoesContainer}>
                     <TouchableHighlight
                         onPress={() => this.props.navigation.navigate('FormVeiculo')}
@@ -71,7 +73,7 @@ class PerfilVeiculo extends Component {
                         </Text>
                     </TouchableHighlight>
                 </View>
-            </ScrollView >
+            </View>
         );
     }
   }
@@ -87,7 +89,7 @@ const styles = StyleSheet.create({
     },
     botaoAzul: {
         ...defaultStyles.botaoAzul,
-        marginBottom: 25,
+        marginTop: 15,
     },
     botaoAzulText: {
         ...defaultStyles.botaoAzulText,

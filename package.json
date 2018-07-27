@@ -20,7 +20,7 @@
     "react-native-modal-dropdown": "0.6.2",
     "react-native-progress-circle": "^2.0.0",
     "react-native-scrollable-tab-view": "0.8.0",
-    "react-navigation": "2.5.5",
+    "react-navigation": "^2.9.3",
     "react-redux": "5.0.7",
     "redux": "4.0.0",
     "redux-thunk": "2.3.0"

@@ -1,6 +1,6 @@
 const cores = {
 
-    azul: '#3075e5',
+    azul: '#4888ef',
 
     cinza: '#bcbcbc',
     verde: '#12cc67',

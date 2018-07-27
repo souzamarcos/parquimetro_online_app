@@ -18,7 +18,7 @@ Api.interceptors.response.use((response) => {
     if (error.response.status === 401) {
         console.log('Não autorizado. Deslogando...');
         NavigationService.navigate('Login');
-    }else {
+    }else if (error.response.status !== 400){
         Alert.alert(
             'Aviso',
             'Um problema no servidor ocorreu, tente novamente.',
