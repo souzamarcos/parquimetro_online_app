@@ -11,14 +11,14 @@ import { renderErro } from '../utils/Erro';
 import { defaultStyles } from '../styles';
 import cores from '../styles/cores';
 import { connect } from 'react-redux';
-import { adicionarVeiculo, modificaId, modificaPlaca, modificaApelido } from '../actions/FormVeiculoActions';
+import { adicionarCartao, modificaId, modificaNumero, modificaBandeira, modificaValidade } from '../actions/FormCartaoActions';
 
-class FormVeiculo  extends Component {
+class FormCartao  extends Component {
 
-    _salvarVeiculo(){
-        const {id, placa, apelido} = this.props;
+    _salvarCartao(){
+        const {id, numero, bandeira, validade} = this.props;
 
-        this.props.adicionarVeiculo(id, placa, apelido);
+        this.props.adicionarCartao(id, numero, bandeira, validade);
     }
 
     render(){
@@ -27,31 +27,38 @@ class FormVeiculo  extends Component {
                 <View style={styles.imagemContainer}>
                     <Image 
                         style={styles.imagem}
-                        source={require('../imgs/icone_placa.png')} 
+                        source={require('../imgs/icone_cartao.png')} 
                     />
                 </View>
                 <View style={styles.formContainer}>
                     <TextInput
-                        placeholder="Placa"
+                        placeholder="Número"
                         style={styles.input}
-                        onChangeText={ (placa)=> this.props.modificaPlaca(placa) }
-                        value={this.props.placa}
+                        onChangeText={ (numero)=> this.props.modificaNumero(numero) }
+                        value={this.props.numero}
                         underlineColorAndroid={cores.cinza}
                     />
-                    { renderErro(this.props.erro, 'placa')}
-                    
+                    { renderErro(this.props.erro, 'numero_cartao')}
                     <TextInput
                         placeholder="Apelido"
                         style={styles.input}
-                        onChangeText={ (apelido)=> this.props.modificaApelido(apelido) }
-                        value={this.props.apelido}
+                        onChangeText={ (bandeira)=> this.props.modificaBandeira(bandeira) }
+                        value={this.props.bandeira}
                         underlineColorAndroid={cores.cinza}
                     />
-                    { renderErro(this.props.erro, 'descricao')}
+                    { renderErro(this.props.erro, 'bandeira')}
+                    <TextInput
+                        placeholder="Validade"
+                        style={styles.input}
+                        onChangeText={ (validade)=> this.props.modificaValidade(validade) }
+                        value={this.props.validade}
+                        underlineColorAndroid={cores.cinza}
+                    />
+                    { renderErro(this.props.erro, 'validade')}
                 </View>
                 <View style={styles.botoesContainer}>
                     <TouchableHighlight
-                        onPress={() => this._salvarVeiculo() }
+                        onPress={() => this._salvarCartao() }
                         style={styles.botaoVerde}
                         underlayColor="rgba(0, 0, 0, 0.05)"
                     >
@@ -97,12 +104,13 @@ const styles = StyleSheet.create({
 
 const mapStateToProps = state => {
     return {
-        id: state.FormVeiculoReducer.id,
-        placa: state.FormVeiculoReducer.placa,
-        apelido: state.FormVeiculoReducer.apelido,
-        salvandoVeiculo: state.FormVeiculoReducer.salvandoVeiculo,
-        erro: state.FormVeiculoReducer.erro,
+        id: state.FormCartaoReducer.id,
+        numero: state.FormCartaoReducer.numero,
+        bandeira: state.FormCartaoReducer.bandeira,
+        validade: state.FormCartaoReducer.validade,
+        salvandoCartao: state.FormCartaoReducer.salvandoCartao,
+        erro: state.FormCartaoReducer.erro,
     }
 };
 
-export default connect(mapStateToProps, { adicionarVeiculo, modificaId, modificaPlaca, modificaApelido })(FormVeiculo);
+export default connect(mapStateToProps, { adicionarCartao, modificaId, modificaNumero, modificaBandeira, modificaValidade  })(FormCartao);

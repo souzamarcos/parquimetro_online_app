@@ -28,3 +28,12 @@ export const  MODIFICA_VEICULO_APELIDO = "modifica_veiculo_apelido";
 export const  SALVAR_VEICULO_EM_ANDAMENTO = "salvar_veiculo_em_andamento";
 export const  SALVAR_VEICULO_SUCESSO = "salvar_veiculo_sucesso";
 export const  SALVAR_VEICULO_ERRO = "salvar_veiculo_erro";
+
+// formCartao
+export const  MODIFICA_CARTAO_ID = "modifica_veiculo_id";
+export const  MODIFICA_CARTAO_NUMERO = "modifica_veiculo_numero";
+export const  MODIFICA_CARTAO_BANDEIRA = "modifica_veiculo_bandeira";
+export const  MODIFICA_CARTAO_VALIDADE = "modifica_veiculo_validade";
+export const  SALVAR_CARTAO_EM_ANDAMENTO = "salvar_veiculo_em_andamento";
+export const  SALVAR_CARTAO_SUCESSO = "salvar_veiculo_sucesso";
+export const  SALVAR_CARTAO_ERRO = "salvar_veiculo_erro";

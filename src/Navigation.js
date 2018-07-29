@@ -17,6 +17,7 @@ import PerfilCartao from './components/PerfilCartao';
 import Perguntas from './components/Perguntas';
 import Cabecalho from './components/Cabecalho';
 import FormVeiculo from './components/FormVeiculo';
+import FormCartao from './components/FormCartao';
   
 const Perfil = createMaterialTopTabNavigator(
     {
@@ -136,6 +137,14 @@ const Navigation = createStackNavigator({
         screen: FormVeiculo,
         navigationOptions: {
             title: 'Veículo',
+            swipeEnabled: false,
+            tabBarVisible: true,
+        }
+    },
+    FormCartao: {
+        screen: FormCartao,
+        navigationOptions: {
+            title: 'Cartão',
             swipeEnabled: false,
             tabBarVisible: true,
         }

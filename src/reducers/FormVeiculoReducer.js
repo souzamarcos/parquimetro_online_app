@@ -28,7 +28,7 @@ export default (state = INITIAL_STATE, action) => {
         case SALVAR_VEICULO_SUCESSO:
             return { ...state, ...INITIAL_STATE }
         case SALVAR_VEICULO_ERRO:
-            return { ...state, erro: action.payload , arregandoVeiculos: false }
+            return { ...state, erro: action.payload , salvandoVeiculo: false }
         
         default:
             return state;

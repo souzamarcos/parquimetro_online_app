@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import _ from 'lodash';
 import { 
+    View,
+    Text,
+    TouchableHighlight,
     ListView,
     StyleSheet,
     ScrollView,
@@ -54,12 +57,25 @@ class PerfilCartao extends Component {
 
     render() {
         return (
-            <ScrollView style={styles.tela}>
-                <ListView
-                    renderRow={this.renderRow}
-                    dataSource={this.dataSource}
-                    />
-            </ScrollView>
+            <View style={styles.tela}>
+                <ScrollView  style={{flexGrow: 1}}>
+                    <ListView
+                        renderRow={this.renderRow}
+                        dataSource={this.dataSource}
+                        />
+                </ScrollView>
+                <View style={styles.botoesContainer}>
+                    <TouchableHighlight
+                        onPress={() => this.props.navigation.navigate('FormCartao')}
+                        style={styles.botaoAzul}
+                        underlayColor="rgba(0, 0, 0, 0.05)"
+                    >
+                        <Text style={styles.botaoAzulText}>
+                            Adicionar
+                        </Text>
+                    </TouchableHighlight>
+                </View>
+            </View>
         );
     }
   }
@@ -68,7 +84,18 @@ const styles = StyleSheet.create({
     tela: {
         ...defaultStyles.telaFull,
         ...defaultStyles.telaPaddingPequeno,
-    }
+    },
+    botoesContainer: {
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    botaoAzul: {
+        ...defaultStyles.botaoAzul,
+        marginTop: 15,
+    },
+    botaoAzulText: {
+        ...defaultStyles.botaoAzulText,
+    },
 });
 
 

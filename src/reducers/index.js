@@ -4,6 +4,7 @@ import AutenticacaoReducer from './AutenticacaoReducer';
 import CartoesReducer from './CartoesReducer';
 import VeiculosReducer from './VeiculosReducer';
 import FormVeiculoReducer from './FormVeiculoReducer';
+import FormCartaoReducer from './FormCartaoReducer';
 
 
 export default combineReducers({
@@ -11,5 +12,6 @@ export default combineReducers({
     AutenticacaoReducer,
     CartoesReducer,
     VeiculosReducer,
-    FormVeiculoReducer
+    FormVeiculoReducer,
+    FormCartaoReducer
 });
