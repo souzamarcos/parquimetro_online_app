@@ -1,15 +1,17 @@
 import React, { Component } from 'react';
 import { 
     View, 
+    ScrollView,
     StyleSheet, 
     ListView, 
-    Picker
+    Picker,
+    ActivityIndicator,
 } from 'react-native';
 import HistoricoItem from './HistoricoItem';
 import { defaultStyles } from '../styles';
 import cores from '../styles/cores';
 import { withNavigationFocus } from 'react-navigation';
-
+import Cabecalho from './Cabecalho';
 import { connect } from 'react-redux';
 import { alteraTitulo } from '../actions/AppActions';
 
@@ -63,7 +65,8 @@ class Historico extends Component {
 
     render(){
         return (
-            <View style={styles.tela}>
+            <ScrollView style={styles.tela} contentContainerStyle={{flex:1}}>
+                <Cabecalho titulo="Histórico" />
                 <View>
                     <Picker  style={{alignSelf: 'flex-end', width: 130, color: cores.azul}}
                         selectedValue={this.state.ordem}
@@ -74,14 +77,22 @@ class Historico extends Component {
                         <Picker.Item label="Caros" value="4" />
                     </Picker>
                 </View>
-                <View style={{ flex: 1}}>
-                    <ListView
-                        enableEmptySections
-                        dataSource={this.state.dataSource}
-                        renderRow={this.renderRow}
-                    />
-                </View>
-            </View>
+                <ScrollView style={{ flex: 1}} contentContainerStyle={styles.listaContainer}>
+                    {
+                        /*this.props.carregandoCartoes*/ false ? 
+                        (
+                            <ActivityIndicator size="large" color={cores.azul} />
+                        ) :
+                        (
+                            <ListView
+                                enableEmptySections
+                                dataSource={this.state.dataSource}
+                                renderRow={this.renderRow}
+                            />
+                        )
+                    }
+                </ScrollView>
+            </ScrollView>
         );
     }
 }
@@ -89,8 +100,12 @@ class Historico extends Component {
 const styles = StyleSheet.create({
     tela: {
         ...defaultStyles.telaFull,
-        ...defaultStyles.telaPaddingHorizontalPequeno,
         backgroundColor: '#e6ebee'
+    },
+    listaContainer: {
+        flex: 1,
+        ...defaultStyles.telaPaddingPequeno,
+        justifyContent: 'center',
     },
 });
 

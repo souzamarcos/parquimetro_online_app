@@ -14,7 +14,6 @@ import Color from 'color';
 import Moment, { duration } from 'moment';
 import { defaultStyles } from '../styles';
 import ProgressCircle from 'react-native-progress-circle';
-import Cabecalho from './Cabecalho';
 import { withNavigationFocus } from 'react-navigation';
 import { connect } from 'react-redux';
 import { alteraTitulo } from '../actions/AppActions';
@@ -189,7 +188,6 @@ class Parquimetro extends Component {
                 //tela resumo
                 return (
                     <View style={[styles.telaResumo, { backgroundColor: this.state.telaContagemCor}]}>
-                        <Cabecalho style={styles.cabecalho}/>
                         <View style={styles.telaResumoConteudo}>
                             <Text style={{ textAlign: 'center', fontWeight: 'bold', fontSize: 16, color: '#fff', paddingVertical: 20,}}>
                                 valor total
@@ -255,7 +253,6 @@ class Parquimetro extends Component {
             //tela Contagem
             return (
                 <View style={[styles.telaContagem, { backgroundColor: this.state.telaContagemCor}]}>
-                    <Cabecalho style={styles.cabecalho}/>
                     <View style={styles.telaContagemInformacao}>
                         <View style={styles.circuloProgresso}>
                             <ProgressCircle
@@ -296,7 +293,6 @@ class Parquimetro extends Component {
         return (
             <View style={styles.tela}>
                 <View style={styles.parteSuperior}>
-                    <Cabecalho style={styles.cabecalho}/>
                     <View style={styles.circuloProgresso}>
                         <ProgressCircle
                             percent={0}
@@ -411,9 +407,6 @@ const styles = StyleSheet.create({
     telaResumoBotoes: {
         paddingVertical: 20,
     },
-    cabecalho: {
-        backgroundColor: 'transparent'
-    },
     parteSuperior: {
         backgroundColor: '#4988ef',
         paddingBottom: 100
@@ -426,6 +419,7 @@ const styles = StyleSheet.create({
     },
     circuloProgresso: {
         alignItems: 'center',
+        marginTop: 30,
         marginBottom: 20,
     },
     circuloProgressoTexto: {

@@ -5,6 +5,7 @@ import {
   ScrollView,
 } from 'react-native';
 import Pergunta from './Pergunta';
+import Cabecalho from './Cabecalho';
 
 import { defaultStyles } from '../styles';
 
@@ -72,6 +73,7 @@ class Perguntas extends Component {
     render() {
         return (
             <ScrollView style={styles.tela}>
+                <Cabecalho titulo="Perguntas Frequentes" />
                 <ListView
 
                     renderRow={this.renderRow}

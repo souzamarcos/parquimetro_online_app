@@ -9,6 +9,7 @@ import {
 } from 'react-native';
 import { defaultStyles } from '../styles';
 import cores from '../styles/cores';
+import Cabecalho from './Cabecalho';
 import { withNavigationFocus } from 'react-navigation';
 
 import { connect } from 'react-redux';
@@ -42,6 +43,7 @@ class PerfilPessoal extends Component {
     render() {
         return (
             <ScrollView  style={styles.tela}>
+                <Cabecalho titulo="Pessoal" />
                 <View>
                     <TextInput
                         placeholder="Nome"

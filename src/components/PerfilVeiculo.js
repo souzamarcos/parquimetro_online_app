@@ -7,12 +7,15 @@ import {
     ListView,
     StyleSheet,
     ScrollView,
+    ActivityIndicator
 } from 'react-native';
 import { defaultStyles } from '../styles';
+import cores from '../styles/cores';
 import { connect } from 'react-redux';
 import { alteraTitulo } from '../actions/AppActions';
 import { carregarVeiculos } from '../actions/VeiculosActions';
 import Veiculo from './Veiculo';
+import Cabecalho from './Cabecalho';
 
 class PerfilVeiculo extends Component {
 
@@ -50,17 +53,27 @@ class PerfilVeiculo extends Component {
     }
 
     renderRow(veiculo){
-        return <Veiculo veiculo={veiculo} />
+        return <Veiculo veiculo={veiculo} styles={styles.veiculo} />
     }
 
     render() {
         return (
-            <View style={styles.tela}>
-                <ScrollView  style={{flexGrow: 1}}>
-                    <ListView
-                        renderRow={this.renderRow}
-                        dataSource={this.dataSource}
-                        />
+            <ScrollView style={styles.tela} contentContainerStyle={{flex:1}}>
+                <Cabecalho titulo="Veículo" />
+                <ScrollView style={{flexGrow: 1}} contentContainerStyle={styles.listaContainer}>
+                    {
+                        this.props.carregandoVeiculos ? 
+                        (
+                            <ActivityIndicator size="large" color={cores.azul} />
+                        ) :
+                        (
+                            <ListView
+                                enableEmptySections
+                                renderRow={this.renderRow}
+                                dataSource={this.dataSource}
+                            />
+                        )
+                    }
                 </ScrollView >
                 <View style={styles.botoesContainer}>
                     <TouchableHighlight
@@ -73,7 +86,7 @@ class PerfilVeiculo extends Component {
                         </Text>
                     </TouchableHighlight>
                 </View>
-            </View>
+            </ScrollView>
         );
     }
   }
@@ -81,15 +94,20 @@ class PerfilVeiculo extends Component {
 const styles = StyleSheet.create({
     tela: {
         ...defaultStyles.telaFull,
+    },
+    listaContainer: {
+        flex: 1,
         ...defaultStyles.telaPaddingPequeno,
+        justifyContent: 'center',
     },
     botoesContainer: {
+        ...defaultStyles.telaPaddingHorizontalPequeno,
         justifyContent: 'center',
         alignItems: 'center',
     },
     botaoAzul: {
         ...defaultStyles.botaoAzul,
-        marginTop: 15,
+        marginVertical: 5,
     },
     botaoAzulText: {
         ...defaultStyles.botaoAzulText,

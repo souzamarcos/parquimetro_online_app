@@ -1,5 +1,5 @@
 import React from 'react';
-import { createBottomTabNavigator, createStackNavigator, Header, createMaterialTopTabNavigator } from 'react-navigation';
+import { createBottomTabNavigator, createStackNavigator, createMaterialTopTabNavigator } from 'react-navigation';
 import _ from 'lodash';
 import cores from './styles/cores';
 
@@ -14,10 +14,12 @@ import Parquimetro from './components/Parquimetro';
 import PerfilPessoal from './components/PerfilPessoal';
 import PerfilVeiculo from './components/PerfilVeiculo';
 import PerfilCartao from './components/PerfilCartao';
-import Perguntas from './components/Perguntas';
+import Configuracao from './components/Configuracao';
 import Cabecalho from './components/Cabecalho';
 import FormVeiculo from './components/FormVeiculo';
 import FormCartao from './components/FormCartao';
+
+import Ionicons from 'react-native-vector-icons/Ionicons';
   
 const Perfil = createMaterialTopTabNavigator(
     {
@@ -60,12 +62,46 @@ const Perfil = createMaterialTopTabNavigator(
 const TelaPrincipal = createBottomTabNavigator(
     {
         Parquimetro: Parquimetro,
-        Perfil: Perfil,
         Historico: Historico,
-        Perguntas: Perguntas,
+        PerfilCartao: PerfilCartao,
+        PerfilVeiculo: PerfilVeiculo,
+        Configuracao: Configuracao,
     },
     {
         initialRouteName : 'Parquimetro',
+        tabBarOptions: {
+            showLabel: false
+        },
+        navigationOptions: ({ navigation }) => ({
+            tabBarIcon: ({ focused, tintColor }) => {
+                const { routeName } = navigation.state;
+                let iconName;
+                switch(routeName){
+                    case 'Parquimetro':
+                        iconName = `md-time`;
+                        break;
+                    case 'Historico':
+                        iconName = `md-list`;
+                        break;
+                    case 'PerfilCartao':
+                        iconName = `md-card`;
+                        break;
+                    case 'PerfilVeiculo':
+                        iconName = `md-car`;
+                        break;
+                    case 'Configuracao':
+                        iconName = `md-settings`;
+                        break;
+                    default:
+                        iconName = `md-settings`;
+                        break;
+                }
+        
+                // You can return any component that you like here! We usually use an
+                // icon component from react-native-vector-icons
+                return <Ionicons name={iconName} size={25} color={tintColor} />;
+              },
+        })
     }
 );
   
@@ -104,34 +140,38 @@ const Navigation = createStackNavigator({
     },
     TelaPrincipal: { 
         screen: TelaPrincipal,
-        navigationOptions: (props) => {
-            const { navigation } = props;
-    
-            let tabBarVisible = true;
-            let backgroundColor = '#fff';
-            let indexAtual = navigation.state.index;
-            let telaAtual = navigation.state.routeName;
-            let indexParquimetro = _.findIndex(navigation.state.routes, function(r) { return r.key == 'Parquimetro'; });
-            let indexPerguntas = _.findIndex(navigation.state.routes, function(r) { return r.key == 'Perguntas'; });
-            let indexHistorico = _.findIndex(navigation.state.routes, function(r) { return r.key == 'Historico'; });
-            
-            if (telaAtual == 'TelaPrincipal')
-            {
-                if(indexAtual == indexParquimetro) 
-                {
-                    tabBarVisible = false;
-                }
-                if(indexAtual == indexPerguntas
-                || indexAtual == indexHistorico)
-                {
-                    backgroundColor = '#e6ebee';
-                }
-            }
-            
-            return {
-                header: tabBarVisible? <Cabecalho backgroundColor={backgroundColor} />: null,
-            };
+        navigationOptions: {
+            swipeEnabled: false,
+            header: null
         }
+        // navigationOptions: (props) => {
+        //     const { navigation } = props;
+    
+        //     let tabBarVisible = true;
+        //     let backgroundColor = '#fff';
+        //     let indexAtual = navigation.state.index;
+        //     let telaAtual = navigation.state.routeName;
+        //     let indexParquimetro = _.findIndex(navigation.state.routes, function(r) { return r.key == 'Parquimetro'; });
+        //     let indexPerguntas = _.findIndex(navigation.state.routes, function(r) { return r.key == 'Perguntas'; });
+        //     let indexHistorico = _.findIndex(navigation.state.routes, function(r) { return r.key == 'Historico'; });
+            
+        //     if (telaAtual == 'TelaPrincipal')
+        //     {
+        //         if(indexAtual == indexParquimetro) 
+        //         {
+        //             tabBarVisible = false;
+        //         }
+        //         if(indexAtual == indexPerguntas
+        //         || indexAtual == indexHistorico)
+        //         {
+        //             backgroundColor = '#e6ebee';
+        //         }
+        //     }
+            
+        //     return {
+        //         header: tabBarVisible? <Cabecalho backgroundColor={backgroundColor} />: null,
+        //     };
+        // }
     },
     FormVeiculo: {
         screen: FormVeiculo,

@@ -27,6 +27,7 @@ export default class TelaInicial extends Component {
                     <Text style={styles.botaoVerdeText}>
                         Login
                     </Text>
+                    
                 </TouchableHighlight>
                 <TouchableHighlight
                     onPress={() => this.props.navigation.navigate('Cadastro')}

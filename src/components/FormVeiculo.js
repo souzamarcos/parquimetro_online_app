@@ -68,7 +68,7 @@ class FormVeiculo  extends Component {
 const styles = StyleSheet.create({
     tela: {
         ...defaultStyles.telaFull,
-        ...defaultStyles.telaPaddingHorizontalGrande,
+        ...defaultStyles.telaPaddingHorizontalPequeno,
     },
     imagem: {
         width: 100,

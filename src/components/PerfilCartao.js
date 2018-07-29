@@ -7,13 +7,15 @@ import {
     ListView,
     StyleSheet,
     ScrollView,
+    ActivityIndicator,
 } from 'react-native';
 import { defaultStyles } from '../styles';
+import cores from '../styles/cores';
 import { connect } from 'react-redux';
 import { alteraTitulo } from '../actions/AppActions';
 import { carregarCartoes } from '../actions/CartoesActions';
 import Cartao from './Cartao';
-
+import Cabecalho from './Cabecalho';
 
 
 class PerfilCartao extends Component {
@@ -57,12 +59,22 @@ class PerfilCartao extends Component {
 
     render() {
         return (
-            <View style={styles.tela}>
-                <ScrollView  style={{flexGrow: 1}}>
-                    <ListView
-                        renderRow={this.renderRow}
-                        dataSource={this.dataSource}
+            <ScrollView style={styles.tela} contentContainerStyle={{flex:1}}>
+                <Cabecalho titulo="Cartão" />
+                <ScrollView  style={{flexGrow: 1}}  contentContainerStyle={styles.listaContainer}>
+                {
+                    this.props.carregandoCartoes ? 
+                    (
+                        <ActivityIndicator size="large" color={cores.azul} />
+                    ) :
+                    (
+                        <ListView
+                            enableEmptySections
+                            renderRow={this.renderRow}
+                            dataSource={this.dataSource}
                         />
+                    )
+                }
                 </ScrollView>
                 <View style={styles.botoesContainer}>
                     <TouchableHighlight
@@ -75,7 +87,7 @@ class PerfilCartao extends Component {
                         </Text>
                     </TouchableHighlight>
                 </View>
-            </View>
+            </ScrollView>
         );
     }
   }
@@ -83,15 +95,20 @@ class PerfilCartao extends Component {
 const styles = StyleSheet.create({
     tela: {
         ...defaultStyles.telaFull,
+    },
+    listaContainer: {
+        flex: 1,
         ...defaultStyles.telaPaddingPequeno,
+        justifyContent: 'center',
     },
     botoesContainer: {
+        ...defaultStyles.telaPaddingHorizontalPequeno,
         justifyContent: 'center',
         alignItems: 'center',
     },
     botaoAzul: {
         ...defaultStyles.botaoAzul,
-        marginTop: 15,
+        marginVertical: 5,
     },
     botaoAzulText: {
         ...defaultStyles.botaoAzulText,

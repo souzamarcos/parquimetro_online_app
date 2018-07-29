@@ -8,10 +8,8 @@ import {
 import { defaultStyles } from '../styles';
 import cores from '../styles/cores';
 import MenuSuperior from './MenuSuperior';
-import { connect } from 'react-redux';
-import { alteraTitulo } from '../actions/AppActions';
 
-class Cabecalho extends Component {
+export default class Cabecalho extends Component {
     
     renderTitulo(){
         if(this.props.titulo){
@@ -52,9 +50,9 @@ class Cabecalho extends Component {
                 <View style={styles.imagemContainer}>
                     {this.renderTitulo()}
                 </View>
-                <View style={styles.topMenu}>
+                {/* <View style={styles.topMenu}>
                     <MenuSuperior texto="..."/>
-                </View>
+                </View> */}
             </View>
         );
     }
@@ -63,7 +61,6 @@ class Cabecalho extends Component {
 const styles = StyleSheet.create({
     tela: {
         width: '100%',
-        zIndex: 10,
         overflow: 'visible'
     },
     title: {
@@ -75,7 +72,7 @@ const styles = StyleSheet.create({
         height: 100,
     },
     imagemContainer: {
-        paddingVertical: 25,
+        paddingVertical: 15,
         justifyContent: 'center',
         alignItems: 'center',
     },
@@ -85,16 +82,3 @@ const styles = StyleSheet.create({
         top: 0,
     }
 });
-
-const mapStateToProps = state => (
-    {
-        titulo: state.AppReducer.titulo,
-    }
-);
-
-export default connect(
-    mapStateToProps, 
-    { 
-        alteraTitulo,
-    })
-(Cabecalho)
