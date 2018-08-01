@@ -17,7 +17,7 @@ export const carregarVeiculos = () => {
         }
         catch(erro)
         {
-            carregarVeiculosErro(erro.message, dispatch);
+            carregarVeiculosErro(erro.response.message, dispatch);
         }
     }
 }

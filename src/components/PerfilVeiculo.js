@@ -101,7 +101,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
     },
     botoesContainer: {
-        ...defaultStyles.telaPaddingHorizontalPequeno,
+        ...defaultStyles.telaPaddingPequeno,
         justifyContent: 'center',
         alignItems: 'center',
     },

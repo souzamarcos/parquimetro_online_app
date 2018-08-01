@@ -61,7 +61,6 @@ export default class Cabecalho extends Component {
 const styles = StyleSheet.create({
     tela: {
         width: '100%',
-        overflow: 'visible'
     },
     title: {
         ...defaultStyles.textTitle,

@@ -16,7 +16,7 @@ export const carregarCartoes = () => {
         }
         catch(erro)
         {
-            carregarCartoesErro(erro.message, dispatch);
+            carregarCartoesErro(erro.response.message, dispatch);
         }
     }
 }
@@ -28,7 +28,7 @@ export const carregarCartoesSucesso = (cartoes, dispatch) => {
     });
 }
 
-export const carregarCartoesErro = (erro) => {
+export const carregarCartoesErro = (erro, dispatch) => {
     dispatch({
         type: CARREGAR_CARTAO_ERRO,
         payload: erro

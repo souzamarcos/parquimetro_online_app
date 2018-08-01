@@ -8,7 +8,8 @@ import {
     LOGIN_USUARIO_SUCESSO,
     LOGIN_USUARIO_ERRO,
     LOGIN_EM_ANDAMENTO ,
-    CADASTRO_EM_ANDAMENTO
+    CADASTRO_EM_ANDAMENTO,
+    DESLOGAR_USUARIO
 } from './types';
 import NavigationService from '../NavigationService';
 
@@ -45,7 +46,6 @@ export const cadastraUsuario = ({ email, senha }) => {
 
 const cadastroUsuarioSucesso = (usuario, dispatch) => {
     dispatch ({ type: CADASTRO_USUARIO_SUCESSO, payload: usuario });
-
     //Actions.boasVindas(); mudar para NavigationActions
 }
 
@@ -91,4 +91,11 @@ const loginUsuarioErro = (mensagem, dispatch) => {
         type: LOGIN_USUARIO_ERRO,
         payload: mensagem
     });
+}
+
+export const deslogarUsuario = () => {
+    NavigationService.navigate('Login');
+    return {
+        type: DESLOGAR_USUARIO,
+    }
 }

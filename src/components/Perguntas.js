@@ -73,12 +73,10 @@ class Perguntas extends Component {
     render() {
         return (
             <ScrollView style={styles.tela}>
-                <Cabecalho titulo="Perguntas Frequentes" />
                 <ListView
 
                     renderRow={this.renderRow}
                     dataSource={this.dataSource}
-                    //style={styles.list}
                     />
             </ScrollView>
         );
@@ -88,7 +86,7 @@ class Perguntas extends Component {
 const styles = StyleSheet.create({
     tela: {
         ...defaultStyles.telaFull,
-        ...defaultStyles.telaPaddingHorizontalPequeno,
+        ...defaultStyles.telaPaddingPequeno,
         backgroundColor: '#e6ebee'
     }
 });

@@ -15,9 +15,10 @@ import PerfilPessoal from './components/PerfilPessoal';
 import PerfilVeiculo from './components/PerfilVeiculo';
 import PerfilCartao from './components/PerfilCartao';
 import Configuracao from './components/Configuracao';
-import Cabecalho from './components/Cabecalho';
+import Perguntas from './components/Perguntas';
 import FormVeiculo from './components/FormVeiculo';
 import FormCartao from './components/FormCartao';
+import TelaSobre from './components/TelaSobre';
 
 import Ionicons from 'react-native-vector-icons/Ionicons';
   
@@ -70,7 +71,10 @@ const TelaPrincipal = createBottomTabNavigator(
     {
         initialRouteName : 'Parquimetro',
         tabBarOptions: {
-            showLabel: false
+            showLabel: false,
+            style: {
+                backgroundColor: '#fff',
+            },
         },
         navigationOptions: ({ navigation }) => ({
             tabBarIcon: ({ focused, tintColor }) => {
@@ -144,34 +148,6 @@ const Navigation = createStackNavigator({
             swipeEnabled: false,
             header: null
         }
-        // navigationOptions: (props) => {
-        //     const { navigation } = props;
-    
-        //     let tabBarVisible = true;
-        //     let backgroundColor = '#fff';
-        //     let indexAtual = navigation.state.index;
-        //     let telaAtual = navigation.state.routeName;
-        //     let indexParquimetro = _.findIndex(navigation.state.routes, function(r) { return r.key == 'Parquimetro'; });
-        //     let indexPerguntas = _.findIndex(navigation.state.routes, function(r) { return r.key == 'Perguntas'; });
-        //     let indexHistorico = _.findIndex(navigation.state.routes, function(r) { return r.key == 'Historico'; });
-            
-        //     if (telaAtual == 'TelaPrincipal')
-        //     {
-        //         if(indexAtual == indexParquimetro) 
-        //         {
-        //             tabBarVisible = false;
-        //         }
-        //         if(indexAtual == indexPerguntas
-        //         || indexAtual == indexHistorico)
-        //         {
-        //             backgroundColor = '#e6ebee';
-        //         }
-        //     }
-            
-        //     return {
-        //         header: tabBarVisible? <Cabecalho backgroundColor={backgroundColor} />: null,
-        //     };
-        // }
     },
     FormVeiculo: {
         screen: FormVeiculo,
@@ -189,8 +165,26 @@ const Navigation = createStackNavigator({
             tabBarVisible: true,
         }
     },
+    PerfilPessoal: {
+        screen: PerfilPessoal,
+        navigationOptions: {
+            title: 'Minha conta',
+        }
+    },
+    Perguntas: {
+        screen: Perguntas,
+        navigationOptions: {
+            title: 'Perguntas frequentes',
+        }
+    },
+    TelaSobre: {
+        screen: TelaSobre,
+        navigationOptions: {
+            title: 'Sobre',
+        }
+    }
 },{
-    initialRouteName : 'Login',
+    initialRouteName : 'TelaInicial',
     navigationOptions: {
         
     }

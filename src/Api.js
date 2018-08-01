@@ -30,7 +30,7 @@ Api.interceptors.response.use((response) => {
         console.log(error.response);
     }
 
-    return Promise.reject(error.response);
+    return error;
 });
 
 Store.subscribe(() => {
