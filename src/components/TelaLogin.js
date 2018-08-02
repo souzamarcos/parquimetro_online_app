@@ -25,16 +25,16 @@ class TelaLogin extends Component {
     
     componentDidMount() {
         Keyboard.dismiss();
-        this.backHandler = BackHandler.addEventListener('hardwareBackPress', () => true);
+        //this.backHandler = BackHandler.addEventListener('hardwareBackPress', () => true);
     }
 
-    componentWillUnmount() {
-        this.backHandler.remove();
-    }
+    // componentWillUnmount() {
+    //     this.backHandler.remove();
+    // }
 
-    handleBackButton() {
-        return true;
-    }
+    // handleBackButton() {
+    //     return true;
+    // }
 
     render(){
         return (
