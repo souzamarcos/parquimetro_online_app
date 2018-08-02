@@ -19,7 +19,7 @@ import { connect } from 'react-redux';
 import { alteraTitulo } from '../actions/AppActions';
 
 
-class Parquimetro extends Component {
+class TelaParquimetro extends Component {
 
     constructor(props){
         super(props);
@@ -461,4 +461,4 @@ const styles = StyleSheet.create({
     },
 });
 
-export default connect(null, {alteraTitulo})(withNavigationFocus(Parquimetro));
+export default connect(null, {alteraTitulo})(withNavigationFocus(TelaParquimetro));

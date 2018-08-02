@@ -9,8 +9,9 @@ import {
 } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { defaultStyles } from '../styles';
+import cores from '../styles/cores';
 
-export default class Cadastro extends Component {
+export default class TelaCadastroUsuario extends Component {
 
     constructor(props){
         super(props);
@@ -53,6 +54,13 @@ export default class Cadastro extends Component {
                             underlineColorAndroid="#5d5d5d"
                         />
                         <TextInput
+                            placeholder="CPF"
+                            style={styles.input}
+                            onChangeText={(email) => false }
+                            //value={this.state.email}
+                            underlineColorAndroid="#5d5d5d"
+                        />
+                        <TextInput
                             placeholder="Senha"
                             style={styles.input}
                             onChangeText={(senha) => this.setState({senha})}
@@ -61,33 +69,32 @@ export default class Cadastro extends Component {
                         />
                     </View>
                     <TouchableHighlight
-                        onPress={() => this.props.navigation.navigate('CompletarCadastro')}
-                        style={styles.button}
+                        onPress={() => this.props.navigation.push('TelaPrincipal')}
+                        style={styles.botaoVerde}
+                        underlayColor="rgba(0, 0, 0, 0.05)"
                     >
-                        <Text style={styles.buttonText}>
+                        <Text style={styles.botaoVerdeText}>
                             Cadastrar
                         </Text>
                     </TouchableHighlight>
-                    <View style={styles.buttonTransparentGroup}>
-                        <TouchableHighlight
-                            onPress={() => this.props.navigation.navigate('CompletarCadastro')}
-                            style={styles.buttonTransparentLeft}
-                            underlayColor="rgba(0, 0, 0, 0.05)"
-                        >
-                            <Text style={styles.buttonTransparentText}>
-                                Google
-                            </Text>
-                        </TouchableHighlight>
-                        <TouchableHighlight
-                            onPress={() => this.props.navigation.navigate('CompletarCadastro')}
-                            style={styles.buttonTransparentRight}
-                            underlayColor="rgba(0, 0, 0, 0.05)"
-                        >
-                            <Text style={styles.buttonTransparentText}>
-                                Facebook
-                            </Text>
-                        </TouchableHighlight>
-                    </View>
+                    <TouchableHighlight
+                        onPress={() => this.props.navigation.push('TelaPrincipal')}
+                        style={styles.botaoAzul}
+                        underlayColor="rgba(0, 0, 0, 0.05)"
+                    >
+                        <Text style={styles.botaoAzulText}>
+                            Facebook
+                        </Text>
+                    </TouchableHighlight>
+                    <TouchableHighlight
+                        onPress={() => this.props.navigation.navigate('TelaPrincipal')}
+                        style={styles.botaoVermelho}
+                        underlayColor="rgba(0, 0, 0, 0.05)"
+                    >
+                        <Text style={styles.botaoVermelhoText}>
+                            Google
+                        </Text>
+                    </TouchableHighlight>
                 </View>
             </KeyboardAwareScrollView>
         );
@@ -102,29 +109,37 @@ const styles = StyleSheet.create({
     },
     title: {
         ...defaultStyles.textTitle,
+        color: cores.azul,
         marginBottom: 30,
     },
     input: {
         ...defaultStyles.input,
     },
-    button: {
-        ...defaultStyles.button,
-        marginTop: 30
+    botaoVerde: {
+        ...defaultStyles.botaoVerde,
+        marginBottom: 20,
+        marginTop: 20,
     },
-    buttonText: {
-        ...defaultStyles.buttonText,
+    mensagemErro: {
+        color: 'red',
+        fontSize: 14,
+        marginBottom: 10
     },
-    buttonTransparentLeft: {
-        ...defaultStyles.buttonTransparentLeft,
+    botaoVerdeText: {
+        ...defaultStyles.botaoVerdeText,
     },
-    buttonTransparentRight: {
-        ...defaultStyles.buttonTransparentRight,
+    botaoAzul: {
+        ...defaultStyles.botaoAzul,
+        marginBottom: 20,
     },
-    buttonTransparentGroup: {
-        ...defaultStyles.buttonTransparentGroup,
-        marginTop: 30,
+    botaoAzulText: {
+        ...defaultStyles.botaoAzulText,
     },
-    buttonTransparentText: {
-        ...defaultStyles.buttonTransparentText,
+    botaoVermelho: {
+        ...defaultStyles.botaoVermelho,
+        marginBottom: 20,
+    },
+    botaoVermelhoText: {
+        ...defaultStyles.botaoVermelhoText,
     },
 });

@@ -1,72 +1,32 @@
 import React from 'react';
-import { createBottomTabNavigator, createStackNavigator, createMaterialTopTabNavigator } from 'react-navigation';
-import _ from 'lodash';
-import cores from './styles/cores';
+import { createBottomTabNavigator, createStackNavigator } from 'react-navigation';
 
 //telas
 import TelaInicial from './components/TelaInicial';
-import Cadastro from './components/Cadastro';
-import Login from './components/Login';
-import CompletarCadastro from './components/CompletarCadastro';
-import Historico from './components/Historico';
-import HistoricoGuarda from './components/HistoricoGuarda';
-import Parquimetro from './components/Parquimetro';
-import PerfilPessoal from './components/PerfilPessoal';
-import PerfilVeiculo from './components/PerfilVeiculo';
-import PerfilCartao from './components/PerfilCartao';
-import Configuracao from './components/Configuracao';
-import Perguntas from './components/Perguntas';
-import FormVeiculo from './components/FormVeiculo';
-import FormCartao from './components/FormCartao';
+import TelaCadastroUsuario from './components/TelaCadastroUsuario';
+import TelaLogin from './components/TelaLogin';
+import TelaCompletarCadastroUsuario from './components/TelaCompletarCadastroUsuario';
+import TelaHistorico from './components/TelaHistorico';
+import TelaHistoricoGuarda from './components/TelaHistoricoGuarda';
+import TelaParquimetro from './components/TelaParquimetro';
+import TelaMinhaConta from './components/TelaMinhaConta';
+import TelaVeiculos from './components/TelaVeiculos';
+import TelaCartoes from './components/TelaCartoes';
+import TelaConfiguracao from './components/TelaConfiguracao';
+import TelaPerguntasFrequentes from './components/TelaPerguntas';
+import TelaFormVeiculo from './components/TelaFormVeiculo';
+import TelaFormCartao from './components/TelaFormCartao';
 import TelaSobre from './components/TelaSobre';
 
 import Ionicons from 'react-native-vector-icons/Ionicons';
   
-const Perfil = createMaterialTopTabNavigator(
-    {
-        PerfilPessoal: {
-            screen: PerfilPessoal,
-            navigationOptions: {
-                title: 'Pessoal',
-            }
-        },
-        PerfilVeiculo: {
-            screen: PerfilVeiculo,
-            navigationOptions: {
-                title: 'Veículo'
-            }
-        },
-        PerfilCartao: {
-            screen: PerfilCartao,
-            navigationOptions: {
-                title: 'Cartão'
-            }
-        },
-    },
-    {
-        swipeEnabled: false,
-        animationEnabled: false,
-        tabBarOptions: {
-            labelStyle: {
-                color: cores.azul,
-            },
-            indicatorStyle: {
-                backgroundColor: cores.azul,
-            },
-            style: {
-                backgroundColor: cores.telaBackgroundColor,
-            },
-        }
-    }
-);
-
 const TelaPrincipal = createBottomTabNavigator(
     {
-        Parquimetro: Parquimetro,
-        Historico: Historico,
-        PerfilCartao: PerfilCartao,
-        PerfilVeiculo: PerfilVeiculo,
-        Configuracao: Configuracao,
+        Parquimetro: TelaParquimetro,
+        Historico: TelaHistorico,
+        PerfilCartao: TelaCartoes,
+        PerfilVeiculo: TelaVeiculos,
+        Configuracao: TelaConfiguracao,
     },
     {
         initialRouteName : 'Parquimetro',
@@ -119,7 +79,7 @@ const Navigation = createStackNavigator({
         }
     },
     Cadastro: {
-        screen: Cadastro,
+        screen: TelaCadastroUsuario,
         navigationOptions: {
             tabBarVisible: false,
             swipeEnabled: false,
@@ -127,7 +87,7 @@ const Navigation = createStackNavigator({
         }
     },
     Login: {
-        screen: Login,
+        screen: TelaLogin,
         navigationOptions: {
             tabBarVisible: false,
             swipeEnabled: false,
@@ -135,7 +95,7 @@ const Navigation = createStackNavigator({
         }
     },
     CompletarCadastro: {
-        screen: CompletarCadastro,
+        screen: TelaCompletarCadastroUsuario,
         navigationOptions: {
             tabBarVisible: false,
             swipeEnabled: false,
@@ -150,7 +110,7 @@ const Navigation = createStackNavigator({
         }
     },
     FormVeiculo: {
-        screen: FormVeiculo,
+        screen: TelaFormVeiculo,
         navigationOptions: {
             title: 'Veículo',
             swipeEnabled: false,
@@ -158,7 +118,7 @@ const Navigation = createStackNavigator({
         }
     },
     FormCartao: {
-        screen: FormCartao,
+        screen: TelaFormCartao,
         navigationOptions: {
             title: 'Cartão',
             swipeEnabled: false,
@@ -166,13 +126,13 @@ const Navigation = createStackNavigator({
         }
     },
     PerfilPessoal: {
-        screen: PerfilPessoal,
+        screen: TelaMinhaConta,
         navigationOptions: {
             title: 'Minha conta',
         }
     },
     Perguntas: {
-        screen: Perguntas,
+        screen: TelaPerguntasFrequentes,
         navigationOptions: {
             title: 'Perguntas frequentes',
         }

@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
 import {
-  Text,
-  TextInput,
-  TouchableHighlight,
-  StyleSheet,
-  View,
-  Keyboard,
+    Text,
+    TextInput,
+    TouchableHighlight,
+    StyleSheet,
+    View,
+    Keyboard,
+    BackHandler,
 } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { defaultStyles } from '../styles';
@@ -14,7 +15,7 @@ import cores from '../styles/cores';
 import { connect } from 'react-redux';
 import { modificaEmail, modificaSenha, autenticarUsuario } from '../actions/AutenticacaoActions';
 
-class Login extends Component {
+class TelaLogin extends Component {
 
     _autenticarUsuario() {
         const { email, senha } = this.props;
@@ -24,6 +25,15 @@ class Login extends Component {
     
     componentDidMount() {
         Keyboard.dismiss();
+        this.backHandler = BackHandler.addEventListener('hardwareBackPress', () => true);
+    }
+
+    componentWillUnmount() {
+        this.backHandler.remove();
+    }
+
+    handleBackButton() {
+        return true;
     }
 
     render(){
@@ -146,4 +156,4 @@ const mapStateToProps = state => (
     }
 )
 
-export default connect(mapStateToProps, { modificaEmail, modificaSenha, autenticarUsuario })(Login);
+export default connect(mapStateToProps, { modificaEmail, modificaSenha, autenticarUsuario })(TelaLogin);

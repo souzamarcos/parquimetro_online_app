@@ -13,7 +13,7 @@ import cores from '../styles/cores';
 import { connect } from 'react-redux';
 import { adicionarVeiculo, modificaId, modificaPlaca, modificaApelido } from '../actions/FormVeiculoActions';
 
-class FormVeiculo  extends Component {
+class TelaFormVeiculo  extends Component {
 
     _salvarVeiculo(){
         const {id, placa, apelido} = this.props;
@@ -105,4 +105,4 @@ const mapStateToProps = state => {
     }
 };
 
-export default connect(mapStateToProps, { adicionarVeiculo, modificaId, modificaPlaca, modificaApelido })(FormVeiculo);
+export default connect(mapStateToProps, { adicionarVeiculo, modificaId, modificaPlaca, modificaApelido })(TelaFormVeiculo);

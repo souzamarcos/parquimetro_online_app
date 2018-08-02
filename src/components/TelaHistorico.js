@@ -15,7 +15,7 @@ import Cabecalho from './Cabecalho';
 import { connect } from 'react-redux';
 import { alteraTitulo } from '../actions/AppActions';
 
-class Historico extends Component {
+class TelaHistorico extends Component {
 
     constructor(props) {
         super(props);
@@ -109,4 +109,4 @@ const styles = StyleSheet.create({
     },
 });
 
-export default connect(null, {alteraTitulo})(withNavigationFocus(Historico));
+export default connect(null, {alteraTitulo})(withNavigationFocus(TelaHistorico));

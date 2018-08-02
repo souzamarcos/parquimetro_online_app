@@ -8,7 +8,7 @@ import {
 } from 'react-native';
 import { defaultStyles } from '../styles';
 
-export default class CompletarCadastro extends Component {
+export default class TelaCompletarCadastroUsuario extends Component {
 
     render(){
         return (

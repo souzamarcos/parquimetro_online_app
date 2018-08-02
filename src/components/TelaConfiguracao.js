@@ -15,7 +15,7 @@ import { connect } from 'react-redux';
 import { deslogarUsuario } from '../actions/AutenticacaoActions';
 
 
-class Configuracao  extends Component {
+class TelaConfiguracao  extends Component {
 
     _deslogarUsuario(){
         Alert.alert(
@@ -137,4 +137,4 @@ const mapStateToProps = state => {
     }
 };
 
-export default connect(mapStateToProps, { deslogarUsuario })(Configuracao);
+export default connect(mapStateToProps, { deslogarUsuario })(TelaConfiguracao);

@@ -20,7 +20,7 @@ export default class TelaInicial extends Component {
                     Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
                 </Text>
                 <TouchableHighlight
-                    onPress={() => this.props.navigation.navigate('Login')}
+                    onPress={() => this.props.navigation.push('Login')}
                     style={styles.botaoVerde}
                     underlayColor="rgba(0, 0, 0, 0.05)"
                 >

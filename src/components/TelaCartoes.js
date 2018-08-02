@@ -7,18 +7,19 @@ import {
     ListView,
     StyleSheet,
     ScrollView,
-    ActivityIndicator
+    ActivityIndicator,
 } from 'react-native';
 import { defaultStyles } from '../styles';
 import cores from '../styles/cores';
 import { connect } from 'react-redux';
 import { alteraTitulo } from '../actions/AppActions';
-import { carregarVeiculos } from '../actions/VeiculosActions';
-import Veiculo from './Veiculo';
+import { carregarCartoes } from '../actions/CartoesActions';
+import Cartao from './Cartao';
 import Cabecalho from './Cabecalho';
 
-class PerfilVeiculo extends Component {
 
+class TelaCartoes extends Component {
+  
     constructor(props){
         super(props);
     }
@@ -27,18 +28,18 @@ class PerfilVeiculo extends Component {
         const { navigation } = this.props;
         this.subscriptions = [ // evento para detectar se o component está focado para alterar o título 
             navigation.addListener('didFocus', () =>{
-                this.props.alteraTitulo('Veículo');
+                this.props.alteraTitulo('Cartão');
             }),
         ];
     }
-
+    
     componentWillMount(){
-        this.props.carregarVeiculos();
+        this.props.carregarCartoes();
         this.criaFonteDados([]);
     }
     
     componentWillReceiveProps(nextProps){
-        this.criaFonteDados(nextProps.veiculos);
+        this.criaFonteDados(nextProps.cartoes);
     }
 
     componentWillUnmount() {
@@ -46,38 +47,38 @@ class PerfilVeiculo extends Component {
         this.subscriptions.forEach(sub => sub.remove());
     }
 
-    criaFonteDados(veiculos) {
+    criaFonteDados(cartoes) {
         const ds = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 });
 
-        this.dataSource = ds.cloneWithRows(veiculos);
+        this.dataSource = ds.cloneWithRows(cartoes);
     }
 
-    renderRow(veiculo){
-        return <Veiculo veiculo={veiculo} styles={styles.veiculo} />
+    renderRow(cartao){
+        return <Cartao cartao={cartao} />
     }
 
     render() {
         return (
             <ScrollView style={styles.tela} contentContainerStyle={{flex:1}}>
-                <Cabecalho titulo="Veículo" />
-                <ScrollView style={{flexGrow: 1}} contentContainerStyle={styles.listaContainer}>
-                    {
-                        this.props.carregandoVeiculos ? 
-                        (
-                            <ActivityIndicator size="large" color={cores.azul} />
-                        ) :
-                        (
-                            <ListView
-                                enableEmptySections
-                                renderRow={this.renderRow}
-                                dataSource={this.dataSource}
-                            />
-                        )
-                    }
-                </ScrollView >
+                <Cabecalho titulo="Cartão" />
+                <ScrollView  style={{flexGrow: 1}}  contentContainerStyle={styles.listaContainer}>
+                {
+                    this.props.carregandoCartoes ? 
+                    (
+                        <ActivityIndicator size="large" color={cores.azul} />
+                    ) :
+                    (
+                        <ListView
+                            enableEmptySections
+                            renderRow={this.renderRow}
+                            dataSource={this.dataSource}
+                        />
+                    )
+                }
+                </ScrollView>
                 <View style={styles.botoesContainer}>
                     <TouchableHighlight
-                        onPress={() => this.props.navigation.navigate('FormVeiculo')}
+                        onPress={() => this.props.navigation.navigate('FormCartao')}
                         style={styles.botaoAzul}
                         underlayColor="rgba(0, 0, 0, 0.05)"
                     >
@@ -114,16 +115,17 @@ const styles = StyleSheet.create({
     },
 });
 
+
 const mapStateToProps = state => {
-    const veiculos = _.map(state.VeiculosReducer.veiculos, (item, index) =>{
+    const cartoes = _.map(state.CartoesReducer.cartoes, (item, index) =>{
         return {...item, index: index + 1};
     });
 
     return {
-        veiculos,
-        carregandoVeiculos: state.VeiculosReducer.carregandoVeiculos,
-        erro: state.VeiculosReducer.erro,
+        cartoes,
+        carregandoCartoes: state.CartoesReducer.carregandoCartoes,
+        erro: state.CartoesReducer.erro,
     }
 };
 
-export default connect(mapStateToProps, { alteraTitulo, carregarVeiculos })(PerfilVeiculo);
+export default connect(mapStateToProps, { alteraTitulo, carregarCartoes })(TelaCartoes);

@@ -15,7 +15,7 @@ import { withNavigationFocus } from 'react-navigation';
 import { connect } from 'react-redux';
 import { alteraTitulo } from '../actions/AppActions';
 
-class PerfilPessoal extends Component {
+class TelaMinhaConta extends Component {
 
     constructor(props){
         super(props);
@@ -112,4 +112,4 @@ const styles = StyleSheet.create({
     },
 });
 
-export default connect(null, {alteraTitulo})(withNavigationFocus(PerfilPessoal));
+export default connect(null, {alteraTitulo})(withNavigationFocus(TelaMinhaConta));

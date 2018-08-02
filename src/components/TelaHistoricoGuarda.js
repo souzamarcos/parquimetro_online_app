@@ -13,7 +13,7 @@ import { withNavigationFocus } from 'react-navigation';
 import { connect } from 'react-redux';
 import { alteraTitulo } from '../actions/AppActions';
 
-class HistoricoGuarda extends Component {
+class TelaHistoricoGuarda extends Component {
 
     constructor(props) {
         super(props);
@@ -106,4 +106,4 @@ const styles = StyleSheet.create({
     },
 });
 
-export default connect(null, {alteraTitulo})(withNavigationFocus(HistoricoGuarda));
+export default connect(null, {alteraTitulo})(withNavigationFocus(TelaHistoricoGuarda));

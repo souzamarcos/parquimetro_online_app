@@ -14,7 +14,7 @@ import { withNavigationFocus } from 'react-navigation';
 import { connect } from 'react-redux';
 import { alteraTitulo } from '../actions/AppActions';
 
-class Perguntas extends Component {
+class TelaPerguntas extends Component {
 
     constructor(props){
         super(props);
@@ -91,4 +91,4 @@ const styles = StyleSheet.create({
     }
 });
 
-export default connect(null, {alteraTitulo})(withNavigationFocus(Perguntas));
+export default connect(null, {alteraTitulo})(withNavigationFocus(TelaPerguntas));

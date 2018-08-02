@@ -13,7 +13,7 @@ import cores from '../styles/cores';
 import { connect } from 'react-redux';
 import { adicionarCartao, modificaId, modificaNumero, modificaBandeira, modificaValidade } from '../actions/FormCartaoActions';
 
-class FormCartao  extends Component {
+class TelaFormCartao  extends Component {
 
     _salvarCartao(){
         const {id, numero, bandeira, validade} = this.props;
@@ -113,4 +113,4 @@ const mapStateToProps = state => {
     }
 };
 
-export default connect(mapStateToProps, { adicionarCartao, modificaId, modificaNumero, modificaBandeira, modificaValidade  })(FormCartao);
+export default connect(mapStateToProps, { adicionarCartao, modificaId, modificaNumero, modificaBandeira, modificaValidade  })(TelaFormCartao);
