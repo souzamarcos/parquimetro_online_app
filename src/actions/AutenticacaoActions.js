@@ -83,7 +83,7 @@ const loginUsuarioSucesso = (usuario, dispatch) => {
         payload: usuario
     });
 
-    NavigationService.navigate('Parquimetro');
+    NavigationService.navigate('TelaParquimetro');
 }
 
 const loginUsuarioErro = (mensagem, dispatch) => {
@@ -94,7 +94,7 @@ const loginUsuarioErro = (mensagem, dispatch) => {
 }
 
 export const deslogarUsuario = () => {
-    NavigationService.navigate('Login');
+    NavigationService.navigate('TelaLogin');
     return {
         type: DESLOGAR_USUARIO,
     }

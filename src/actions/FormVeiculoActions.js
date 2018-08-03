@@ -59,7 +59,7 @@ export const adicionarVeiculoSucesso = (veiculos, dispatch) => {
         type: SALVAR_VEICULO_SUCESSO,
         payload: veiculos
     });
-    NavigationService.navigate('PerfilVeiculo');
+    NavigationService.navigate('TelaVeiculos');
     dispatch(carregarVeiculos());
 }
 

@@ -20,7 +20,7 @@ export default class TelaInicial extends Component {
                     Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
                 </Text>
                 <TouchableHighlight
-                    onPress={() => this.props.navigation.push('Login')}
+                    onPress={() => this.props.navigation.navigate('TelaLogin')}
                     style={styles.botaoVerde}
                     underlayColor="rgba(0, 0, 0, 0.05)"
                 >
@@ -30,7 +30,7 @@ export default class TelaInicial extends Component {
                     
                 </TouchableHighlight>
                 <TouchableHighlight
-                    onPress={() => this.props.navigation.navigate('Cadastro')}
+                    onPress={() => this.props.navigation.navigate('TelaCadastroUsuario')}
                     style={styles.botaoAzul}
                     underlayColor="rgba(0, 0, 0, 0.05)"
                 >

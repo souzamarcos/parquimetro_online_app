@@ -67,7 +67,7 @@ export const adicionarCartaoSucesso = (cartaos, dispatch) => {
         type: SALVAR_CARTAO_SUCESSO,
         payload: cartaos
     });
-    NavigationService.navigate('PerfilCartao');
+    NavigationService.navigate('TelaCartoes');
     dispatch(carregarCartoes());
 }
 

@@ -17,7 +17,7 @@ Api.interceptors.response.use((response) => {
     //não autorizado
     if (error.response.status === 401) {
         console.log('Não autorizado. Deslogando...');
-        NavigationService.navigate('Login');
+        NavigationService.navigate('TelaLogin');
     }else if (error.response.status !== 400){
         Alert.alert(
             'Aviso',

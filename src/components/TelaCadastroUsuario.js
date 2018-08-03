@@ -10,18 +10,10 @@ import {
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { defaultStyles } from '../styles';
 import cores from '../styles/cores';
+import { connect } from 'react-redux';
+import { modificaNome, modificaEmail, modificaCpf, modificaSenha, cadastrarUsuario } from '../actions/CadastroUsuarioActions'
 
-export default class TelaCadastroUsuario extends Component {
-
-    constructor(props){
-        super(props);
-
-        this.state = {
-            nome: '',
-            email: '',
-            senha: '',
-        };
-    }
+class TelaCadastroUsuario extends Component {
 
     componentDidMount() {
         Keyboard.dismiss();
@@ -143,3 +135,14 @@ const styles = StyleSheet.create({
         ...defaultStyles.botaoVermelhoText,
     },
 });
+
+const mapStateToProps = state => {
+    return {
+        nome: state.CadastroUsuarioReducer.nome,
+        email: state.CadastroUsuarioReducer.email,
+        cpf: state.CadastroUsuarioReducer.cpf,
+        senha: state.CadastroUsuarioReducer.senha
+    }
+}
+
+export default connect(mapStateToProps, { modificaNome, modificaEmail, modificaCpf, modificaSenha, cadastrarUsuario })(TelaCadastroUsuario);

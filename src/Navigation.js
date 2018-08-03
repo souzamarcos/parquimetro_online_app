@@ -22,14 +22,14 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
   
 const TelaPrincipal = createBottomTabNavigator(
     {
-        Parquimetro: TelaParquimetro,
-        Historico: TelaHistorico,
-        PerfilCartao: TelaCartoes,
-        PerfilVeiculo: TelaVeiculos,
-        Configuracao: TelaConfiguracao,
+        TelaParquimetro: TelaParquimetro,
+        TelaHistorico: TelaHistorico,
+        TelaCartoes: TelaCartoes,
+        TelaVeiculos: TelaVeiculos,
+        TelaConfiguracao: TelaConfiguracao,
     },
     {
-        initialRouteName : 'Parquimetro',
+        initialRouteName : 'TelaParquimetro',
         tabBarOptions: {
             showLabel: false,
             style: {
@@ -41,19 +41,19 @@ const TelaPrincipal = createBottomTabNavigator(
                 const { routeName } = navigation.state;
                 let iconName;
                 switch(routeName){
-                    case 'Parquimetro':
+                    case 'TelaParquimetro':
                         iconName = `md-time`;
                         break;
-                    case 'Historico':
+                    case 'TelaHistorico':
                         iconName = `md-list`;
                         break;
-                    case 'PerfilCartao':
+                    case 'TelaCartoes':
                         iconName = `md-card`;
                         break;
-                    case 'PerfilVeiculo':
+                    case 'TelaVeiculos':
                         iconName = `md-car`;
                         break;
-                    case 'Configuracao':
+                    case 'TelaConfiguracao':
                         iconName = `md-settings`;
                         break;
                     default:
@@ -78,7 +78,7 @@ const Navigation = createStackNavigator({
             header: null
         }
     },
-    Cadastro: {
+    TelaCadastroUsuario: {
         screen: TelaCadastroUsuario,
         navigationOptions: {
             tabBarVisible: false,
@@ -86,7 +86,7 @@ const Navigation = createStackNavigator({
             header: null
         }
     },
-    Login: {
+    TelaLogin: {
         screen: TelaLogin,
         navigationOptions: {
             tabBarVisible: false,
@@ -94,7 +94,7 @@ const Navigation = createStackNavigator({
             header: null
         }
     },
-    CompletarCadastro: {
+    TelaCompletarCadastroUsuario: {
         screen: TelaCompletarCadastroUsuario,
         navigationOptions: {
             tabBarVisible: false,
@@ -109,7 +109,7 @@ const Navigation = createStackNavigator({
             header: null
         }
     },
-    FormVeiculo: {
+    TelaFormVeiculo: {
         screen: TelaFormVeiculo,
         navigationOptions: {
             title: 'Veículo',
@@ -117,7 +117,7 @@ const Navigation = createStackNavigator({
             tabBarVisible: true,
         }
     },
-    FormCartao: {
+    TelaFormCartao: {
         screen: TelaFormCartao,
         navigationOptions: {
             title: 'Cartão',
@@ -125,13 +125,13 @@ const Navigation = createStackNavigator({
             tabBarVisible: true,
         }
     },
-    PerfilPessoal: {
+    TelaMinhaConta: {
         screen: TelaMinhaConta,
         navigationOptions: {
             title: 'Minha conta',
         }
     },
-    Perguntas: {
+    TelaPerguntasFrequentes: {
         screen: TelaPerguntasFrequentes,
         navigationOptions: {
             title: 'Perguntas frequentes',
