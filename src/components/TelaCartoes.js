@@ -78,7 +78,7 @@ class TelaCartoes extends Component {
                 </ScrollView>
                 <View style={styles.botoesContainer}>
                     <TouchableHighlight
-                        onPress={() => this.props.navigation.navigate('FormCartao')}
+                        onPress={() => this.props.navigation.navigate('TelaFormCartao')}
                         style={styles.botaoAzul}
                         underlayColor="rgba(0, 0, 0, 0.05)"
                     >

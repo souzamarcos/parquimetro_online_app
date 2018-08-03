@@ -12,6 +12,7 @@ import { defaultStyles } from '../styles';
 import cores from '../styles/cores';
 import { connect } from 'react-redux';
 import { adicionarCartao, modificaId, modificaNumero, modificaBandeira, modificaValidade } from '../actions/FormCartaoActions';
+import { TextInputMask } from 'react-native-masked-text';
 
 class TelaFormCartao  extends Component {
 
@@ -31,8 +32,9 @@ class TelaFormCartao  extends Component {
                     />
                 </View>
                 <View style={styles.formContainer}>
-                    <TextInput
+                    <TextInputMask
                         placeholder="Número"
+                        type="credit-card"
                         style={styles.input}
                         onChangeText={ (numero)=> this.props.modificaNumero(numero) }
                         value={this.props.numero}

@@ -12,6 +12,7 @@ import { defaultStyles } from '../styles';
 import cores from '../styles/cores';
 import { connect } from 'react-redux';
 import { adicionarVeiculo, modificaId, modificaPlaca, modificaApelido } from '../actions/FormVeiculoActions';
+import { TextInputMask } from 'react-native-masked-text';
 
 class TelaFormVeiculo  extends Component {
 
@@ -31,15 +32,21 @@ class TelaFormVeiculo  extends Component {
                     />
                 </View>
                 <View style={styles.formContainer}>
-                    <TextInput
+                    <TextInputMask
                         placeholder="Placa"
+                        type="custom"
                         style={styles.input}
                         onChangeText={ (placa)=> this.props.modificaPlaca(placa) }
                         value={this.props.placa}
                         underlineColorAndroid={cores.cinza}
+                        customTextInputProps={{ //corrigir
+                            autoCapitalize: 'characters'
+                        }}
+                        options={{
+                            mask: 'AAA-9999',
+                        }}
                     />
                     { renderErro(this.props.erro, 'placa')}
-                    
                     <TextInput
                         placeholder="Apelido"
                         style={styles.input}

@@ -77,7 +77,7 @@ class TelaVeiculos extends Component {
                 </ScrollView >
                 <View style={styles.botoesContainer}>
                     <TouchableHighlight
-                        onPress={() => this.props.navigation.navigate('FormVeiculo')}
+                        onPress={() => this.props.navigation.navigate('TelaFormVeiculo')}
                         style={styles.botaoAzul}
                         underlayColor="rgba(0, 0, 0, 0.05)"
                     >

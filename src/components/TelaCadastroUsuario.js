@@ -12,6 +12,8 @@ import { defaultStyles } from '../styles';
 import cores from '../styles/cores';
 import { connect } from 'react-redux';
 import { modificaNome, modificaEmail, modificaCpf, modificaSenha, cadastrarUsuario } from '../actions/CadastroUsuarioActions'
+import { renderErro } from '../utils/Erro';
+import { TextInputMask } from 'react-native-masked-text';
 
 class TelaCadastroUsuario extends Component {
 
@@ -24,7 +26,7 @@ class TelaCadastroUsuario extends Component {
             <KeyboardAwareScrollView
                 resetScrollToCoords={{ x: 0, y: 0 }}
                 contentContainerStyle={styles.tela}
-                scrollEnabled={false}              
+                scrollEnabled={true}              
             >
                 <View style={{ width: '100%' }}>
                     <Text style={styles.title}>
@@ -34,31 +36,37 @@ class TelaCadastroUsuario extends Component {
                         <TextInput
                             placeholder="Nome"
                             style={styles.input}
-                            onChangeText={(nome) => this.setState({nome})}
-                            value={this.state.nome}
+                            onChangeText={(nome) => this.props.modificaNome(nome)}
+                            value={this.props.nome}
                             underlineColorAndroid="#5d5d5d"
                         />
+                        { renderErro(this.props.erro, 'nome')}
                         <TextInput
                             placeholder="E-mail"
                             style={styles.input}
-                            onChangeText={(email) => this.setState({email})}
-                            value={this.state.email}
+                            onChangeText={(email) => this.props.modificaEmail(email)}
+                            value={this.props.email}
                             underlineColorAndroid="#5d5d5d"
                         />
-                        <TextInput
+                        { renderErro(this.props.erro, 'email')}
+                        <TextInputMask
                             placeholder="CPF"
+                            type="cpf"
                             style={styles.input}
-                            onChangeText={(email) => false }
-                            //value={this.state.email}
+                            onChangeText={(cpf) => this.props.modificaCpf(cpf) }
+                            value={this.props.cpf}
                             underlineColorAndroid="#5d5d5d"
                         />
+                        { renderErro(this.props.erro, 'cpf')}
                         <TextInput
                             placeholder="Senha"
+                            secureTextEntry={true}
                             style={styles.input}
-                            onChangeText={(senha) => this.setState({senha})}
-                            value={this.state.senha}
+                            onChangeText={(senha) => this.props.modificaSenha(senha)}
+                            value={this.props.senha}
                             underlineColorAndroid="#5d5d5d"
                         />
+                        { renderErro(this.props.erro, 'senha')}
                     </View>
                     <TouchableHighlight
                         onPress={() => this.props.navigation.push('TelaPrincipal')}
