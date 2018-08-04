@@ -8,7 +8,6 @@ import {
 export const carregarVeiculos = () => {
 
     return async dispatch => {
-        console.log('passou aqui');
         dispatch({ type: CARREGAR_VEICULO_EM_ANDAMENTO });
         try
         {

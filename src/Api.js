@@ -27,10 +27,8 @@ Api.interceptors.response.use((response) => {
             ],
             { cancelable: false }
         );
-        console.log(error.response);
     }
-
-    return error;
+    return Promise.reject(error.response);
 });
 
 Store.subscribe(() => {

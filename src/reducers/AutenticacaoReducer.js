@@ -17,7 +17,6 @@ const INITIAL_STATE = {
     erroCadastro: '',
     erroLogin: '',
     loadingLogin: false,
-    loadingCadastro: false,
 }
 
 export default (state = INITIAL_STATE, action) => {
@@ -26,18 +25,12 @@ export default (state = INITIAL_STATE, action) => {
             return { ...state, email: action.payload }
         case MODIFICA_SENHA:
             return { ...state, senha: action.payload }
-        case CADASTRO_USUARIO_ERRO:
-            return { ...state, erroCadastro: action.payload, loadingCadastro: false }
-        case CADASTRO_USUARIO_SUCESSO:
-            return { ...state, nome: '', senha: '', loadingCadastro: false }
         case LOGIN_USUARIO_ERRO:
             return { ...state, erroLogin: action.payload, loadingLogin: false }
         case LOGIN_USUARIO_SUCESSO:
-            return { ...state, usuarioLogado: action.payload } 
+            return { ...state, usuarioLogado: action.payload, loadingLogin: false } 
         case LOGIN_EM_ANDAMENTO:
             return { ...state, loadingLogin: true }
-        case CADASTRO_EM_ANDAMENTO:
-            return { ...state, loadingCadastro: true }
         case DESLOGAR_USUARIO:
             return { ...state, ...INITIAL_STATE }
         default:

@@ -7,6 +7,7 @@ import {
     SALVAR_VEICULO_SUCESSO,
     SALVAR_VEICULO_ERRO,
 } from './types';
+import _ from 'lodash';
 import { carregarVeiculos } from './VeiculosActions';
 import NavigationService from '../NavigationService';
 
@@ -19,7 +20,7 @@ export const adicionarVeiculo = (id, placa,apelido) => {
         {
             const retorno = await API.post('veiculo/novo',{
                 veiculo: {
-                    placa,
+                    placa: _.isEmpty(placa) ? placa : placa.toUpperCase(),
                     descricao: apelido
                 }
             });
@@ -27,7 +28,6 @@ export const adicionarVeiculo = (id, placa,apelido) => {
         }
         catch(erro)
         {
-            console.log(erro.data);
             adicionarVeiculoErro(erro.data.errors, dispatch);
         }
     }

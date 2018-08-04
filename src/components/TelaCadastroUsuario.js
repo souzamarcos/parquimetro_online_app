@@ -6,8 +6,8 @@ import {
   StyleSheet,
   View,
   Keyboard,
+  ScrollView
 } from 'react-native';
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { defaultStyles } from '../styles';
 import cores from '../styles/cores';
 import { connect } from 'react-redux';
@@ -23,11 +23,7 @@ class TelaCadastroUsuario extends Component {
 
     render(){
         return (
-            <KeyboardAwareScrollView
-                resetScrollToCoords={{ x: 0, y: 0 }}
-                contentContainerStyle={styles.tela}
-                scrollEnabled={true}              
-            >
+            <ScrollView style={{ width: '100%' }} contentContainerStyle={styles.tela}>
                 <View style={{ width: '100%' }}>
                     <Text style={styles.title}>
                         Cadastro
@@ -68,35 +64,47 @@ class TelaCadastroUsuario extends Component {
                         />
                         { renderErro(this.props.erro, 'senha')}
                     </View>
-                    <TouchableHighlight
-                        onPress={() => this.props.navigation.push('TelaPrincipal')}
-                        style={styles.botaoVerde}
-                        underlayColor="rgba(0, 0, 0, 0.05)"
-                    >
-                        <Text style={styles.botaoVerdeText}>
-                            Cadastrar
-                        </Text>
-                    </TouchableHighlight>
-                    <TouchableHighlight
-                        onPress={() => this.props.navigation.push('TelaPrincipal')}
-                        style={styles.botaoAzul}
-                        underlayColor="rgba(0, 0, 0, 0.05)"
-                    >
-                        <Text style={styles.botaoAzulText}>
-                            Facebook
-                        </Text>
-                    </TouchableHighlight>
-                    <TouchableHighlight
-                        onPress={() => this.props.navigation.navigate('TelaPrincipal')}
-                        style={styles.botaoVermelho}
-                        underlayColor="rgba(0, 0, 0, 0.05)"
-                    >
-                        <Text style={styles.botaoVermelhoText}>
-                            Google
-                        </Text>
-                    </TouchableHighlight>
+                    <View style={styles.botoesContainer}>
+                    {
+                        this.props.salvandoUsuario ? 
+                        (
+                            <ActivityIndicator style={styles.activityIndicator} size="large" color={cores.verde} />
+                        ) :
+                        (
+                            <View>
+                                <TouchableHighlight
+                                    onPress={() => this.props.navigation.push('TelaPrincipal')}
+                                    style={styles.botaoVerde}
+                                    underlayColor="rgba(0, 0, 0, 0.05)"
+                                >
+                                    <Text style={styles.botaoVerdeText}>
+                                        Cadastrar
+                                    </Text>
+                                </TouchableHighlight>
+                                <TouchableHighlight
+                                    onPress={() => this.props.navigation.push('TelaPrincipal')}
+                                    style={styles.botaoAzul}
+                                    underlayColor="rgba(0, 0, 0, 0.05)"
+                                >
+                                    <Text style={styles.botaoAzulText}>
+                                        Facebook
+                                    </Text>
+                                </TouchableHighlight>
+                                <TouchableHighlight
+                                    onPress={() => this.props.navigation.navigate('TelaPrincipal')}
+                                    style={styles.botaoVermelho}
+                                    underlayColor="rgba(0, 0, 0, 0.05)"
+                                >
+                                    <Text style={styles.botaoVermelhoText}>
+                                        Google
+                                    </Text>
+                                </TouchableHighlight>
+                            </View>
+                        )
+                    }
+                    </View>
                 </View>
-            </KeyboardAwareScrollView>
+            </ScrollView>
         );
     }
 }
@@ -104,8 +112,8 @@ class TelaCadastroUsuario extends Component {
 const styles = StyleSheet.create({
     tela: {
         ...defaultStyles.telaFull,
-        ...defaultStyles.telaCentralizada,
         ...defaultStyles.telaPaddingHorizontalGrande,
+        justifyContent: 'center',
     },
     title: {
         ...defaultStyles.textTitle,
@@ -115,15 +123,22 @@ const styles = StyleSheet.create({
     input: {
         ...defaultStyles.input,
     },
-    botaoVerde: {
-        ...defaultStyles.botaoVerde,
-        marginBottom: 20,
-        marginTop: 20,
-    },
     mensagemErro: {
         color: 'red',
         fontSize: 14,
         marginBottom: 10
+    },
+    activityIndicator: {
+        paddingVertical: 10,
+    },
+    botoesContainer: {
+        justifyContent: 'center',
+        height: 220,
+        marginTop: 20,
+    },
+    botaoVerde: {
+        ...defaultStyles.botaoVerde,
+        marginBottom: 20,
     },
     botaoVerdeText: {
         ...defaultStyles.botaoVerdeText,
@@ -149,7 +164,8 @@ const mapStateToProps = state => {
         nome: state.CadastroUsuarioReducer.nome,
         email: state.CadastroUsuarioReducer.email,
         cpf: state.CadastroUsuarioReducer.cpf,
-        senha: state.CadastroUsuarioReducer.senha
+        senha: state.CadastroUsuarioReducer.senha,
+        salvandoUsuario: state.CadastroUsuarioReducer.salvandoUsuario
     }
 }
 

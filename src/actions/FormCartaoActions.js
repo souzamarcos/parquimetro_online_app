@@ -29,7 +29,6 @@ export const adicionarCartao = (id, numero, bandeira, validade) => {
         }
         catch(erro)
         {
-            console.log(erro.data);
             adicionarCartaoErro(erro.data.errors, dispatch);
         }
     }

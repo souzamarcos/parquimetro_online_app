@@ -6,6 +6,7 @@ import {
     StyleSheet,
     TextInput,
     TouchableHighlight,
+    ActivityIndicator
 } from 'react-native';
 import { renderErro } from '../utils/Erro';
 import { defaultStyles } from '../styles';
@@ -59,15 +60,23 @@ class TelaFormCartao  extends Component {
                     { renderErro(this.props.erro, 'validade')}
                 </View>
                 <View style={styles.botoesContainer}>
-                    <TouchableHighlight
-                        onPress={() => this._salvarCartao() }
-                        style={styles.botaoVerde}
-                        underlayColor="rgba(0, 0, 0, 0.05)"
-                    >
-                        <Text style={styles.botaoVerdeText}>
-                            Salvar
-                        </Text>
-                    </TouchableHighlight>
+                    {
+                        this.props.salvandoCartao ? 
+                        (
+                            <ActivityIndicator style={styles.activityIndicator} size="large" color={cores.verde} />
+                        ) :
+                        (
+                            <TouchableHighlight
+                                onPress={() => this._salvarCartao() }
+                                style={styles.botaoVerde}
+                                underlayColor="rgba(0, 0, 0, 0.05)"
+                            >
+                                <Text style={styles.botaoVerdeText}>
+                                    Salvar
+                                </Text>
+                            </TouchableHighlight>
+                        )
+                    }
                 </View>
             </View>
         );
@@ -94,10 +103,13 @@ const styles = StyleSheet.create({
     botoesContainer: {
         justifyContent: 'center',
         alignItems: 'center',
+        paddingVertical: 25,
+    },
+    activityIndicator: {
+        paddingVertical: 10,
     },
     botaoVerde: {
         ...defaultStyles.botaoVerde,
-        marginVertical: 25,
     },
     botaoVerdeText: {
         ...defaultStyles.botaoVerdeText,

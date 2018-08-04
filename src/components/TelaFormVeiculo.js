@@ -6,6 +6,7 @@ import {
     StyleSheet,
     TextInput,
     TouchableHighlight,
+    ActivityIndicator,
 } from 'react-native';
 import { renderErro } from '../utils/Erro';
 import { defaultStyles } from '../styles';
@@ -39,9 +40,6 @@ class TelaFormVeiculo  extends Component {
                         onChangeText={ (placa)=> this.props.modificaPlaca(placa) }
                         value={this.props.placa}
                         underlineColorAndroid={cores.cinza}
-                        customTextInputProps={{ //corrigir
-                            autoCapitalize: 'characters'
-                        }}
                         options={{
                             mask: 'AAA-9999',
                         }}
@@ -57,15 +55,23 @@ class TelaFormVeiculo  extends Component {
                     { renderErro(this.props.erro, 'descricao')}
                 </View>
                 <View style={styles.botoesContainer}>
-                    <TouchableHighlight
-                        onPress={() => this._salvarVeiculo() }
-                        style={styles.botaoVerde}
-                        underlayColor="rgba(0, 0, 0, 0.05)"
-                    >
-                        <Text style={styles.botaoVerdeText}>
-                            Salvar
-                        </Text>
-                    </TouchableHighlight>
+                {
+                    this.props.salvandoVeiculo ? 
+                    (
+                        <ActivityIndicator style={styles.activityIndicator} size="large" color={cores.verde} />
+                    ) :
+                    (
+                        <TouchableHighlight
+                            onPress={() => this._salvarVeiculo() }
+                            style={styles.botaoVerde}
+                            underlayColor="rgba(0, 0, 0, 0.05)"
+                        >
+                            <Text style={styles.botaoVerdeText}>
+                                Salvar
+                            </Text>
+                        </TouchableHighlight>
+                    )
+                }
                 </View>
             </View>
         );
@@ -92,10 +98,13 @@ const styles = StyleSheet.create({
     botoesContainer: {
         justifyContent: 'center',
         alignItems: 'center',
+        paddingVertical: 25,
     },
-    botaoVerde: {
+    activityIndicator: {
+        paddingVertical: 10,
+    }
+    ,botaoVerde: {
         ...defaultStyles.botaoVerde,
-        marginVertical: 25,
     },
     botaoVerdeText: {
         ...defaultStyles.botaoVerdeText,
