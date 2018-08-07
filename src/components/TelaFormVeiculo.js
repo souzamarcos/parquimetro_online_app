@@ -12,18 +12,24 @@ import { renderErro } from '../utils/Erro';
 import { defaultStyles } from '../styles';
 import cores from '../styles/cores';
 import { connect } from 'react-redux';
-import { adicionarVeiculo, modificaId, modificaPlaca, modificaApelido } from '../actions/FormVeiculoActions';
+import { salvarVeiculo, modificaId, modificaPlaca, modificaDescricao } from '../actions/FormVeiculoActions';
 import { TextInputMask } from 'react-native-masked-text';
 
 class TelaFormVeiculo  extends Component {
+    
+    static navigationOptions = ({ navigation }) => {
+        return {
+            title: navigation.getParam('titulo', 'Adicionar Veículo'),
+        };
+    };
 
     _salvarVeiculo(){
-        const {id, placa, apelido} = this.props;
-
-        this.props.adicionarVeiculo(id, placa, apelido);
+        this.props.salvarVeiculo(this.props.veiculo);
     }
+    
 
     render(){
+        console.log(this.props.veiculo);
         return (
             <View style={styles.tela}>
                 <View style={styles.imagemContainer}>
@@ -38,18 +44,19 @@ class TelaFormVeiculo  extends Component {
                         type="custom"
                         style={styles.input}
                         onChangeText={ (placa)=> this.props.modificaPlaca(placa) }
-                        value={this.props.placa}
+                        value={this.props.veiculo.placa}
                         underlineColorAndroid={cores.cinza}
+                        editable={this.props.veiculo.id === 0}
                         options={{
                             mask: 'AAA-9999',
                         }}
                     />
                     { renderErro(this.props.erro, 'placa')}
                     <TextInput
-                        placeholder="Apelido"
+                        placeholder="Descrição"
                         style={styles.input}
-                        onChangeText={ (apelido)=> this.props.modificaApelido(apelido) }
-                        value={this.props.apelido}
+                        onChangeText={ (descricao)=> this.props.modificaDescricao(descricao) }
+                        value={this.props.veiculo.descricao}
                         underlineColorAndroid={cores.cinza}
                     />
                     { renderErro(this.props.erro, 'descricao')}
@@ -113,12 +120,10 @@ const styles = StyleSheet.create({
 
 const mapStateToProps = state => {
     return {
-        id: state.FormVeiculoReducer.id,
-        placa: state.FormVeiculoReducer.placa,
-        apelido: state.FormVeiculoReducer.apelido,
+        veiculo: state.FormVeiculoReducer.veiculo,
         salvandoVeiculo: state.FormVeiculoReducer.salvandoVeiculo,
         erro: state.FormVeiculoReducer.erro,
     }
 };
 
-export default connect(mapStateToProps, { adicionarVeiculo, modificaId, modificaPlaca, modificaApelido })(TelaFormVeiculo);
+export default connect(mapStateToProps, { salvarVeiculo, modificaId, modificaPlaca, modificaDescricao })(TelaFormVeiculo);

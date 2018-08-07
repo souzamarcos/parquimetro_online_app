@@ -5,16 +5,32 @@ import {
     StyleSheet,
     TextInput,
     TouchableHighlight,
+    Alert,
 } from 'react-native';
 import { defaultStyles } from '../styles';
 import cores from '../styles/cores';
+import { connect } from 'react-redux';
+import { editarVeiculo, excluirVeiculo } from '../actions/FormVeiculoActions';
 
 class Veiculo  extends Component {
+
+    excluirVeiculo() {
+        Alert.alert(
+            'Aviso',
+            'Deseja realmente excluir o veículo? Esta ação não pode ser desfeita',
+            [
+                {text: 'Não' },
+                {text: 'Sim', onPress: () => this.props.excluirVeiculo(this.props.veiculo) }
+            ],
+            { cancelable: true }
+        );
+        return;
+    }
 
     render(){
         return (
             <TouchableHighlight
-                onPress={() => false}
+                onPress={() => this.props.editarVeiculo(this.props.veiculo)}
                 style={styles.veiculo}
                 underlayColor="rgba(0, 0, 0, 0.05)"
             >
@@ -25,11 +41,17 @@ class Veiculo  extends Component {
                                 Veículo {this.props.veiculo.index}
                             </Text>
                         </View>
-                        <View style={{ flex: 1}}>
-                            <Text style={styles.veiculoTextoDeletar}>
-                                Deletar
-                            </Text>
-                        </View>
+                        <TouchableHighlight
+                            onPress={() => this.excluirVeiculo()}
+                            style={styles.veiculoDeletar}
+                            underlayColor="rgba(0, 0, 0, 0.05)"
+                        >
+                            <View style={{ flex: 1}}>
+                                <Text style={styles.veiculoTextoDeletar}>
+                                    Deletar
+                                </Text>
+                            </View>
+                        </TouchableHighlight>
                     </View>
                     <TextInput
                         placeholder="Placa"
@@ -60,13 +82,16 @@ const styles = StyleSheet.create({
     },
     veiculoCabecalho: {
         flexDirection: 'row',
-        marginBottom: 10,
-        paddingHorizontal: 5
+        paddingTop: 5
     },
     veiculoTextoNumero: {
         fontWeight: 'bold',
         fontSize: 18,
         color: cores.azul
+    },
+    veiculoDeletar: {
+        paddingHorizontal: 10,
+        paddingVertical: 5,
     },
     veiculoTextoDeletar: {
         fontWeight: 'bold',
@@ -76,4 +101,4 @@ const styles = StyleSheet.create({
     }
 });
 
-export default Veiculo;
+export default connect(null, { editarVeiculo, excluirVeiculo })(Veiculo);

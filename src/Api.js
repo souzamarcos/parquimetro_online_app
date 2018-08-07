@@ -28,6 +28,7 @@ Api.interceptors.response.use((response) => {
             { cancelable: false }
         );
     }
+    console.log(error.response);
     return Promise.reject(error.response);
 });
 

@@ -111,11 +111,6 @@ const Navigation = createStackNavigator({
     },
     TelaFormVeiculo: {
         screen: TelaFormVeiculo,
-        navigationOptions: {
-            title: 'Veículo',
-            swipeEnabled: false,
-            tabBarVisible: true,
-        }
     },
     TelaFormCartao: {
         screen: TelaFormCartao,

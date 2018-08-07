@@ -20,12 +20,17 @@ export const CARREGAR_VEICULO_SUCESSO = "carregar_veiculo_sucesso";
 export const CARREGAR_VEICULO_ERRO = "carregar_veiculo_erro";
 
 // formVeiculo
+export const MODIFICA_VEICULO = "modifica_veiculo";
 export const MODIFICA_VEICULO_ID = "modifica_veiculo_id";
 export const MODIFICA_VEICULO_PLACA = "modifica_veiculo_placa";
-export const MODIFICA_VEICULO_APELIDO = "modifica_veiculo_apelido";
+export const MODIFICA_VEICULO_DESCRICAO = "modifica_veiculo_descricao";
 export const SALVAR_VEICULO_EM_ANDAMENTO = "salvar_veiculo_em_andamento";
 export const SALVAR_VEICULO_SUCESSO = "salvar_veiculo_sucesso";
 export const SALVAR_VEICULO_ERRO = "salvar_veiculo_erro";
+
+export const EXCLUIR_VEICULO_EM_ANDAMENTO = "excluir_veiculo_em_andamento";
+export const EXCLUIR_VEICULO_SUCESSO = "excluir_veiculo_sucesso";
+export const EXCLUIR_VEICULO_ERRO = "excluir_veiculo_erro";
 
 // formCartao
 export const MODIFICA_CARTAO_ID = "modifica_veiculo_id";

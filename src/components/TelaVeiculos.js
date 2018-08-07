@@ -14,6 +14,7 @@ import cores from '../styles/cores';
 import { connect } from 'react-redux';
 import { alteraTitulo } from '../actions/AppActions';
 import { carregarVeiculos } from '../actions/VeiculosActions';
+import { adicionarVeiculo } from '../actions/FormVeiculoActions';
 import Veiculo from './Veiculo';
 import Cabecalho from './Cabecalho';
 
@@ -77,7 +78,7 @@ class TelaVeiculos extends Component {
                 </ScrollView >
                 <View style={styles.botoesContainer}>
                     <TouchableHighlight
-                        onPress={() => this.props.navigation.navigate('TelaFormVeiculo')}
+                        onPress={() => this.props.adicionarVeiculo() }
                         style={styles.botaoAzul}
                         underlayColor="rgba(0, 0, 0, 0.05)"
                     >
@@ -126,4 +127,4 @@ const mapStateToProps = state => {
     }
 };
 
-export default connect(mapStateToProps, { alteraTitulo, carregarVeiculos })(TelaVeiculos);
+export default connect(mapStateToProps, { alteraTitulo, carregarVeiculos, adicionarVeiculo })(TelaVeiculos);
