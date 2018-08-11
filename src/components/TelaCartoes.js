@@ -23,15 +23,6 @@ class TelaCartoes extends Component {
     constructor(props){
         super(props);
     }
-
-    componentDidMount(){
-        const { navigation } = this.props;
-        this.subscriptions = [ // evento para detectar se o component está focado para alterar o título 
-            navigation.addListener('didFocus', () =>{
-                this.props.alteraTitulo('Cartão');
-            }),
-        ];
-    }
     
     componentWillMount(){
         this.props.carregarCartoes();
@@ -40,11 +31,6 @@ class TelaCartoes extends Component {
     
     componentWillReceiveProps(nextProps){
         this.criaFonteDados(nextProps.cartoes);
-    }
-
-    componentWillUnmount() {
-        // remove eventos
-        this.subscriptions.forEach(sub => sub.remove());
     }
 
     criaFonteDados(cartoes) {

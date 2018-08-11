@@ -7,7 +7,7 @@ export const telaFull = {
 
 export const telaCentralizada = {
     justifyContent: 'center',
-    alignItems: 'center',
+    //alignItems: 'center',
 };
 
 export const telaPaddingHorizontalGrande = {

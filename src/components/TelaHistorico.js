@@ -45,18 +45,6 @@ class TelaHistorico extends Component {
         };
     }
 
-    componentWillMount(){
-        if(this.props.isFocused){
-            this.props.alteraTitulo('Histórico');
-        }
-    }
-    
-    componentWillReceiveProps(nextProps){
-        if(nextProps.isFocused){
-            this.props.alteraTitulo('Histórico');
-        }
-    }
-
     renderRow(sessao) {
         return (
             <HistoricoItem sessao={sessao} />
@@ -109,4 +97,4 @@ const styles = StyleSheet.create({
     },
 });
 
-export default connect(null, {alteraTitulo})(withNavigationFocus(TelaHistorico));
+export default connect(null, {alteraTitulo})(TelaHistorico);

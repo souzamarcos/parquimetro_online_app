@@ -32,6 +32,24 @@ export default class Cabecalho extends Component {
                             style={styles.imagem}
                             source={require('../imgs/icone_cartao.png')} />
                     );
+                case 'Consulta':
+                    return (
+                        <Image 
+                            style={styles.imagem}
+                            source={require('../imgs/icone_lupa.png')} />
+                    );
+                case 'Consulta Sucesso':
+                    return (
+                        <Image 
+                            style={styles.imagem}
+                            source={require('../imgs/icone_parquimetro_sucesso.png')} />
+                    );
+                case 'Consulta Erro':
+                    return (
+                        <Image 
+                            style={styles.imagem}
+                            source={require('../imgs/icone_parquimetro_erro.png')} />
+                    );
                 default:
                     return (
                         <Text style={styles.title}>

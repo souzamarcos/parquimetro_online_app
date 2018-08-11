@@ -4,6 +4,7 @@ import {
   StyleSheet,
   View,
   TouchableHighlight,
+  Image,
 } from 'react-native';
 import _ from 'lodash';
 import cores from '../styles/cores';
@@ -42,7 +43,13 @@ class HistoricoGuardaItem extends Component {
                                 <Text style={styles.tituloTexto}>{this.props.consulta.placa}</Text>
                             </View>
                             <View style={{paddingLeft: 15}}>
-                                <Text style={styles.valor}>{_.isEmpty(this.props.consulta.sessao) ? 'Ruim': 'Bom'}</Text>
+                                <Text style={styles.valor}>
+                                    {
+                                        _.isEmpty(this.props.consulta.sessao) ? 
+                                            <Image style={styles.icone} source={require('../imgs/icone_parquimetro_erro.png')} />
+                                        :
+                                            <Image style={styles.icone} source={require('../imgs/icone_parquimetro_sucesso.png')} />
+                                    }</Text>
                             </View>
                         </View>
                     </View>
@@ -82,6 +89,10 @@ const styles = StyleSheet.create({
     },
     data:{
         color: cores.azul,
+    },
+    icone: {
+        width: 100,
+        height: 100,
     },
     duracao: {
         color: '#6e868e',

@@ -6,6 +6,7 @@ import TelaInicial from './components/TelaInicial';
 import TelaCadastroUsuario from './components/TelaCadastroUsuario';
 import TelaLogin from './components/TelaLogin';
 import TelaCompletarCadastroUsuario from './components/TelaCompletarCadastroUsuario';
+import TelaConsultaGuarda from './components/TelaConsultaGuarda';
 import TelaHistorico from './components/TelaHistorico';
 import TelaHistoricoGuarda from './components/TelaHistoricoGuarda';
 import TelaParquimetro from './components/TelaParquimetro';
@@ -16,6 +17,7 @@ import TelaConfiguracao from './components/TelaConfiguracao';
 import TelaPerguntasFrequentes from './components/TelaPerguntas';
 import TelaFormVeiculo from './components/TelaFormVeiculo';
 import TelaFormCartao from './components/TelaFormCartao';
+import TelaRetornoConsultaGuarda from './components/TelaRetornoConsultaGuarda';
 import TelaSobre from './components/TelaSobre';
 
 import Ionicons from 'react-native-vector-icons/Ionicons';
@@ -60,15 +62,51 @@ const TelaPrincipal = createBottomTabNavigator(
                         iconName = `md-settings`;
                         break;
                 }
-        
-                // You can return any component that you like here! We usually use an
-                // icon component from react-native-vector-icons
+
                 return <Ionicons name={iconName} size={25} color={tintColor} />;
               },
         })
     }
 );
-  
+const TelaPrincipalGuarda = createBottomTabNavigator(
+    {
+        TelaConsultaGuarda: TelaConsultaGuarda,
+        TelaHistoricoGuarda: TelaHistoricoGuarda,
+        TelaConfiguracao: TelaConfiguracao,
+    },
+    {
+        initialRouteName : 'TelaConsultaGuarda',
+        tabBarOptions: {
+            showLabel: false,
+            style: {
+                backgroundColor: '#fff',
+            },
+        },
+        navigationOptions: ({ navigation }) => ({
+            tabBarIcon: ({ focused, tintColor }) => {
+                const { routeName } = navigation.state;
+                let iconName;
+                switch(routeName){
+                    case 'TelaConsultaGuarda':
+                        iconName = `md-search`;
+                        break;
+                    case 'TelaHistoricoGuarda':
+                        iconName = `md-list`;
+                        break;
+                    case 'TelaConfiguracao':
+                        iconName = `md-settings`;
+                        break;
+                    default:
+                        iconName = `md-settings`;
+                        break;
+                }
+
+                return <Ionicons name={iconName} size={25} color={tintColor} />;
+              },
+        })
+    }
+);
+
 const Navigation = createStackNavigator({
     TelaInicial: {
         screen: TelaInicial,
@@ -109,6 +147,20 @@ const Navigation = createStackNavigator({
             header: null
         }
     },
+    TelaPrincipalGuarda: { 
+        screen: TelaPrincipalGuarda,
+        navigationOptions: {
+            swipeEnabled: false,
+            header: null
+        }
+    },
+    TelaRetornoConsultaGuarda: {
+        screen: TelaRetornoConsultaGuarda,
+        navigationOptions: {
+            swipeEnabled: false,
+            header: null
+        }
+    },
     TelaFormVeiculo: {
         screen: TelaFormVeiculo,
     },
@@ -139,7 +191,7 @@ const Navigation = createStackNavigator({
         }
     }
 },{
-    initialRouteName : 'TelaInicial',
+    initialRouteName : 'TelaPrincipalGuarda',
     navigationOptions: {
         
     }

@@ -4,12 +4,13 @@ import {
     StyleSheet, 
     ListView, 
     Picker,
+    ScrollView
 } from 'react-native';
 import HistoricoGuardaItem from './HistoricoGuardaItem';
 import { defaultStyles } from '../styles';
 import cores from '../styles/cores';
 import { withNavigationFocus } from 'react-navigation';
-
+import Cabecalho from './Cabecalho';
 import { connect } from 'react-redux';
 import { alteraTitulo } from '../actions/AppActions';
 
@@ -23,7 +24,7 @@ class TelaHistoricoGuarda extends Component {
         for(let i = 0; i< 5; i++){
             if(i%2==0){
                 consultas.push({
-                    data: '06 Abril - 12:32',
+                    data: '06 Abril - 12:12',
                     placa: 'ABC-4513',
                     sessao: {
                         uid: i,
@@ -37,12 +38,12 @@ class TelaHistoricoGuarda extends Component {
                         cartaoBandeira: 'Mastercard',
                         cartao: '**** **** **** 5413',
                         horaInicio: '12:00',
-                        horaFim: '12:22'
+                        horaFim: '13:22'
                     }
                 });
             }else{
                 consultas.push({
-                    data: '06 Abril - 12:32',
+                    data: '06 Abril - 12:12',
                     placa: 'ABC-3333',
                     sessao: null,
                 });
@@ -55,18 +56,6 @@ class TelaHistoricoGuarda extends Component {
         };
     }
 
-    componentWillMount(){
-        if(this.props.isFocused){
-            this.props.alteraTitulo('Histórico');
-        }
-    }
-    
-    componentWillReceiveProps(nextProps){
-        if(nextProps.isFocused){
-            this.props.alteraTitulo('Histórico');
-        }
-    }
-
     renderRow(consulta) {
         return (
             <HistoricoGuardaItem consulta={consulta} />
@@ -75,7 +64,8 @@ class TelaHistoricoGuarda extends Component {
 
     render(){
         return (
-            <View style={styles.tela}>
+            <ScrollView style={styles.tela} contentContainerStyle={{flex:1}}>
+                <Cabecalho titulo="Consultas" />
                 <View>
                     <Picker  style={{alignSelf: 'flex-end', width: 130, color: cores.azul}}
                         selectedValue={this.state.ordem}
@@ -91,9 +81,10 @@ class TelaHistoricoGuarda extends Component {
                         enableEmptySections
                         dataSource={this.state.dataSource}
                         renderRow={this.renderRow}
+                        contentContainerStyle={styles.listaContainer}
                     />
                 </View>
-            </View>
+            </ScrollView>
         );
     }
 }
@@ -101,8 +92,10 @@ class TelaHistoricoGuarda extends Component {
 const styles = StyleSheet.create({
     tela: {
         ...defaultStyles.telaFull,
-        ...defaultStyles.telaPaddingHorizontalPequeno,
         backgroundColor: '#e6ebee'
+    },
+    listaContainer: {
+        ...defaultStyles.telaPaddingPequeno,
     },
 });
 

@@ -34,11 +34,11 @@ class TelaConfiguracao  extends Component {
         return (
             <ScrollView style={styles.tela}>
                 <View style={styles.usuario}>
-                    <Text style={styles.usuarioNome}>{this.props.usuario.nome} {this.props.usuario.sobrenome}</Text>
-                    <Text style={styles.usuarioEmail}>{this.props.usuario.email}</Text>
+                    <Text style={styles.usuarioNome}>{this.props.usuario && this.props.usuario.nome} {this.props.usuario && this.props.usuario.sobrenome}</Text>
+                    <Text style={styles.usuarioEmail}>{this.props.usuario && this.props.usuario.email}</Text>
                 </View>
                 <TouchableHighlight
-                    onPress={() => this.props.navigation.navigate('PerfilPessoal') }
+                    onPress={() => this.props.navigation.navigate('TelaMinhaConta') }
                     underlayColor="rgba(0, 0, 0, 0.05)"
                     >
                     <View style={styles.item}>
@@ -51,7 +51,7 @@ class TelaConfiguracao  extends Component {
                     </View>
                 </TouchableHighlight>
                 <TouchableHighlight
-                    onPress={() => this.props.navigation.push('Perguntas') }
+                    onPress={() => this.props.navigation.push('TelaPerguntasFrequentes') }
                     underlayColor="rgba(0, 0, 0, 0.05)"
                     >
                     <View style={styles.item}>

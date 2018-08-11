@@ -73,7 +73,7 @@ class TelaCadastroUsuario extends Component {
                         (
                             <View>
                                 <TouchableHighlight
-                                    onPress={() => this.props.navigation.push('TelaPrincipal')}
+                                    onPress={() => this.props.navigation.push('TelaCompletarCadastroUsuario')}
                                     style={styles.botaoVerde}
                                     underlayColor="rgba(0, 0, 0, 0.05)"
                                 >
@@ -82,7 +82,7 @@ class TelaCadastroUsuario extends Component {
                                     </Text>
                                 </TouchableHighlight>
                                 <TouchableHighlight
-                                    onPress={() => this.props.navigation.push('TelaPrincipal')}
+                                    onPress={() => this.props.navigation.push('TelaCompletarCadastroUsuario')}
                                     style={styles.botaoAzul}
                                     underlayColor="rgba(0, 0, 0, 0.05)"
                                 >
@@ -91,7 +91,7 @@ class TelaCadastroUsuario extends Component {
                                     </Text>
                                 </TouchableHighlight>
                                 <TouchableHighlight
-                                    onPress={() => this.props.navigation.navigate('TelaPrincipal')}
+                                    onPress={() => this.props.navigation.navigate('TelaCompletarCadastroUsuario')}
                                     style={styles.botaoVermelho}
                                     underlayColor="rgba(0, 0, 0, 0.05)"
                                 >
