@@ -14,11 +14,11 @@ import { TextInputMask } from 'react-native-masked-text';
 export default class TelaRetornoConsultaGuarda extends Component {
 
     state = {
-        // sessao: {
-        //     id: 10
-        //     //mais propriedades
-        // },
-        sessao: null
+        sessao: {
+            id: 10
+            //mais propriedades
+        },
+        // sessao: null
     }
 
     render(){
@@ -34,18 +34,18 @@ export default class TelaRetornoConsultaGuarda extends Component {
                 <Text style={[styles.title, { color: this.state.sessao ? cores.verde : cores.vermelho} ]}>
                     {
                         this.state.sessao ?
-                        'Veículo cadastrado' :
-                        'Veículo não registrado'
+                        'Pagamento registrado' :
+                        'Pagamento não registrado'
                     }
                 </Text>
                 {
                     this.state.sessao ?
                         <Text style={styles.text}>
-                            O veículo com placa KPO-5359 foi registrado no parquímetro localizado em Av. Paulo de Frontin - Aterrado - Volta Redonda.
+                            O pagamento do veículo com placa KPO-5359 foi registrado no parquímetro localizado em Av. Paulo de Frontin - Aterrado - Volta Redonda.
                         </Text>
                     :
                         <Text style={styles.text}>
-                            O veículo com placa KPO-5359 não foi registrado.
+                            O pagamento do veículo com placa KPO-5359 não foi registrado.
                         </Text>
                 }
                 

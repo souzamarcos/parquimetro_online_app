@@ -5,55 +5,71 @@ import {
     StyleSheet,
     TextInput,
     TouchableHighlight,
+    Alert,
 } from 'react-native';
 import { defaultStyles } from '../styles';
 import cores from '../styles/cores';
+import { connect } from 'react-redux';
+import { excluirCartao } from '../actions/FormCartaoActions';
 
 class Cartao  extends Component {
 
+    excluirCartao() {
+        Alert.alert(
+            'Aviso',
+            'Deseja realmente excluir o cartão? Esta ação não pode ser desfeita',
+            [
+                {text: 'Não' },
+                {text: 'Sim', onPress: () => this.props.excluirCartao(this.props.cartao) }
+            ],
+            { cancelable: true }
+        );
+        return;
+    }
+
     render(){
         return (
-            <TouchableHighlight
-                onPress={() => false}
-                style={styles.cartao}
-                underlayColor="rgba(0, 0, 0, 0.05)"
-            >
-                <View>
-                    <View style={styles.cartaoCabecalho}>
-                        <View style={{ flex: 1}}>
-                            <Text style={styles.cartaoTextoNumero}>
-                                Cartão {this.props.cartao.index}
-                            </Text>
-                        </View>
+            <View>
+                <View style={styles.cartaoCabecalho}>
+                    <View style={{ flex: 1}}>
+                        <Text style={styles.cartaoTextoNumero}>
+                            Cartão {this.props.cartao.index}
+                        </Text>
+                    </View>
+                    <TouchableHighlight
+                        onPress={() => this.excluirCartao()}
+                        style={styles.veiculoDeletar}
+                        underlayColor="rgba(0, 0, 0, 0.05)"
+                    >
                         <View style={{ flex: 1}}>
                             <Text style={styles.cartaoTextoDeletar}>
                                 Deletar
                             </Text>
                         </View>
-                    </View>
-                    <TextInput
-                        placeholder="Número"
-                        style={styles.input}
-                        value={this.props.cartao.numero}
-                        underlineColorAndroid={cores.cinza}
-                        editable={false}
-                    />
-                    <TextInput
-                        placeholder="Bandeira"
-                        style={styles.input}
-                        value={this.props.cartao.bandeira}
-                        underlineColorAndroid={cores.cinza}
-                        editable={false}
-                    />
-                    {/* <TextInput
-                        placeholder="Validade"
-                        style={styles.input}
-                        onChangeText={(validade) => this.setState({validade})}
-                        value={this.state.validade}
-                        underlineColorAndroid={cores.cinza}
-                    /> */}
+                    </TouchableHighlight>
                 </View>
-            </TouchableHighlight>
+                <TextInput
+                    placeholder="Número"
+                    style={styles.input}
+                    value={"**** **** **** " + this.props.cartao.numero}
+                    underlineColorAndroid={cores.cinza}
+                    editable={false}
+                />
+                <TextInput
+                    placeholder="Bandeira"
+                    style={styles.input}
+                    value={this.props.cartao.bandeira}
+                    underlineColorAndroid={cores.cinza}
+                    editable={false}
+                />
+                {/* <TextInput
+                    placeholder="Validade"
+                    style={styles.input}
+                    onChangeText={(validade) => this.setState({validade})}
+                    value={this.state.validade}
+                    underlineColorAndroid={cores.cinza}
+                /> */}
+            </View>
         );
     }
 }
@@ -87,4 +103,4 @@ const styles = StyleSheet.create({
     }
 });
 
-export default Cartao;
+export default connect(null, { excluirCartao })(Cartao);

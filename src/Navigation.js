@@ -191,7 +191,7 @@ const Navigation = createStackNavigator({
         }
     }
 },{
-    initialRouteName : 'TelaPrincipalGuarda',
+    initialRouteName : 'TelaInicial',
     navigationOptions: {
         
     }

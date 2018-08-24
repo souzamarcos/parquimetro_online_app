@@ -6,21 +6,32 @@ import {
     StyleSheet,
     TextInput,
     TouchableHighlight,
-    ActivityIndicator
+    ActivityIndicator,
+    Picker
 } from 'react-native';
 import { renderErro } from '../utils/Erro';
 import { defaultStyles } from '../styles';
 import cores from '../styles/cores';
 import { connect } from 'react-redux';
-import { adicionarCartao, modificaId, modificaNumero, modificaBandeira, modificaValidade } from '../actions/FormCartaoActions';
+import {
+    adicionarCartao, 
+    modificaId, 
+    modificaNumero, 
+    modificaBandeira, 
+    modificaMesValidade, 
+    modificaAnoValidade, 
+    modificaCvv,
+} from '../actions/FormCartaoActions';
 import { TextInputMask } from 'react-native-masked-text';
 
-class TelaFormCartao  extends Component {
+class TelaFormCartao  extends Component {  
 
+    constructor(props){
+        super(props)
+    }
+    
     _salvarCartao(){
-        const {id, numero, bandeira, validade} = this.props;
-
-        this.props.adicionarCartao(id, numero, bandeira, validade);
+        this.props.adicionarCartao(this.props.cartao);
     }
 
     render(){
@@ -38,26 +49,72 @@ class TelaFormCartao  extends Component {
                         type="credit-card"
                         style={styles.input}
                         onChangeText={ (numero)=> this.props.modificaNumero(numero) }
-                        value={this.props.numero}
+                        value={this.props.cartao.numero}
                         underlineColorAndroid={cores.cinza}
                     />
                     { renderErro(this.props.erro, 'numero_cartao')}
                     <TextInput
-                        placeholder="Apelido"
+                        placeholder="CVV"
+                        secureTextEntry={true}
                         style={styles.input}
-                        onChangeText={ (bandeira)=> this.props.modificaBandeira(bandeira) }
-                        value={this.props.bandeira}
+                        onChangeText={ (cvv)=> this.props.modificaCvv(cvv) }
+                        value={this.props.cartao.cvv}
                         underlineColorAndroid={cores.cinza}
                     />
+                    { renderErro(this.props.erro, 'token')}
+                    <Picker
+                        selectedValue={this.props.cartao.bandeira}
+                        style={{ height: 50, width: '100%' }}
+                        onValueChange={(bandeira)=> this.props.modificaBandeira(bandeira)}>
+                            <Picker.Item label="Bandeira" value="" />
+                            <Picker.Item label="Visa" value="Visa" />
+                            <Picker.Item label="Master Card" value="Master Card" />
+                            <Picker.Item label="Elo" value="Elo" />
+                    </Picker>
                     { renderErro(this.props.erro, 'bandeira')}
-                    <TextInput
-                        placeholder="Validade"
-                        style={styles.input}
-                        onChangeText={ (validade)=> this.props.modificaValidade(validade) }
-                        value={this.props.validade}
-                        underlineColorAndroid={cores.cinza}
-                    />
-                    { renderErro(this.props.erro, 'validade')}
+                    <Picker
+                        selectedValue={this.props.cartao.mes_validade}
+                        style={{ height: 50, width: '100%' }}
+                        onValueChange={(mes_validade) => this.props.modificaMesValidade(mes_validade)}>
+                            <Picker.Item label="Mês de Validade" value="" />
+                            <Picker.Item label="Janeiro" value="1" />
+                            <Picker.Item label="Fevereiro" value="2" />
+                            <Picker.Item label="Março" value="3" />
+                            <Picker.Item label="Abril" value="4" />
+                            <Picker.Item label="Maio" value="5" />
+                            <Picker.Item label="Junho" value="6" />
+                            <Picker.Item label="Julho" value="7" />
+                            <Picker.Item label="Agosto" value="8" />
+                            <Picker.Item label="Setembro" value="9" />
+                            <Picker.Item label="Outubro" value="10" />
+                            <Picker.Item label="Novembro" value="11" />
+                            <Picker.Item label="Dezembro" value="12" />
+                    </Picker>
+                    { renderErro(this.props.erro, 'mes_validade')}
+                    <Picker
+                        selectedValue={this.props.cartao.ano_validade}
+                        style={{ height: 50, width: '100%' }}
+                        onValueChange={(ano_validade) => this.props.modificaAnoValidade(ano_validade)}>
+                            <Picker.Item label="Ano de Validade" value="" />
+                            <Picker.Item label="2018" value="2018" />
+                            <Picker.Item label="2019" value="2019" />
+                            <Picker.Item label="2020" value="2020" />
+                            <Picker.Item label="2021" value="2021" />
+                            <Picker.Item label="2022" value="2022" />
+                            <Picker.Item label="2023" value="2023" />
+                            <Picker.Item label="2024" value="2024" />
+                            <Picker.Item label="2025" value="2025" />
+                            <Picker.Item label="2026" value="2026" />
+                            <Picker.Item label="2027" value="2027" />
+                            <Picker.Item label="2028" value="2028" />
+                            <Picker.Item label="2029" value="2029" />
+                            <Picker.Item label="2030" value="2030" />
+                            <Picker.Item label="2031" value="2031" />
+                            <Picker.Item label="2032" value="2032" />
+                            <Picker.Item label="2033" value="2033" />
+                            <Picker.Item label="2034" value="2034" />
+                    </Picker>
+                    { renderErro(this.props.erro, 'ano_validade')}
                 </View>
                 <View style={styles.botoesContainer}>
                     {
@@ -121,13 +178,18 @@ const styles = StyleSheet.create({
 
 const mapStateToProps = state => {
     return {
-        id: state.FormCartaoReducer.id,
-        numero: state.FormCartaoReducer.numero,
-        bandeira: state.FormCartaoReducer.bandeira,
-        validade: state.FormCartaoReducer.validade,
+        cartao: state.FormCartaoReducer.cartao,
         salvandoCartao: state.FormCartaoReducer.salvandoCartao,
         erro: state.FormCartaoReducer.erro,
     }
 };
 
-export default connect(mapStateToProps, { adicionarCartao, modificaId, modificaNumero, modificaBandeira, modificaValidade  })(TelaFormCartao);
+export default connect(mapStateToProps, { 
+    adicionarCartao, 
+    modificaId, 
+    modificaNumero, 
+    modificaBandeira, 
+    modificaMesValidade, 
+    modificaAnoValidade, 
+    modificaCvv,
+})(TelaFormCartao);

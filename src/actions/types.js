@@ -14,7 +14,7 @@ export const CARREGAR_CARTAO_EM_ANDAMENTO = "carregar_cartao_em_andamento";
 export const CARREGAR_CARTAO_SUCESSO = "carregar_cartao_sucesso";
 export const CARREGAR_CARTAO_ERRO = "carregar_cartao_erro";
 
-// veiculo
+// cartao
 export const CARREGAR_VEICULO_EM_ANDAMENTO = "carregar_veiculo_em_andamento";
 export const CARREGAR_VEICULO_SUCESSO = "carregar_veiculo_sucesso";
 export const CARREGAR_VEICULO_ERRO = "carregar_veiculo_erro";
@@ -36,10 +36,16 @@ export const EXCLUIR_VEICULO_ERRO = "excluir_veiculo_erro";
 export const MODIFICA_CARTAO_ID = "modifica_veiculo_id";
 export const MODIFICA_CARTAO_NUMERO = "modifica_veiculo_numero";
 export const MODIFICA_CARTAO_BANDEIRA = "modifica_veiculo_bandeira";
-export const MODIFICA_CARTAO_VALIDADE = "modifica_veiculo_validade";
+export const MODIFICA_CARTAO_MES_VALIDADE = "modifica_veiculo_mes_validade";
+export const MODIFICA_CARTAO_ANO_VALIDADE = "modifica_veiculo_ano_validade";
+export const MODIFICA_CARTAO_CVV = "modifica_veiculo_cvv";
 export const SALVAR_CARTAO_EM_ANDAMENTO = "salvar_veiculo_em_andamento";
 export const SALVAR_CARTAO_SUCESSO = "salvar_veiculo_sucesso";
 export const SALVAR_CARTAO_ERRO = "salvar_veiculo_erro";
+
+export const EXCLUIR_CARTAO_EM_ANDAMENTO = "excluir_cartao_em_andamento";
+export const EXCLUIR_CARTAO_SUCESSO = "excluir_cartao_sucesso";
+export const EXCLUIR_CARTAO_ERRO = "excluir_cartao_erro";
 
 // cadastro usuario
 export const MODIFICA_CADASTRO_USUARIO_NOME = "modifica_cadastro_usuario_nome";
