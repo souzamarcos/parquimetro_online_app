@@ -4,6 +4,7 @@ import {
     CARREGAR_CARTAO_SUCESSO,
     CARREGAR_CARTAO_ERRO,
 } from './types';
+import _ from 'lodash';
 
 export const carregarCartoes = () => {
 
@@ -12,11 +13,16 @@ export const carregarCartoes = () => {
         try
         {
             const retorno = await API.get('cartao',{});
-            carregarCartoesSucesso(retorno.data, dispatch);
+
+            const cartoes = _.map(retorno.data, (item, index) =>{
+                return {...item, index: index + 1};
+            });
+
+            carregarCartoesSucesso(cartoes, dispatch);
         }
         catch(erro)
         {
-            carregarCartoesErro(erro.response.message, dispatch);
+            carregarCartoesErro(erro.message, dispatch);
         }
     }
 }

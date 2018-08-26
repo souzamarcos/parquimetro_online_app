@@ -191,7 +191,7 @@ const Navigation = createStackNavigator({
         }
     }
 },{
-    initialRouteName : 'TelaInicial',
+    initialRouteName : 'TelaLogin',
     navigationOptions: {
         
     }

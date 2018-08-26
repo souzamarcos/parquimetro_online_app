@@ -116,12 +116,8 @@ const styles = StyleSheet.create({
 });
 
 const mapStateToProps = state => {
-    const veiculos = _.map(state.VeiculosReducer.veiculos, (item, index) =>{
-        return {...item, index: index + 1};
-    });
-
     return {
-        veiculos,
+        veiculos: state.VeiculosReducer.veiculos,
         carregandoVeiculos: state.VeiculosReducer.carregandoVeiculos,
         erro: state.VeiculosReducer.erro,
     }

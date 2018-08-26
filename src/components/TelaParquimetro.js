@@ -6,18 +6,20 @@ import {
   ScrollView,
   Picker,
   TouchableHighlight,
-  Alert
+  Alert,
+  ActivityIndicator
 } from 'react-native';
 import BackgroundTimer from 'react-native-background-timer';
 import _ from 'lodash';
 import Color from 'color';
 import Moment, { duration } from 'moment';
 import { defaultStyles } from '../styles';
+import cores from '../styles/cores';
 import ProgressCircle from 'react-native-progress-circle';
-import { withNavigationFocus } from 'react-navigation';
 import { connect } from 'react-redux';
-import { alteraTitulo } from '../actions/AppActions';
-
+import { carregarParquimetro, modificaLatitudeLongitude } from '../actions/ParquimetroActions';
+import { carregarCartoes } from '../actions/CartoesActions';
+import { carregarVeiculos } from '../actions/VeiculosActions';
 
 class TelaParquimetro extends Component {
 
@@ -36,15 +38,27 @@ class TelaParquimetro extends Component {
     }
 
     componentWillMount(){
-        if(this.props.isFocused){
-            this.props.alteraTitulo('');
-        }
+        this.props.carregarCartoes();
+        this.props.carregarVeiculos();
+        this.geolocation = navigator.geolocation.watchPosition(
+            (position) => {
+                this.props.modificaLatitudeLongitude(position.coords);
+                this.props.carregarParquimetro(this.props.latitude, this.props.longitude);
+            }, 
+            (erro) => {
+                console.log(erro);
+            },
+            { 
+                enableHighAccuracy: true, 
+                timeout: 10000, 
+                maximumAge: 1000,
+                distanceFilter: 10,
+                enableHighAccuracy: true
+            });
     }
-    
-    componentWillReceiveProps(nextProps){
-        if(nextProps.isFocused){
-            this.props.alteraTitulo('');
-        }
+
+    componentWillUnmount(){
+        navigator.geolocation.clearWatch(this.geolocation);
     }
 
     iniciarSessao(){
@@ -182,6 +196,60 @@ class TelaParquimetro extends Component {
         });
     }
 
+    renderPickerCartao(){
+        if(_.isEmpty(this.props.cartoes)) {
+            return (
+                <Picker
+                    selectedValue={this.state.cartao}
+                    style={{ height: 50, width: '100%' }}
+                    onValueChange={(itemValue) => this.setState({cartao: itemValue})}>
+                    <Picker.Item key={-1} label="Cartão" value={null} />
+                </Picker>
+            )
+        }
+
+        return (
+            <Picker
+                selectedValue={this.state.cartao}
+                style={{ height: 50, width: '100%' }}
+                onValueChange={(itemValue) => this.setState({cartao: itemValue})}>
+                <Picker.Item key={-1} label="Cartão" value={null} />
+                {
+                    this.props.cartoes.map((cartao) => (
+                        <Picker.Item key={cartao.index} label={"****.****.****." + cartao.numero} value={cartao.id} />
+                    ))
+                }
+            </Picker>
+        )
+    }
+
+    renderPickerVeiculo(){
+        if(_.isEmpty(this.props.veiculos)) {
+            return (
+                <Picker
+                    selectedValue={this.state.veiculo}
+                    style={{ height: 50, width: '100%' }}
+                    onValueChange={(itemValue) => this.setState({veiculo: itemValue})}>
+                    <Picker.Item label="Veículo" value={null} />
+                </Picker>
+            )
+        }
+
+        return (
+            <Picker
+                selectedValue={this.state.veiculo}
+                style={{ height: 50, width: '100%' }}
+                onValueChange={(itemValue) => this.setState({veiculo: itemValue})}>
+                <Picker.Item label="Veículo" value={null} />
+                {
+                    this.props.veiculos.map((veiculo) => (
+                        <Picker.Item key={veiculo.index} label={veiculo.placa.toUpperCase()} value={veiculo.id} />
+                    ))
+                }
+            </Picker>
+        )
+    }
+
     renderTela(){
         if(!_.isEmpty(this.state.sessao)){
             if(this.state.sessao.exibirResumoSessao){
@@ -305,28 +373,25 @@ class TelaParquimetro extends Component {
                             <Text style={styles.circuloProgressoTexto}>{this.state.textoProgresso}</Text>
                         </ProgressCircle>
                     </View>
-                    <Text style={styles.textoRua}>
-                        Avenida Paulo de Frontin
-                    </Text>
+                    {
+                        this.props.carregandoParquimetro ?
+                        <ActivityIndicator style={styles.activityIndicator} size="large" color={cores.branco} />
+                        :
+                        (
+                            <Text style={styles.textoContagem}>
+                                {this.props.parquimetro.endereco_completo}
+                            </Text>
+                        )
+                    }
                 </View>
                 <View style={styles.parteInferior}>
                     <View style={styles.blocoBranco}>
-                        <Picker
-                            selectedValue={this.state.cartao}
-                            style={{ height: 50, width: '100%' }}
-                            onValueChange={(itemValue) => this.setState({cartao: itemValue})}>
-                            <Picker.Item label="Cartão" value={null} />
-                            <Picker.Item label="****.****.****.1111" value="1" />
-                            <Picker.Item label="****.****.****.1234" value="2" />
-                        </Picker>
-                        <Picker
-                            selectedValue={this.state.veiculo}
-                            style={{ height: 50, width: '100%' }}
-                            onValueChange={(itemValue) => this.setState({veiculo: itemValue})}>
-                            <Picker.Item label="Veículo" value={null} />
-                            <Picker.Item label="abc-1234" value="1" />
-                            <Picker.Item label="abc-2222" value="2" />
-                        </Picker>
+                        {
+                            this.renderPickerCartao()
+                        }
+                        {
+                            this.renderPickerVeiculo()
+                        }
                         <TouchableHighlight
                             onPress={() => this.iniciarSessao()}
                             style={styles.botaoVerde}
@@ -461,4 +526,25 @@ const styles = StyleSheet.create({
     },
 });
 
-export default connect(null, {alteraTitulo})(withNavigationFocus(TelaParquimetro));
+const mapStateToProps = state => {
+    return {
+        cartoes: state.CartoesReducer.cartoes,
+        veiculos: state.VeiculosReducer.veiculos,
+        parquimetro: state.ParquimetroReducer.parquimetro,
+        carregandoParquimetro: state.ParquimetroReducer.carregandoParquimetro,
+        sessao: state.ParquimetroReducer.sessao,
+        carregandoSessao: state.ParquimetroReducer.carregandoSessao,
+        cartaoId: state.ParquimetroReducer.cartaoId,
+        veiculoId: state.ParquimetroReducer.veiculoId,
+        latitude: state.ParquimetroReducer.latitude,
+        longitude: state.ParquimetroReducer.longitude,
+    }
+};
+
+
+export default connect(mapStateToProps, {
+    carregarParquimetro,
+    modificaLatitudeLongitude,
+    carregarCartoes,
+    carregarVeiculos
+})(TelaParquimetro);

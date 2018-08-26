@@ -4,6 +4,7 @@ import {
     CARREGAR_VEICULO_SUCESSO,
     CARREGAR_VEICULO_ERRO,
 } from './types';
+import _ from 'lodash';
 
 export const carregarVeiculos = () => {
 
@@ -12,11 +13,15 @@ export const carregarVeiculos = () => {
         try
         {
             const retorno = await API.get('veiculo',{});
-            carregarVeiculosSucesso(retorno.data, dispatch);
+            const veiculos = _.map(retorno.data, (item, index) =>{
+                return {...item, index: index + 1};
+            });
+
+            carregarVeiculosSucesso(veiculos, dispatch);
         }
         catch(erro)
         {
-            carregarVeiculosErro(erro.response.message, dispatch);
+            carregarVeiculosErro(erro.message, dispatch);
         }
     }
 }

@@ -55,3 +55,11 @@ export const MODIFICA_CADASTRO_USUARIO_SENHA = "modifica_cadastro_usuario_senha"
 export const SALVAR_CADASTRO_USUARIO_EM_ANDAMENTO = "salvar_cadastro_usuario_em_andamento";
 export const SALVAR_CADASTRO_USUARIO_SUCESSO = "salvar_cadastro_usuario_sucesso";
 export const SALVAR_CADASTRO_USUARIO_ERRO = "salvar_cadastro_usuario_erro";
+
+
+//parquimetro
+export const MODIFICA_SESSAO_PARQUIMETRO = "modifica_sessao_parquimetro";
+export const MODIFICA_SESSAO_LATITUDE_LONGITUDE = "modifica_sessao_latitude_longitude";
+export const MODIFICA_SESSAO_CARTAO_ID = "modifica_sessao_cartao_id";
+export const MODIFICA_SESSAO_VEICULO_ID = "modifica_sessao_veiculo_id";
+export const CARREGAR_SESSAO_PARQUIMETRO_EM_ANDAMENTO = "carregar_sessao_parquimetro_em_andamento";

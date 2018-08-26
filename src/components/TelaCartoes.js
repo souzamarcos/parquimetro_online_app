@@ -103,12 +103,8 @@ const styles = StyleSheet.create({
 
 
 const mapStateToProps = state => {
-    const cartoes = _.map(state.CartoesReducer.cartoes, (item, index) =>{
-        return {...item, index: index + 1};
-    });
-
     return {
-        cartoes,
+        cartoes: state.CartoesReducer.cartoes,
         carregandoCartoes: state.CartoesReducer.carregandoCartoes,
         erro: state.CartoesReducer.erro,
     }
