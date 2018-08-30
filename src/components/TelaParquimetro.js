@@ -9,6 +9,7 @@ import {
   Alert,
   ActivityIndicator
 } from 'react-native';
+import { renderErro } from '../utils/Erro';
 import BackgroundTimer from 'react-native-background-timer';
 import _ from 'lodash';
 import Color from 'color';
@@ -17,7 +18,17 @@ import { defaultStyles } from '../styles';
 import cores from '../styles/cores';
 import ProgressCircle from 'react-native-progress-circle';
 import { connect } from 'react-redux';
-import { carregarParquimetro, modificaLatitudeLongitude } from '../actions/ParquimetroActions';
+import { 
+    carregarParquimetro, 
+    carregarParquimetroErro,
+    modificaLatitudeLongitude, 
+    modificaCartaoId, 
+    modificaVeiculoId,
+    iniciarSessao,
+    modificaPorcentagemContador,
+    modificaTempoContador,
+    modificaValorAtual,
+ } from '../actions/ParquimetroActions';
 import { carregarCartoes } from '../actions/CartoesActions';
 import { carregarVeiculos } from '../actions/VeiculosActions';
 
@@ -47,6 +58,7 @@ class TelaParquimetro extends Component {
             }, 
             (erro) => {
                 console.log(erro);
+                this.props.carregarParquimetroErro(erro);
             },
             { 
                 enableHighAccuracy: true, 
@@ -62,13 +74,11 @@ class TelaParquimetro extends Component {
     }
 
     iniciarSessao(){
-
-        if(_.isEmpty(this.state.cartao)){
+        if(!this.props.cartaoId){
             Alert.alert(
                 'Aviso',
                 'Preencha o cartão a ser utilizado',
                 [
-                  //{text: 'Cancel', onPress: () => console.log('Cancel Pressed'), style: 'cancel'},
                   {text: 'OK'},
                 ],
                 { cancelable: false }
@@ -76,7 +86,7 @@ class TelaParquimetro extends Component {
             return;
         }
 
-        if(_.isEmpty(this.state.veiculo)){
+        if(!this.props.veiculoId){
             Alert.alert(
                 'Aviso',
                 'Preencha o veículo a ser utilizado',
@@ -88,51 +98,59 @@ class TelaParquimetro extends Component {
             return;
         }
 
-        this.setState({
-            sessao: {
-                valorAtual: 0.00,
-                tempoSobrando: null,
-                exibirResumoSessao: false,
-                parquimetro: {
-                    id: 1,
-                    descricao: 'Avenida Paulo de Frontin',
-                    tempoMaximoMinutos: 240,
-                    precoMinuto: 0.0416666667
-                },
-                horaInicio: Moment(),
-                cartao: {
-                    id: 1,
-                    numero: '****.****.****.1111'
-                },
-                veiculo: {
-                    id: 1,
-                    placa: 'abc-1234'
-                },
-            },
-        });
+        const {latitude, longitude, cartaoId, veiculoId} = this.props;
+        console.log(this.props);
+        this.props.iniciarSessao(latitude,longitude,cartaoId,veiculoId);
+
+        // this.setState({
+        //     sessao: {
+        //         valorAtual: 0.00,
+        //         tempoSobrando: null,
+        //         exibirResumoSessao: false,
+        //         parquimetro: {
+        //             id: 1,
+        //             descricao: 'Avenida Paulo de Frontin',
+        //             tempoMaximoMinutos: 240,
+        //             precoMinuto: 0.0416666667
+        //         },
+        //         horaInicio: Moment(),
+        //         cartao: {
+        //             id: 1,
+        //             numero: '****.****.****.1111'
+        //         },
+        //         veiculo: {
+        //             id: 1,
+        //             placa: 'abc-1234'
+        //         },
+        //     },
+        // });
 
         BackgroundTimer.runBackgroundTimer(() => { 
             //corrigir contador
-            if(!_.isEmpty(this.state.sessao)){
-                let duracaoPercorrida = duration(Moment().diff(this.state.sessao.horaInicio));
+            if(!_.isEmpty(this.props.sessao)){
+                let duracaoPercorrida = duration(Moment().diff(this.props.sessao.data_inicio));
                 let tempoPercorrido = Moment.utc(duracaoPercorrida.as('milliseconds'));
-               
-                let tempoMaximoMinutos = this.state.sessao.parquimetro.tempoMaximoMinutos;
-                let minutosPercorridos = duracaoPercorrida.as('minutes');
-                let porcentagemContador = (minutosPercorridos / tempoMaximoMinutos) * 100;
 
-                let textoProgresso = tempoPercorrido != null ? tempoPercorrido.format('HH:mm') : ""
+                let tempoMaximoMinutos = 3*60; //corrigir pegar tempo máximo do parquimetro
+                let minutosPercorridos = duracaoPercorrida.as('minutes');
+
+                let porcentagemContador = (minutosPercorridos / tempoMaximoMinutos) * 100;
+                let tempoContador = tempoPercorrido != null ? tempoPercorrido.format('HH:mm') : ""
+                let valorAtual = _.round(1 * minutosPercorridos, 2);//corrigir pegar preço do parquimetro
                 
-                let valorAtual = _.round(this.state.sessao.parquimetro.precoMinuto * minutosPercorridos, 2);
+                this.props.modificaPorcentagemContador(porcentagemContador);
+                this.props.modificaTempoContador(tempoContador);
+                this.props.modificaValorAtual(valorAtual);
+                // this.setState({
+                //     porcentagemContador,
+                //     textoProgresso,
+                //     sessao: {
+                //         ...this.state.sessao,
+                //         valorAtual
+                //     }
+                // });
+
                 
-                this.setState({
-                    porcentagemContador,
-                    textoProgresso,
-                    sessao: {
-                        ...this.state.sessao,
-                        valorAtual
-                    }
-                });
 
                 if(porcentagemContador>=100){
                     //parar contador
@@ -145,10 +163,7 @@ class TelaParquimetro extends Component {
 
     exibirResumoSessao(){
         this.setState({
-            sessao: {
-                ...this.state.sessao,
-                exibirResumoSessao: true
-            }
+            exibirResumoSessao: true
         });
     }
 
@@ -167,14 +182,12 @@ class TelaParquimetro extends Component {
 
     cancelarConclusaoSessao(){
         this.setState({
-            sessao: {
-                ...this.state.sessao,
-                exibirResumoSessao: false
-            }
+            exibirResumoSessao: false
         });
     }
 
     concluirSessao(){
+        /*
         Alert.alert(
             'Aviso',
             'Sessão concluída com sucesso!',
@@ -186,23 +199,26 @@ class TelaParquimetro extends Component {
         //pausar o timer
         BackgroundTimer.stopBackgroundTimer();
 
+        //fechar sessão ######################################
+
+
+        this.props.modificaPorcentagemContador(0);
+        this.props.modificaTempoContador("00:00");
+        this.props.modificaValorAtual(0);
+
         this.setState({
-            cartao: null,
-            veiculo: null,
-            sessao: null,
             exibirResumoSessao: false,
-            textoProgresso: "00:00",
-            porcentagemContador: 0,
         });
+        */
     }
 
     renderPickerCartao(){
         if(_.isEmpty(this.props.cartoes)) {
             return (
                 <Picker
-                    selectedValue={this.state.cartao}
+                    selectedValue={this.props.cartaoId}
                     style={{ height: 50, width: '100%' }}
-                    onValueChange={(itemValue) => this.setState({cartao: itemValue})}>
+                    onValueChange={(veiculcartaoIdoId) => this.props.modificaCartaoId(cartaoId)}>
                     <Picker.Item key={-1} label="Cartão" value={null} />
                 </Picker>
             )
@@ -210,9 +226,9 @@ class TelaParquimetro extends Component {
 
         return (
             <Picker
-                selectedValue={this.state.cartao}
+                selectedValue={this.props.cartaoId}
                 style={{ height: 50, width: '100%' }}
-                onValueChange={(itemValue) => this.setState({cartao: itemValue})}>
+                onValueChange={(cartaoId) => this.props.modificaCartaoId(cartaoId)}>
                 <Picker.Item key={-1} label="Cartão" value={null} />
                 {
                     this.props.cartoes.map((cartao) => (
@@ -227,9 +243,9 @@ class TelaParquimetro extends Component {
         if(_.isEmpty(this.props.veiculos)) {
             return (
                 <Picker
-                    selectedValue={this.state.veiculo}
+                    selectedValue={this.props.veiculoId}
                     style={{ height: 50, width: '100%' }}
-                    onValueChange={(itemValue) => this.setState({veiculo: itemValue})}>
+                    onValueChange={(veiculoId) => this.props.modificaVeiculoId(veiculoId)}>
                     <Picker.Item label="Veículo" value={null} />
                 </Picker>
             )
@@ -237,9 +253,9 @@ class TelaParquimetro extends Component {
 
         return (
             <Picker
-                selectedValue={this.state.veiculo}
+                selectedValue={this.props.veiculoId}
                 style={{ height: 50, width: '100%' }}
-                onValueChange={(itemValue) => this.setState({veiculo: itemValue})}>
+                onValueChange={(veiculoId) => this.props.modificaVeiculoId(veiculoId)}>
                 <Picker.Item label="Veículo" value={null} />
                 {
                     this.props.veiculos.map((veiculo) => (
@@ -251,8 +267,8 @@ class TelaParquimetro extends Component {
     }
 
     renderTela(){
-        if(!_.isEmpty(this.state.sessao)){
-            if(this.state.sessao.exibirResumoSessao){
+        if(!_.isEmpty(this.props.sessao)){
+            if(this.state.exibirResumoSessao){
                 //tela resumo
                 return (
                     <View style={[styles.telaResumo, { backgroundColor: this.state.telaContagemCor}]}>
@@ -261,10 +277,10 @@ class TelaParquimetro extends Component {
                                 valor total
                             </Text>
                             <Text style={styles.telaResumoValor}>
-                                R$ {this.state.sessao.valorAtual.toString().replace('.',',')}
+                                R$ {this.props.valorAtual.toString().replace('.',',')}
                             </Text>
                             <Text style={styles.telaResumoCartao}>
-                                Visa: { this.state.sessao.cartao.numero } 
+                                CARTÃO FALTA ARRUMAR{/* Visa: { this.sessao.cartao_credito.numero }  */}
                             </Text>
                             <View style={styles.telaResumoItens}>
                                 <View style={{ flex: 1 }}>
@@ -272,7 +288,7 @@ class TelaParquimetro extends Component {
                                         tempo
                                     </Text>
                                     <Text style={styles.telaResumoItemvalor}>
-                                        {this.state.textoProgresso}
+                                        {this.props.tempoContador}
                                     </Text>
                                 </View>
                                 <View style={{ flex: 1 }}>
@@ -280,7 +296,7 @@ class TelaParquimetro extends Component {
                                         veículo
                                     </Text>
                                     <Text style={styles.telaResumoItemvalor}>
-                                        {this.state.sessao.veiculo.placa}
+                                        VEICULO FALTA ARRUMAR{/* Visa: { this.sessao.veiculo.numero }  */}
                                     </Text>
                                 </View>
                                 <View style={{ flex: 1 }}>
@@ -288,12 +304,12 @@ class TelaParquimetro extends Component {
                                         data
                                     </Text>
                                     <Text style={styles.telaResumoItemvalor}>
-                                        {this.state.sessao.horaInicio.format('DD/MM/YYYY')}
+                                        {this.props.sessao.data_inicio.format('DD/MM/YYYY')}
                                     </Text>
                                 </View>
                             </View>
                             <Text style={styles.telaResumoCartao}>
-                                Avenida Paulo de Frontin
+                                FALTA ARRUMAR RUA{/* {this.props.sessao.parquimetro.endereco_completo} */}
                             </Text>
                             <View>
                                 <TouchableHighlight
@@ -324,24 +340,24 @@ class TelaParquimetro extends Component {
                     <View style={styles.telaContagemInformacao}>
                         <View style={styles.circuloProgresso}>
                             <ProgressCircle
-                                percent={this.state.porcentagemContador}
+                                percent={this.props.porcentagemContador}
                                 borderWidth={8}
                                 color="#fff"
                                 shadowColor={ Color(this.state.telaContagemCor).lighten(0.2).string() } //adicionando a mesma cor da tela com mais branco
                                 bgColor={this.state.telaContagemCor}
                                 radius={100}
                             >
-                                <Text style={styles.circuloProgressoTexto}>{this.state.textoProgresso}</Text>
+                                <Text style={styles.circuloProgressoTexto}>{this.props.tempoContador}</Text>
                             </ProgressCircle>
                         </View>
                         <Text style={styles.textoContagem}>
-                            Avenida Paulo de Frontin
+                            FALTA ARRUMAR RUA{/* {this.props.sessao.parquimetro.endereco_completo} */}
                         </Text>
                         <Text style={styles.textoContagem}>
-                            Cartão: { this.state.sessao.cartao.numero } 
+                            CARTÃO FALTA ARRUMAR{/* Visa: { this.sessao.cartao_credito.numero }  */}
                         </Text>
                         <Text style={styles.textoContagem}>
-                            Veículo: { this.state.sessao.veiculo.placa } 
+                            VEICULO FALTA ARRUMAR{/* Visa: { this.sessao.veiculo.numero }  */}
                         </Text>
                     </View>
                     <View style={styles.telaContagemParteBotao}>
@@ -389,9 +405,11 @@ class TelaParquimetro extends Component {
                         {
                             this.renderPickerCartao()
                         }
+                        { renderErro(this.props.erro, 'cartao_credito')}
                         {
                             this.renderPickerVeiculo()
                         }
+                        { renderErro(this.props.erro, 'veiculo')}
                         <TouchableHighlight
                             onPress={() => this.iniciarSessao()}
                             style={styles.botaoVerde}
@@ -538,6 +556,9 @@ const mapStateToProps = state => {
         veiculoId: state.ParquimetroReducer.veiculoId,
         latitude: state.ParquimetroReducer.latitude,
         longitude: state.ParquimetroReducer.longitude,
+        porcentagemContador: state.ParquimetroReducer.porcentagemContador,
+        tempoContador: state.ParquimetroReducer.tempoContador,
+        valorAtual: state.ParquimetroReducer.valorAtual,
     }
 };
 
@@ -546,5 +567,11 @@ export default connect(mapStateToProps, {
     carregarParquimetro,
     modificaLatitudeLongitude,
     carregarCartoes,
-    carregarVeiculos
+    carregarVeiculos,
+    modificaCartaoId,
+    modificaVeiculoId,
+    iniciarSessao,
+    modificaPorcentagemContador,
+    modificaTempoContador,
+    modificaValorAtual,
 })(TelaParquimetro);
