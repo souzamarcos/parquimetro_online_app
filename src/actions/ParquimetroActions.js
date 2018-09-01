@@ -1,4 +1,5 @@
 import API  from '../Api';
+import { Alert } from 'react-native';
 import { 
     MODIFICA_SESSAO_PARQUIMETRO,
     MODIFICA_SESSAO_LATITUDE_LONGITUDE,
@@ -11,6 +12,9 @@ import {
     MODIFICA_SESSAO_PORCENTAGEM_CONTADOR,
     MODIFICA_SESSAO_TEMPO_CONTADOR,
     MODIFICA_SESSAO_VALOR_ATUAL,
+    FINALIZAR_SESSAO_SUCESSO,
+    FINALIZAR_SESSAO_ERRO,
+    FINALIZAR_SESSAO_EM_ANDAMENTO,
 } from './types';
 
 export const carregarParquimetro = (latitude, longitude) => {
@@ -29,7 +33,7 @@ export const carregarParquimetro = (latitude, longitude) => {
         }
         catch(erro)
         {
-            carregarParquimetroErro(erro.message, dispatch);
+            //carregarParquimetroErro(erro.message, dispatch);
         }
     }
 }
@@ -55,7 +59,6 @@ export const iniciarSessao = (latitude, longitude, cartaoId, veiculoId ) => {
                 }
             });
 
-            console.log(retorno.data);
             iniciarSessaoSucesso(retorno.data, dispatch);
         }
         catch(erro)
@@ -65,6 +68,25 @@ export const iniciarSessao = (latitude, longitude, cartaoId, veiculoId ) => {
     }
 }
 
+export const finalizarSessao = () => {
+
+    return async dispatch => {
+        dispatch({ type: FINALIZAR_SESSAO_EM_ANDAMENTO });
+        try
+        {
+            const retorno = await API.post('parquimetro/finalizar',{});
+
+            console.log(retorno.data);
+            finalizarSessaoSucesso(retorno.data, dispatch);
+        }
+        catch(erro)
+        {
+            finalizarSessaoErro(erro.message, dispatch);
+        }
+    }
+}
+
+
 export const carregarParquimetroSucesso = (parquimetro, dispatch) => {
     dispatch({
         type: MODIFICA_SESSAO_PARQUIMETRO,
@@ -73,10 +95,17 @@ export const carregarParquimetroSucesso = (parquimetro, dispatch) => {
 }
 
 export const carregarParquimetroErro = (erro, dispatch) => {
-    dispatch({
-        type: MODIFICA_SESSAO_PARQUIMETRO,
-        payload: null
-    });
+    // if(dispatch){
+    //     dispatch({
+    //         type: MODIFICA_SESSAO_PARQUIMETRO,
+    //         payload: null
+    //     });
+    // }else{
+    //     return {
+    //         type: MODIFICA_SESSAO_PARQUIMETRO,
+    //         payload: null
+    //     }
+    // }
 }
 
 export const iniciarSessaoSucesso = (parquimetro, dispatch) => {
@@ -94,9 +123,48 @@ export const iniciarSessaoSucesso = (parquimetro, dispatch) => {
 }
 
 export const iniciarSessaoErro = (erro, dispatch) => {
-    //exibir alert com o erro
+    console.log(erro);
+    Alert.alert(
+        'Aviso',
+        'Erro ao iniciar sessão!',
+        [
+            {text: 'OK'}
+        ],
+        { cancelable: false }
+    );
+
     dispatch({
         type: INICIAR_SESSAO_ERRO,
+    });
+}
+
+export const finalizarSessaoSucesso = (parquimetro, dispatch) => {
+    if(dispatch){
+        dispatch({
+            type: FINALIZAR_SESSAO_SUCESSO,
+            payload: parquimetro
+        });
+    }else{
+        return {
+            type: FINALIZAR_SESSAO_SUCESSO,
+            payload: parquimetro
+        }
+    }
+}
+
+export const finalizarSessaoErro = (erro, dispatch) => {
+    console.log(erro);
+    Alert.alert(
+        'Aviso',
+        'Erro ao finalizar sessão!',
+        [
+            {text: 'OK'}
+        ],
+        { cancelable: false }
+    );
+    
+    dispatch({
+        type: FINALIZAR_SESSAO_ERRO,
     });
 }
 

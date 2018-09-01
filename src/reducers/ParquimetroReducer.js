@@ -10,19 +10,23 @@ import {
     MODIFICA_SESSAO_PORCENTAGEM_CONTADOR,
     MODIFICA_SESSAO_TEMPO_CONTADOR,
     MODIFICA_SESSAO_VALOR_ATUAL,
+    FINALIZAR_SESSAO_SUCESSO,
+    FINALIZAR_SESSAO_EM_ANDAMENTO,
+    FINALIZAR_SESSAO_ERRO,
 } from '../actions/types';
 
 const INITIAL_STATE = {
     parquimetro: null,
     carregandoParquimetro: true,
     sessao: null,
-    carregandoSessao: true,
+    iniciandoSessao: false,
+    finalizandoSessao: false,
     cartaoId: null,
     veiculoId: null,
     latitude: null,
     longitude: null,
     porcentagemContador: 0,
-    tempoContador: '00:00',
+    tempoContador: "00:00:00",
     valorAtual: 0
 }
 
@@ -39,17 +43,23 @@ export default (state = INITIAL_STATE, action) => {
         case MODIFICA_SESSAO_LATITUDE_LONGITUDE:
             return { ...state, latitude: action.payload.latitude, longitude: action.payload.longitude }
         case INICIAR_SESSAO_EM_ANDAMENTO:
-            return { ...state, carregandoSessao: true}
+            return { ...state, iniciandoSessao: true}
         case INICIAR_SESSAO_SUCESSO:
-            return { ...state, sessao: action.payload, carregandoSessao: false}
+            return { ...state, sessao: action.payload, iniciandoSessao: false}
         case INICIAR_SESSAO_ERRO:
-            return { ...state, carregandoSessao: false}
+            return { ...state, iniciandoSessao: false}
         case MODIFICA_SESSAO_PORCENTAGEM_CONTADOR:
             return { ...state, porcentagemContador: action.payload }
         case MODIFICA_SESSAO_TEMPO_CONTADOR:
             return { ...state, tempoContador: action.payload }
         case MODIFICA_SESSAO_VALOR_ATUAL:
             return { ...state, valorAtual: action.payload }
+        case FINALIZAR_SESSAO_EM_ANDAMENTO:
+            return { ...state, finalizandoSessao: true}
+        case FINALIZAR_SESSAO_SUCESSO:
+            return { ...state, sessao: null, finalizandoSessao: false }
+        case FINALIZAR_SESSAO_ERRO:
+            return { ...state, finalizandoSessao: false }
         default:
             return state;
     }    

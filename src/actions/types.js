@@ -69,3 +69,6 @@ export const INICIAR_SESSAO_EM_ANDAMENTO = "iniciar_sessao_em_andamento";
 export const MODIFICA_SESSAO_PORCENTAGEM_CONTADOR = "modifica_sessao_porcentagem_contador";
 export const MODIFICA_SESSAO_TEMPO_CONTADOR = "modifica_sessao_tempo_contador";
 export const MODIFICA_SESSAO_VALOR_ATUAL = "modifica_sessao_valor_atual";
+export const FINALIZAR_SESSAO_SUCESSO = "finalizar_sessao_sucesso";
+export const FINALIZAR_SESSAO_ERRO = "finalizar_sessao_erro";
+export const FINALIZAR_SESSAO_EM_ANDAMENTO = "finalizar_sessao_em_andamento";
