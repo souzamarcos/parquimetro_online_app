@@ -34,6 +34,7 @@ export const carregarParquimetro = (latitude, longitude) => {
         catch(erro)
         {
             //carregarParquimetroErro(erro.message, dispatch);
+            dispatch({ type: null});
         }
     }
 }
@@ -59,6 +60,7 @@ export const iniciarSessao = (latitude, longitude, cartaoId, veiculoId ) => {
                 }
             });
 
+            console.log(retorno.data);
             iniciarSessaoSucesso(retorno.data, dispatch);
         }
         catch(erro)
@@ -94,18 +96,19 @@ export const carregarParquimetroSucesso = (parquimetro, dispatch) => {
     });
 }
 
+//melhorar pois não precisa limpar o parquimetro da sessão
 export const carregarParquimetroErro = (erro, dispatch) => {
-    // if(dispatch){
-    //     dispatch({
-    //         type: MODIFICA_SESSAO_PARQUIMETRO,
-    //         payload: null
-    //     });
-    // }else{
-    //     return {
-    //         type: MODIFICA_SESSAO_PARQUIMETRO,
-    //         payload: null
-    //     }
-    // }
+    if(dispatch){
+        dispatch({
+            type: MODIFICA_SESSAO_PARQUIMETRO,
+            payload: null
+        });
+    }else{
+        return {
+            type: MODIFICA_SESSAO_PARQUIMETRO,
+            payload: null
+        }
+    }
 }
 
 export const iniciarSessaoSucesso = (parquimetro, dispatch) => {

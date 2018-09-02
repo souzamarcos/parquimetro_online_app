@@ -54,7 +54,6 @@ class TelaParquimetro extends Component {
             }, 
             (erro) => {
                 console.log(erro);
-                this.props.carregarParquimetroErro(erro);
             },
             { 
                 enableHighAccuracy: true, 
@@ -96,7 +95,6 @@ class TelaParquimetro extends Component {
 
         const {latitude, longitude, cartaoId, veiculoId} = this.props;
 
-        console.log(this.props);
         this.props.iniciarSessao(latitude,longitude,cartaoId,veiculoId);
 
         BackgroundTimer.runBackgroundTimer(() => { 
@@ -112,14 +110,13 @@ class TelaParquimetro extends Component {
                 
                 let tempoPercorrido = Moment.utc(duracaoPercorrida.as('milliseconds'));
 
-                let tempoMaximoMinutos = 3*60; //corrigir pegar tempo máximo do parquimetro
+                let tempoMaximoMinutos = this.props.sessao.grupo_parquimetro.tempo_limite * 60; //corrigir pegar tempo máximo do parquimetro
                 let minutosPercorridos = duracaoPercorrida.as('minutes');
 
                 let porcentagemContador = (minutosPercorridos / tempoMaximoMinutos) * 100;
                 let tempoContador = tempoPercorrido != null ? tempoPercorrido.format('HH:mm:ss') : "";
-                let valorAtual = _.round(1/60 * minutosPercorridos, 2);//corrigir pegar preço do parquimetro
+                let valorAtual = _.round(this.props.sessao.grupo_parquimetro.valor_minuto * minutosPercorridos, 2);//corrigir pegar preço do parquimetro
                 
-                console.log(duracaoPercorrida,tempoContador)
                 this.props.modificaPorcentagemContador(porcentagemContador);
                 this.props.modificaTempoContador(tempoContador);
                 this.props.modificaValorAtual(valorAtual);               
@@ -162,19 +159,8 @@ class TelaParquimetro extends Component {
         this.props.finalizarSessao();
         //validar se der erro
 
-        // Alert.alert(
-        //     'Aviso',
-        //     'Sessão concluída com sucesso!',
-        //     [
-        //         {text: 'OK'}
-        //     ],
-        //     { cancelable: false }
-        // );
         //pausar o timer
         BackgroundTimer.stopBackgroundTimer();
-
-        //fechar sessão ######################################
-
 
         this.props.modificaPorcentagemContador(0);
         this.props.modificaTempoContador("00:00:00");
@@ -261,7 +247,7 @@ class TelaParquimetro extends Component {
                                 R$ {this.props.valorAtual.toFixed(2).toString().replace('.',',')}
                             </Text>
                             <Text style={styles.telaResumoCartao}>
-                                CARTÃO FALTA ARRUMAR{/* Visa: { this.sessao.cartao_credito.numero }  */}
+                                {`${ this.props.sessao.cartao_credito.bandeira }: ****.****.****.${ this.props.sessao.cartao_credito.numero }`}
                             </Text>
                             <View style={styles.telaResumoItens}>
                                 <View style={{ flex: 1 }}>
@@ -277,7 +263,7 @@ class TelaParquimetro extends Component {
                                         veículo
                                     </Text>
                                     <Text style={styles.telaResumoItemvalor}>
-                                        VEICULO FALTA ARRUMAR{/* Visa: { this.sessao.veiculo.numero }  */}
+                                        { this.props.sessao.veiculo.placa.toUpperCase() }
                                     </Text>
                                 </View>
                                 <View style={{ flex: 1 }}>
@@ -290,7 +276,7 @@ class TelaParquimetro extends Component {
                                 </View>
                             </View>
                             <Text style={styles.telaResumoCartao}>
-                                FALTA ARRUMAR RUA{/* {this.props.sessao.parquimetro.endereco_completo} */}
+                                {this.props.sessao.parquimetro.endereco_completo}
                             </Text>
                             <View>
                                 <TouchableHighlight
@@ -337,13 +323,13 @@ class TelaParquimetro extends Component {
                             </ProgressCircle>
                         </View>
                         <Text style={styles.textoContagem}>
-                            FALTA ARRUMAR RUA{/* {this.props.sessao.parquimetro.endereco_completo} */}
+                            {this.props.sessao.parquimetro.endereco_completo}
                         </Text>
                         <Text style={styles.textoContagem}>
-                            CARTÃO FALTA ARRUMAR{/* Visa: { this.sessao.cartao_credito.numero }  */}
+                            Cartão: {`****.****.****.${ this.props.sessao.cartao_credito.numero }`}
                         </Text>
                         <Text style={styles.textoContagem}>
-                            VEICULO FALTA ARRUMAR{/* Visa: { this.sessao.veiculo.numero }  */}
+                            Veículo: { this.props.sessao.veiculo.placa.toUpperCase() }
                         </Text>
                     </View>
                     <View style={styles.telaContagemParteBotao}>

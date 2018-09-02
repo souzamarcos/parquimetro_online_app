@@ -6,6 +6,7 @@ import {
   TouchableHighlight,
 } from 'react-native';
 import cores from '../styles/cores';
+import Moment, { duration } from 'moment';
 
 class HistoricoItem extends Component {
 
@@ -24,6 +25,14 @@ class HistoricoItem extends Component {
     }
 
     render() {
+        const dataInicio = Moment(this.props.sessao.data_inicio);
+        const dataInicioTexto = dataInicio.format('DD/MM/YYYY');
+        const horaInicioTexto = dataInicio.format('HH:mm:ss');
+        const dataFim = Moment(this.props.sessao.data_fim);
+        const dataFimTexto = dataFim.format('DD/MM/YYYY');
+        const horaFimTexto = dataFim.format('HH:mm:ss');
+        const duracao = duration(Moment(this.props.sessao.data_fim).diff(this.props.sessao.data_inicio));
+        const duracaoTexto = Moment.utc(duracao.as('milliseconds')).format('HH:mm');
         return (
             <View style={styles.historico}>
                 <TouchableHighlight
@@ -36,14 +45,14 @@ class HistoricoItem extends Component {
                         <View style={{ flexDirection: 'row', alignItems: 'center'}}>
                             <View style={{ flex: 1}}>
                                 <View style={{ flexDirection: 'row', alignItems: 'center'}}>
-                                    <Text style={styles.data}>{this.props.sessao.dataDia} </Text>
-                                    <Text style={styles.data}>{this.props.sessao.dataMes} </Text>
-                                    <Text style={styles.duracao}>{this.props.sessao.duracao}</Text>
+                                    <Text style={styles.data}>{dataInicioTexto} </Text>
+                                    {/* <Text style={styles.data}>{this.props.sessao.dataMes} </Text> */}
+                                    <Text style={styles.duracao}>{this.props.sessao.data_fim ? duracaoTexto : "Em andamento"}</Text>
                                 </View>
-                                <Text style={styles.tituloTexto}>{this.props.sessao.bairro}</Text>
+                                {/* <Text style={styles.tituloTexto}>{this.props.sessao.bairro}</Text> */}
                             </View>
                             <View style={{paddingLeft: 15}}>
-                                <Text style={styles.valor}>R$ {this.props.sessao.valor}</Text>
+                                <Text style={styles.valor}>{this.props.sessao.valor ? `R$ ${this.props.sessao.valor.toFixed(2).replace('.',',')}`: `...`}</Text>
                             </View>
                         </View>
                     </View>
@@ -51,12 +60,12 @@ class HistoricoItem extends Component {
                 {this.state.expandido ? 
                     (
                         <View style={styles.detalhes}>
-                            <Text style={styles.rua}>{this.props.sessao.rua}</Text>
-                            <Text style={styles.horario}>{this.props.sessao.horaInicio} - {this.props.sessao.horaFim}</Text>
+                            {<Text style={styles.rua}>{this.props.sessao.parquimetro.endereco_completo}</Text>}
+                            <Text style={styles.horario}>{dataInicioTexto} {horaInicioTexto} - {this.props.sessao.data_fim ? horaFimTexto : "Contando ..."}</Text>
                             <Text style={styles.pagamentoLabel}>Pagamento:</Text>
-                            <Text style={styles.cartao}>{this.props.sessao.cartao}</Text>
+                            <Text style={styles.cartao}>{`****.****.****.${ this.props.sessao.cartao_credito.numero }`}</Text>
                             <Text style={styles.veiculoLabel}>Veículo:</Text>
-                            <Text style={styles.veiculo}>{this.props.sessao.placa}</Text>
+                            <Text style={styles.veiculo}>{ this.props.sessao.veiculo.placa.toUpperCase() }</Text>
                         </View>
                     ) : null
                 }

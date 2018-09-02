@@ -7,12 +7,12 @@ import {
     ListView,
     StyleSheet,
     ScrollView,
-    ActivityIndicator
+    ActivityIndicator,
+    RefreshControl
 } from 'react-native';
 import { defaultStyles } from '../styles';
 import cores from '../styles/cores';
 import { connect } from 'react-redux';
-import { alteraTitulo } from '../actions/AppActions';
 import { carregarVeiculos } from '../actions/VeiculosActions';
 import { adicionarVeiculo } from '../actions/FormVeiculoActions';
 import Veiculo from './Veiculo';
@@ -24,15 +24,6 @@ class TelaVeiculos extends Component {
         super(props);
     }
 
-    componentDidMount(){
-        const { navigation } = this.props;
-        this.subscriptions = [ // evento para detectar se o component está focado para alterar o título 
-            navigation.addListener('didFocus', () =>{
-                this.props.alteraTitulo('Veículo');
-            }),
-        ];
-    }
-
     componentWillMount(){
         this.props.carregarVeiculos();
         this.criaFonteDados([]);
@@ -41,12 +32,7 @@ class TelaVeiculos extends Component {
     componentWillReceiveProps(nextProps){
         this.criaFonteDados(nextProps.veiculos);
     }
-
-    componentWillUnmount() {
-        // remove eventos
-        this.subscriptions.forEach(sub => sub.remove());
-    }
-
+    
     criaFonteDados(veiculos) {
         const ds = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 });
 
@@ -72,6 +58,12 @@ class TelaVeiculos extends Component {
                                 enableEmptySections
                                 renderRow={this.renderRow}
                                 dataSource={this.dataSource}
+                                refreshControl={
+                                    <RefreshControl
+                                        refreshing={this.props.carregandoVeiculos}
+                                        onRefresh={() =>this.props.carregarVeiculos()}
+                                    />
+                                }
                             />
                         )
                     }
@@ -123,4 +115,4 @@ const mapStateToProps = state => {
     }
 };
 
-export default connect(mapStateToProps, { alteraTitulo, carregarVeiculos, adicionarVeiculo })(TelaVeiculos);
+export default connect(mapStateToProps, { carregarVeiculos, adicionarVeiculo })(TelaVeiculos);

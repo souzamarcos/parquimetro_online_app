@@ -8,6 +8,7 @@ import {
     StyleSheet,
     ScrollView,
     ActivityIndicator,
+    RefreshControl,
 } from 'react-native';
 import { defaultStyles } from '../styles';
 import cores from '../styles/cores';
@@ -58,6 +59,12 @@ class TelaCartoes extends Component {
                             enableEmptySections
                             renderRow={this.renderRow}
                             dataSource={this.dataSource}
+                            refreshControl={
+                                <RefreshControl
+                                    refreshing={this.props.carregandoCartoes}
+                                    onRefresh={() =>this.props.carregarCartoes()}
+                                />
+                            }
                         />
                     )
                 }

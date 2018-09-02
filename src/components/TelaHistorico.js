@@ -6,43 +6,38 @@ import {
     ListView, 
     Picker,
     ActivityIndicator,
+    RefreshControl,
 } from 'react-native';
 import HistoricoItem from './HistoricoItem';
 import { defaultStyles } from '../styles';
 import cores from '../styles/cores';
-import { withNavigationFocus } from 'react-navigation';
 import Cabecalho from './Cabecalho';
 import { connect } from 'react-redux';
-import { alteraTitulo } from '../actions/AppActions';
+import { carregarHistorico } from '../actions/HistoricoActions';
 
 class TelaHistorico extends Component {
 
     constructor(props) {
         super(props);
-        const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
-
-        let transacoes = [];
-        for(let i = 0; i< 5; i++){
-            transacoes.push({
-                uid: i,
-                dataDia: '06',
-                dataMes: 'Abril',
-                rua: 'Av. Antônio de Almeida - Volta Redonda - RJ',
-                bairro: 'Vila Santa Cecília',
-                duracao: '22',
-                valor: 2.35,
-                placa: 'ABC-4513',
-                cartaoBandeira: 'Mastercard',
-                cartao: '**** **** **** 5413',
-                horaInicio: '12:00',
-                horaFim: '12:22'
-            });
-        }
 
         this.state = {
             ordem: "1",
-            dataSource: ds.cloneWithRows(transacoes),
         };
+    }
+
+    componentWillMount(){
+        this.props.carregarHistorico();
+        this.criaFonteDados([]);
+    }
+    
+    componentWillReceiveProps(nextProps){
+        this.criaFonteDados(nextProps.historico);
+    }
+
+    criaFonteDados(historico) {
+        const ds = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 });
+
+        this.dataSource = ds.cloneWithRows(historico);
     }
 
     renderRow(sessao) {
@@ -60,22 +55,28 @@ class TelaHistorico extends Component {
                         selectedValue={this.state.ordem}
                         onValueChange={(itemValue, itemIndex) => this.setState({ordem: itemValue})}>
                         <Picker.Item label="Recentes" value="1" />
-                        <Picker.Item label="Antigos" value="2" />
+                        {/* <Picker.Item label="Antigos" value="2" />
                         <Picker.Item label="Baratos" value="3" />
-                        <Picker.Item label="Caros" value="4" />
+                        <Picker.Item label="Caros" value="4" /> */}
                     </Picker>
                 </View>
                 <ScrollView style={{ flex: 1}} contentContainerStyle={styles.listaContainer}>
                     {
-                        /*this.props.carregandoCartoes*/ false ? 
+                        this.props.carregandoHistorico ? 
                         (
                             <ActivityIndicator size="large" color={cores.azul} />
                         ) :
                         (
                             <ListView
                                 enableEmptySections
-                                dataSource={this.state.dataSource}
+                                dataSource={this.dataSource}
                                 renderRow={this.renderRow}
+                                refreshControl={
+                                    <RefreshControl
+                                        refreshing={this.props.carregandoHistorico}
+                                        onRefresh={() =>this.props.carregarHistorico()}
+                                    />
+                                }
                             />
                         )
                     }
@@ -97,4 +98,12 @@ const styles = StyleSheet.create({
     },
 });
 
-export default connect(null, {alteraTitulo})(TelaHistorico);
+const mapStateToProps = state => {
+    return {
+        historico: state.HistoricoReducer.historico,
+        carregandoHistorico: state.HistoricoReducer.carregandoHistorico,
+        erro: state.HistoricoReducer.erro,
+    }
+};
+
+export default connect(mapStateToProps, {carregarHistorico})(TelaHistorico);

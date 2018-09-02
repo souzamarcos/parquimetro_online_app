@@ -7,6 +7,7 @@ import FormVeiculoReducer from './FormVeiculoReducer';
 import FormCartaoReducer from './FormCartaoReducer';
 import CadastroUsuarioReducer from './CadastroUsuarioReducer';
 import ParquimetroReducer from './ParquimetroReducer';
+import HistoricoReducer from './HistoricoReducer';
 
 export default combineReducers({
     AppReducer,
@@ -16,5 +17,6 @@ export default combineReducers({
     FormVeiculoReducer,
     FormCartaoReducer,
     CadastroUsuarioReducer,
-    ParquimetroReducer
+    ParquimetroReducer,
+    HistoricoReducer
 });
