@@ -3,15 +3,35 @@ import {
   Text,
   TouchableHighlight,
   StyleSheet,
+  Alert,
   View,
-  ScrollView
+  ScrollView,
+  ActivityIndicator
 } from 'react-native';
 import { defaultStyles } from '../styles';
 import cores from '../styles/cores';
 import Cabecalho from './Cabecalho';
 import { TextInputMask } from 'react-native-masked-text';
+import { connect } from 'react-redux';
+import { consultarPlaca, modificaPlaca } from '../actions/ConsultaActions';
 
-export default class TelaConsultaGuarda extends Component {
+class TelaConsultaGuarda extends Component {
+
+    consultarPlaca(){
+        if(!this.props.placa || this.props.placa.length != 8){
+            Alert.alert(
+                'Aviso',
+                'Preencha a placa corretamente',
+                [
+                  {text: 'OK'},
+                ],
+                { cancelable: false }
+            );
+            return;
+        }
+
+        this.props.consultarPlaca(this.props.placa);
+    }
 
     render(){
         return (
@@ -24,22 +44,32 @@ export default class TelaConsultaGuarda extends Component {
                     placeholder="Placa"
                     type="custom"
                     style={styles.input}
-                    onChangeText={ (placa)=> false }
+                    onChangeText={ (placa) => this.props.modificaPlaca(placa) }
+                    value={this.props.placa}
                     underlineColorAndroid={cores.cinza}
+                    autoCapitalize="characters"
                     options={{
                         mask: 'AAA-9999',
                     }}
                 />
-                <TouchableHighlight
-                    onPress={() => this.props.navigation.navigate('TelaRetornoConsultaGuarda')}
-                    style={styles.botaoVerde}
-                    underlayColor="rgba(0, 0, 0, 0.05)"
-                >
-                    <Text style={styles.botaoVerdeText}>
-                        Buscar
-                    </Text>
-                    
-                </TouchableHighlight>
+                {
+                    this.props.carregandoSessao ? 
+                    (
+                        <ActivityIndicator style={styles.activityIndicator} size="large" color={cores.verde} />
+                    ) :
+                    (    
+                        <TouchableHighlight
+                            onPress={() => this.consultarPlaca()}
+                            style={styles.botaoVerde}
+                            underlayColor="rgba(0, 0, 0, 0.05)"
+                        >
+                            <Text style={styles.botaoVerdeText}>
+                                Buscar
+                            </Text>
+                            
+                        </TouchableHighlight>
+                    )
+                }
             </ScrollView>
         );
     }
@@ -54,6 +84,10 @@ const styles = StyleSheet.create({
     telaCentralizada: {
         ...defaultStyles.telaFull,
         ...defaultStyles.telaCentralizada,
+    },
+    activityIndicator: {
+        paddingVertical: 9,
+        marginBottom: 40,
     },
     cabecalho: {
         marginBottom: 40,
@@ -75,3 +109,14 @@ const styles = StyleSheet.create({
         ...defaultStyles.botaoVerdeText,
     },
 });
+
+const mapStateToProps = state => {
+    return {
+        placa: state.ConsultaReducer.placa,
+        sessao: state.ConsultaReducer.sessao,
+        carregandoSessao: state.ConsultaReducer.carregandoSessao,
+        erro: state.ConsultaReducer.erro,
+    }
+};
+
+export default connect(mapStateToProps, { consultarPlaca, modificaPlaca })(TelaConsultaGuarda);

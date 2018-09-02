@@ -49,7 +49,7 @@ class HistoricoItem extends Component {
                                     {/* <Text style={styles.data}>{this.props.sessao.dataMes} </Text> */}
                                     <Text style={styles.duracao}>{this.props.sessao.data_fim ? duracaoTexto : "Em andamento"}</Text>
                                 </View>
-                                {/* <Text style={styles.tituloTexto}>{this.props.sessao.bairro}</Text> */}
+                                <Text style={styles.tituloTexto}>{this.props.sessao.parquimetro.endereco_completo}</Text>
                             </View>
                             <View style={{paddingLeft: 15}}>
                                 <Text style={styles.valor}>{this.props.sessao.valor ? `R$ ${this.props.sessao.valor.toFixed(2).replace('.',',')}`: `...`}</Text>
@@ -60,7 +60,7 @@ class HistoricoItem extends Component {
                 {this.state.expandido ? 
                     (
                         <View style={styles.detalhes}>
-                            {<Text style={styles.rua}>{this.props.sessao.parquimetro.endereco_completo}</Text>}
+                            {/*<Text style={styles.rua}>{this.props.sessao.parquimetro.endereco_completo}</Text>*/}
                             <Text style={styles.horario}>{dataInicioTexto} {horaInicioTexto} - {this.props.sessao.data_fim ? horaFimTexto : "Contando ..."}</Text>
                             <Text style={styles.pagamentoLabel}>Pagamento:</Text>
                             <Text style={styles.cartao}>{`****.****.****.${ this.props.sessao.cartao_credito.numero }`}</Text>

@@ -8,6 +8,7 @@ import FormCartaoReducer from './FormCartaoReducer';
 import CadastroUsuarioReducer from './CadastroUsuarioReducer';
 import ParquimetroReducer from './ParquimetroReducer';
 import HistoricoReducer from './HistoricoReducer';
+import ConsultaReducer from './ConsultaReducer';
 
 export default combineReducers({
     AppReducer,
@@ -18,5 +19,6 @@ export default combineReducers({
     FormCartaoReducer,
     CadastroUsuarioReducer,
     ParquimetroReducer,
-    HistoricoReducer
+    HistoricoReducer,
+    ConsultaReducer
 });

@@ -9,43 +9,35 @@ import {
 import { defaultStyles } from '../styles';
 import cores from '../styles/cores';
 import Cabecalho from './Cabecalho';
-import { TextInputMask } from 'react-native-masked-text';
+import { connect } from 'react-redux';
 
-export default class TelaRetornoConsultaGuarda extends Component {
-
-    state = {
-        sessao: {
-            id: 10
-            //mais propriedades
-        },
-        // sessao: null
-    }
+class TelaRetornoConsultaGuarda extends Component {
 
     render(){
         return (
             <ScrollView contentContainerStyle={styles.tela}>
                 <Cabecalho 
                     titulo={
-                    this.state.sessao ?
+                    this.props.sessao ?
                         'Consulta Sucesso' :
                         'Consulta Erro'
                     } 
                 style={styles.cabecalho} />
-                <Text style={[styles.title, { color: this.state.sessao ? cores.verde : cores.vermelho} ]}>
+                <Text style={[styles.title, { color: this.props.sessao ? cores.verde : cores.vermelho} ]}>
                     {
-                        this.state.sessao ?
+                        this.props.sessao ?
                         'Pagamento registrado' :
                         'Pagamento não registrado'
                     }
                 </Text>
                 {
-                    this.state.sessao ?
+                    this.props.sessao ?
                         <Text style={styles.text}>
-                            O pagamento do veículo com placa KPO-5359 foi registrado no parquímetro localizado em Av. Paulo de Frontin - Aterrado - Volta Redonda.
+                            O pagamento do veículo com placa {(this.props.placa || "").toUpperCase()} foi registrado no parquímetro localizado em Av. Paulo de Frontin - Aterrado - Volta Redonda.
                         </Text>
                     :
                         <Text style={styles.text}>
-                            O pagamento do veículo com placa KPO-5359 não foi registrado.
+                            O pagamento do veículo com placa {(this.props.placa || "").toUpperCase()} não foi registrado.
                         </Text>
                 }
                 
@@ -98,3 +90,14 @@ const styles = StyleSheet.create({
         ...defaultStyles.botaoVerdeText,
     },
 });
+
+const mapStateToProps = state => {
+    return {
+        placa: state.ConsultaReducer.placa,
+        sessao: state.ConsultaReducer.sessao,
+        carregandoSessao: state.ConsultaReducer.carregandoSessao,
+        erro: state.ConsultaReducer.erro,
+    }
+};
+
+export default connect(mapStateToProps, {  })(TelaRetornoConsultaGuarda);

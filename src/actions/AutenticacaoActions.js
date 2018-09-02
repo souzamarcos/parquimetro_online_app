@@ -46,7 +46,9 @@ export const autenticarUsuario = ({ email, senha }) => {
                 loginUsuarioSucesso(retorno.data.usuario, dispatch)
             }
         }
-        catch (erro){}
+        catch (erro){
+            loginUsuarioErro(erro.message, dispatch);
+        }
     }
 }
 
@@ -57,7 +59,11 @@ const loginUsuarioSucesso = (usuario, dispatch) => {
         payload: usuario
     });
 
-    NavigationService.navigate('TelaParquimetro');
+    if(usuario.grupo == 'Guarda'){
+        NavigationService.navigate('TelaPrincipalGuarda');
+    }else{
+        NavigationService.navigate('TelaPrincipal');
+    }    
 }
 
 const loginUsuarioErro = (mensagem, dispatch) => {

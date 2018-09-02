@@ -77,3 +77,9 @@ export const FINALIZAR_SESSAO_EM_ANDAMENTO = "finalizar_sessao_em_andamento";
 export const CARREGAR_HISTORICO_EM_ANDAMENTO = "carregar_historico_em_andamento";
 export const CARREGAR_HISTORICO_SUCESSO = "carregar_historico_sucesso";
 export const CARREGAR_HISTORICO_ERRO = "carregar_historico_erro";
+
+// consulta placa
+export const CONSULTA_PLACA_EM_ANDAMENTO = "consulta_placa_em_andamento";
+export const CONSULTA_PLACA_SUCESSO = "consulta_placa_sucesso";
+export const CONSULTA_PLACA_ERRO = "consulta_placa_erro";
+export const MODIFICA_CONSULTA_PLACA = "modifica_consulta_placa";
