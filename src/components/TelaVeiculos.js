@@ -47,27 +47,20 @@ class TelaVeiculos extends Component {
         return (
             <ScrollView style={styles.tela} contentContainerStyle={{flex:1}}>
                 <Cabecalho titulo="Veículo" />
-                <ScrollView style={{flexGrow: 1}} contentContainerStyle={styles.listaContainer}>
-                    {
-                        this.props.carregandoVeiculos ? 
-                        (
-                            <ActivityIndicator size="large" color={cores.azul} />
-                        ) :
-                        (
-                            <ListView
-                                enableEmptySections
-                                renderRow={this.renderRow}
-                                dataSource={this.dataSource}
-                                refreshControl={
-                                    <RefreshControl
-                                        refreshing={this.props.carregandoVeiculos}
-                                        onRefresh={() =>this.props.carregarVeiculos()}
-                                    />
-                                }
+                <View style={{flexGrow: 1}}>
+                    <ListView
+                        enableEmptySections
+                        renderRow={this.renderRow}
+                        dataSource={this.dataSource}
+                        contentContainerStyle={styles.listaContainer}
+                        refreshControl={
+                            <RefreshControl
+                                refreshing={this.props.carregandoVeiculos}
+                                onRefresh={() =>this.props.carregarVeiculos()}
                             />
-                        )
-                    }
-                </ScrollView >
+                        }
+                    />
+                </View>
                 <View style={styles.botoesContainer}>
                     <TouchableHighlight
                         onPress={() => this.props.adicionarVeiculo() }
@@ -89,9 +82,7 @@ const styles = StyleSheet.create({
         ...defaultStyles.telaFull,
     },
     listaContainer: {
-        flex: 1,
         ...defaultStyles.telaPaddingPequeno,
-        justifyContent: 'center',
     },
     botoesContainer: {
         ...defaultStyles.telaPaddingPequeno,

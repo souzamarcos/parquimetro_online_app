@@ -83,3 +83,8 @@ export const CONSULTA_PLACA_EM_ANDAMENTO = "consulta_placa_em_andamento";
 export const CONSULTA_PLACA_SUCESSO = "consulta_placa_sucesso";
 export const CONSULTA_PLACA_ERRO = "consulta_placa_erro";
 export const MODIFICA_CONSULTA_PLACA = "modifica_consulta_placa";
+
+// historico guarda
+export const CARREGAR_HISTORICO_GUARDA_EM_ANDAMENTO = "carregar_historico_guarda_em_andamento";
+export const CARREGAR_HISTORICO_GUARDA_SUCESSO = "carregar_historico_guarda_sucesso";
+export const CARREGAR_HISTORICO_GUARDA_ERRO = "carregar_historico_guarda_erro";

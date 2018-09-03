@@ -7,7 +7,6 @@ import {
     ListView,
     StyleSheet,
     ScrollView,
-    ActivityIndicator,
     RefreshControl,
 } from 'react-native';
 import { defaultStyles } from '../styles';
@@ -48,27 +47,20 @@ class TelaCartoes extends Component {
         return (
             <ScrollView style={styles.tela} contentContainerStyle={{flex:1}}>
                 <Cabecalho titulo="Cartão" />
-                <ScrollView  style={{flexGrow: 1}}  contentContainerStyle={styles.listaContainer}>
-                {
-                    this.props.carregandoCartoes ? 
-                    (
-                        <ActivityIndicator size="large" color={cores.azul} />
-                    ) :
-                    (
-                        <ListView
-                            enableEmptySections
-                            renderRow={this.renderRow}
-                            dataSource={this.dataSource}
-                            refreshControl={
-                                <RefreshControl
-                                    refreshing={this.props.carregandoCartoes}
-                                    onRefresh={() =>this.props.carregarCartoes()}
-                                />
-                            }
-                        />
-                    )
-                }
-                </ScrollView>
+                <View style={{flexGrow: 1}}>
+                    <ListView
+                        enableEmptySections
+                        renderRow={this.renderRow}
+                        dataSource={this.dataSource}
+                        contentContainerStyle={styles.listaContainer}
+                        refreshControl={
+                            <RefreshControl
+                                refreshing={this.props.carregandoCartoes}
+                                onRefresh={() =>this.props.carregarCartoes()}
+                            />
+                        }
+                    />
+                </View>
                 <View style={styles.botoesContainer}>
                     <TouchableHighlight
                         onPress={() => this.props.navigation.navigate('TelaFormCartao')}
@@ -90,9 +82,7 @@ const styles = StyleSheet.create({
         ...defaultStyles.telaFull,
     },
     listaContainer: {
-        flex: 1,
         ...defaultStyles.telaPaddingPequeno,
-        justifyContent: 'center',
     },
     botoesContainer: {
         ...defaultStyles.telaPaddingPequeno,

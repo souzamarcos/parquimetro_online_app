@@ -5,7 +5,6 @@ import {
     StyleSheet, 
     ListView, 
     Picker,
-    ActivityIndicator,
     RefreshControl,
 } from 'react-native';
 import HistoricoItem from './HistoricoItem';
@@ -17,13 +16,9 @@ import { carregarHistorico } from '../actions/HistoricoActions';
 
 class TelaHistorico extends Component {
 
-    constructor(props) {
-        super(props);
-
-        this.state = {
-            ordem: "1",
-        };
-    }
+    state = {
+        ordem: "1",
+    };
 
     componentWillMount(){
         this.props.carregarHistorico();
@@ -60,27 +55,20 @@ class TelaHistorico extends Component {
                         <Picker.Item label="Caros" value="4" /> */}
                     </Picker>
                 </View>
-                <ScrollView style={{ flex: 1}} contentContainerStyle={styles.listaContainer}>
-                    {
-                        this.props.carregandoHistorico ? 
-                        (
-                            <ActivityIndicator size="large" color={cores.azul} />
-                        ) :
-                        (
-                            <ListView
-                                enableEmptySections
-                                dataSource={this.dataSource}
-                                renderRow={this.renderRow}
-                                refreshControl={
-                                    <RefreshControl
-                                        refreshing={this.props.carregandoHistorico}
-                                        onRefresh={() =>this.props.carregarHistorico()}
-                                    />
-                                }
+                <View style={{ flex: 1}}>
+                    <ListView
+                        enableEmptySections
+                        dataSource={this.dataSource}
+                        renderRow={this.renderRow}
+                        contentContainerStyle={styles.listaContainer}
+                        refreshControl={
+                            <RefreshControl
+                                refreshing={this.props.carregandoHistorico}
+                                onRefresh={() =>this.props.carregarHistorico()}
                             />
-                        )
-                    }
-                </ScrollView>
+                        }
+                    />
+                </View>
             </ScrollView>
         );
     }
@@ -92,9 +80,7 @@ const styles = StyleSheet.create({
         backgroundColor: '#e6ebee'
     },
     listaContainer: {
-        flex: 1,
         ...defaultStyles.telaPaddingPequeno,
-        justifyContent: 'center',
     },
 });
 

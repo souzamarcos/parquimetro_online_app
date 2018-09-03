@@ -47,7 +47,6 @@ class TelaConsultaGuarda extends Component {
                     onChangeText={ (placa) => this.props.modificaPlaca(placa) }
                     value={this.props.placa}
                     underlineColorAndroid={cores.cinza}
-                    autoCapitalize="characters"
                     options={{
                         mask: 'AAA-9999',
                     }}

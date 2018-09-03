@@ -4,62 +4,41 @@ import {
     StyleSheet, 
     ListView, 
     Picker,
-    ScrollView
+    ScrollView,
+    RefreshControl
 } from 'react-native';
 import HistoricoGuardaItem from './HistoricoGuardaItem';
 import { defaultStyles } from '../styles';
 import cores from '../styles/cores';
-import { withNavigationFocus } from 'react-navigation';
 import Cabecalho from './Cabecalho';
 import { connect } from 'react-redux';
-import { alteraTitulo } from '../actions/AppActions';
+import { carregarHistorico } from '../actions/HistoricoGuardaActions';
 
 class TelaHistoricoGuarda extends Component {
 
-    constructor(props) {
-        super(props);
-        const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
+    state = {
+        ordem: "1",
+    };
 
-        let consultas = [];
-        for(let i = 0; i< 5; i++){
-            if(i%2==0){
-                consultas.push({
-                    data: '06 Abril - 12:12',
-                    placa: 'ABC-4513',
-                    sessao: {
-                        uid: i,
-                        dataDia: '06',
-                        dataMes: 'Abril',
-                        rua: 'Av. Antônio de Almeida - Volta Redonda - RJ',
-                        bairro: 'Vila Santa Cecília',
-                        duracao: '22',
-                        valor: 2.35,
-                        placa: 'ABC-4513',
-                        cartaoBandeira: 'Mastercard',
-                        cartao: '**** **** **** 5413',
-                        horaInicio: '12:00',
-                        horaFim: '13:22'
-                    }
-                });
-            }else{
-                consultas.push({
-                    data: '06 Abril - 12:12',
-                    placa: 'ABC-3333',
-                    sessao: null,
-                });
-            }
-        }
-
-        this.state = {
-            ordem: "1",
-            dataSource: ds.cloneWithRows(consultas),
-        };
+    componentWillMount(){
+        this.props.carregarHistorico();
+        this.criaFonteDados([]);
+    }
+    
+    componentWillReceiveProps(nextProps){
+        this.criaFonteDados(nextProps.historico);
     }
 
     renderRow(consulta) {
         return (
             <HistoricoGuardaItem consulta={consulta} />
         );
+    }
+
+    criaFonteDados(historico) {
+        const ds = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 });
+
+        this.dataSource = ds.cloneWithRows(historico);
     }
 
     render(){
@@ -71,17 +50,23 @@ class TelaHistoricoGuarda extends Component {
                         selectedValue={this.state.ordem}
                         onValueChange={(itemValue, itemIndex) => this.setState({ordem: itemValue})}>
                         <Picker.Item label="Recentes" value="1" />
-                        <Picker.Item label="Antigos" value="2" />
+                        {/* <Picker.Item label="Antigos" value="2" />
                         <Picker.Item label="Baratos" value="3" />
-                        <Picker.Item label="Caros" value="4" />
+                        <Picker.Item label="Caros" value="4" /> */}
                     </Picker>
                 </View>
                 <View style={{ flex: 1}}>
                     <ListView
                         enableEmptySections
-                        dataSource={this.state.dataSource}
+                        dataSource={this.dataSource}
                         renderRow={this.renderRow}
                         contentContainerStyle={styles.listaContainer}
+                        refreshControl={
+                            <RefreshControl
+                                refreshing={this.props.carregandoHistorico}
+                                onRefresh={() =>this.props.carregarHistorico()}
+                            />
+                        }
                     />
                 </View>
             </ScrollView>
@@ -99,4 +84,12 @@ const styles = StyleSheet.create({
     },
 });
 
-export default connect(null, {alteraTitulo})(withNavigationFocus(TelaHistoricoGuarda));
+const mapStateToProps = state => {
+    return {
+        historico: state.HistoricoGuardaReducer.historico,
+        carregandoHistorico: state.HistoricoGuardaReducer.carregandoHistorico,
+        erro: state.HistoricoGuardaReducer.erro,
+    }
+};
+
+export default connect(mapStateToProps, { carregarHistorico })(TelaHistoricoGuarda);

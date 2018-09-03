@@ -11,13 +11,9 @@ import cores from '../styles/cores';
 
 class HistoricoGuardaItem extends Component {
 
-    constructor(props){
-        super(props);
-
-        this.state = {
-            expandido: false,
-        }
-    }
+    state = {
+        expandido: false,
+    };
    
     expandir() {
         this.setState({
@@ -38,7 +34,7 @@ class HistoricoGuardaItem extends Component {
                         <View style={{ flexDirection: 'row', alignItems: 'center'}}>
                             <View style={{ flex: 1}}>
                                 <View style={{ flexDirection: 'row', alignItems: 'center'}}>
-                                    <Text style={styles.data}>{this.props.consulta.data} </Text>
+                                    {/* <Text style={styles.data}>{this.props.consulta.data} </Text> */}
                                 </View>
                                 <Text style={styles.tituloTexto}>{this.props.consulta.placa}</Text>
                             </View>
