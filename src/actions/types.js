@@ -72,6 +72,10 @@ export const MODIFICA_SESSAO_VALOR_ATUAL = "modifica_sessao_valor_atual";
 export const FINALIZAR_SESSAO_SUCESSO = "finalizar_sessao_sucesso";
 export const FINALIZAR_SESSAO_ERRO = "finalizar_sessao_erro";
 export const FINALIZAR_SESSAO_EM_ANDAMENTO = "finalizar_sessao_em_andamento";
+export const BUSCAR_SESSAO_SUCESSO = "buscar_sessao_sucesso";
+export const BUSCAR_SESSAO_EM_ANDAMENTO = "buscar_sessao_em_andamento";
+export const MODIFICA_SESSAO_COR_FUNDO = "modifica_sessao_cor_fundo";
+
 
 // historico
 export const CARREGAR_HISTORICO_EM_ANDAMENTO = "carregar_historico_em_andamento";

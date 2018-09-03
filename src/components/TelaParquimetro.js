@@ -10,7 +10,6 @@ import {
   ActivityIndicator
 } from 'react-native';
 import { renderErro } from '../utils/Erro';
-import BackgroundTimer from 'react-native-background-timer';
 import _ from 'lodash';
 import Color from 'color';
 import Moment, { duration } from 'moment';
@@ -28,10 +27,12 @@ import {
     modificaPorcentagemContador,
     modificaTempoContador,
     modificaValorAtual,
-    finalizarSessao
+    finalizarSessao,
+    buscarUltimaSessao,
  } from '../actions/ParquimetroActions';
 import { carregarCartoes } from '../actions/CartoesActions';
 import { carregarVeiculos } from '../actions/VeiculosActions';
+import CronometroParquimetro from '../utils/CronometroParquimetro';
 
 class TelaParquimetro extends Component {
 
@@ -45,6 +46,7 @@ class TelaParquimetro extends Component {
     }
 
     componentWillMount(){
+        this.props.buscarUltimaSessao();
         this.props.carregarCartoes();
         this.props.carregarVeiculos();
         this.geolocation = navigator.geolocation.watchPosition(
@@ -97,36 +99,7 @@ class TelaParquimetro extends Component {
 
         this.props.iniciarSessao(latitude,longitude,cartaoId,veiculoId);
 
-        BackgroundTimer.runBackgroundTimer(() => { 
-            //corrigir contador
-            if(!_.isEmpty(this.props.sessao)){
-
-                let duracaoPercorrida = null;
-                if(Moment() < Moment(this.props.sessao.data_inicio)){
-                    duracaoPercorrida = duration(Moment().diff(Moment()));
-                }else{
-                    duracaoPercorrida = duration(Moment().diff(this.props.sessao.data_inicio));
-                }
-                
-                let tempoPercorrido = Moment.utc(duracaoPercorrida.as('milliseconds'));
-
-                let tempoMaximoMinutos = this.props.sessao.grupo_parquimetro.tempo_limite * 60; //corrigir pegar tempo máximo do parquimetro
-                let minutosPercorridos = duracaoPercorrida.as('minutes');
-
-                let porcentagemContador = (minutosPercorridos / tempoMaximoMinutos) * 100;
-                let tempoContador = tempoPercorrido != null ? tempoPercorrido.format('HH:mm:ss') : "";
-                let valorAtual = _.round(this.props.sessao.grupo_parquimetro.valor_minuto * minutosPercorridos, 2);//corrigir pegar preço do parquimetro
-                
-                this.props.modificaPorcentagemContador(porcentagemContador);
-                this.props.modificaTempoContador(tempoContador);
-                this.props.modificaValorAtual(valorAtual);               
-
-                if(porcentagemContador>=100){
-                    //parar contador
-                    BackgroundTimer.stopBackgroundTimer();
-                }
-            }
-        }, 1000);
+        CronometroParquimetro.iniciarCronometroParquimetro();
     }
 
     exibirResumoSessao(){
@@ -155,13 +128,11 @@ class TelaParquimetro extends Component {
     }
 
     concluirSessao(){
-        
         this.props.finalizarSessao();
-        //validar se der erro
+        //falta validar se der erro
 
         //pausar o timer
-        BackgroundTimer.stopBackgroundTimer();
-
+        CronometroParquimetro.pausarCronometroParquimetro();
         this.props.modificaPorcentagemContador(0);
         this.props.modificaTempoContador("00:00:00");
         this.props.modificaValorAtual(0);
@@ -226,9 +197,9 @@ class TelaParquimetro extends Component {
     }
 
     renderTela(){
-        if(this.props.iniciandoSessao || this.props.finalizandoSessao){
+        if(this.props.buscandoSessao || this.props.iniciandoSessao || this.props.finalizandoSessao){
             return (
-                <View style={[styles.telaCarregando, { backgroundColor: this.state.telaContagemCor}]}>
+                <View style={[styles.telaCarregando, { backgroundColor: this.props.corFundo}]}>
                     <ActivityIndicator style={styles.activityIndicator} size="large" color={cores.branco} />
                 </View>
             );  
@@ -238,7 +209,7 @@ class TelaParquimetro extends Component {
             if(this.state.exibirResumoSessao){
                 //tela resumo
                 return (
-                    <View style={[styles.telaResumo, { backgroundColor: this.state.telaContagemCor}]}>
+                    <View style={[styles.telaResumo, { backgroundColor: this.props.corFundo}]}>
                         <View style={styles.telaResumoConteudo}>
                             <Text style={{ textAlign: 'center', fontWeight: 'bold', fontSize: 16, color: '#fff', paddingVertical: 20,}}>
                                 valor total
@@ -284,14 +255,14 @@ class TelaParquimetro extends Component {
                                     style={styles.botaoBranco}
                                     underlayColor={Color(cores.branco).darken(0.2)}
                                 >
-                                    <Text style={[styles.botaoVerdeText, {color: this.state.telaContagemCor}]}>
+                                    <Text style={[styles.botaoVerdeText, {color: this.props.corFundo}]}>
                                         Concluir
                                     </Text>
                                 </TouchableHighlight>
                                 <TouchableHighlight
                                     onPress={() => this.cancelarConclusaoSessao()}
                                     style={{ marginTop: 10, }}
-                                    underlayColor={Color(this.state.telaContagemCor).lighten(0.2)}
+                                    underlayColor={Color(this.props.corFundo).lighten(0.2)}
                                 >
                                     <Text style={[styles.botaoCancelarText, {color: '#fff'}]}>
                                         Voltar
@@ -305,15 +276,15 @@ class TelaParquimetro extends Component {
 
             //tela Contagem
             return (
-                <View style={[styles.telaContagem, { backgroundColor: this.state.telaContagemCor}]}>
+                <View style={[styles.telaContagem, { backgroundColor: this.props.corFundo}]}>
                     <View style={styles.telaContagemInformacao}>
                         <View style={styles.circuloProgresso}>
                             <ProgressCircle
                                 percent={this.props.porcentagemContador}
                                 borderWidth={8}
                                 color="#fff"
-                                shadowColor={ Color(this.state.telaContagemCor).lighten(0.2).string() } //adicionando a mesma cor da tela com mais branco
-                                bgColor={this.state.telaContagemCor}
+                                shadowColor={ Color(this.props.corFundo).lighten(0.2).string() } //adicionando a mesma cor da tela com mais branco
+                                bgColor={this.props.corFundo}
                                 radius={100}
                             >
                                 <View style={styles.circuloProgressoTexto}>
@@ -338,7 +309,7 @@ class TelaParquimetro extends Component {
                             style={styles.botaoBranco}
                             underlayColor={Color(cores.branco).darken(0.2)}
                         >
-                            <Text style={[styles.botaoVerdeText, {color: this.state.telaContagemCor}]}>
+                            <Text style={[styles.botaoVerdeText, {color: this.props.corFundo}]}>
                                 Parar
                             </Text>
                         </TouchableHighlight>
@@ -355,8 +326,8 @@ class TelaParquimetro extends Component {
                             percent={0}
                             borderWidth={8}
                             color="#fff"
-                            shadowColor={ Color(this.state.telaContagemCor).lighten(0.2).string() } //adicionando a mesma cor da tela com mais branco
-                            bgColor={this.state.telaContagemCor}
+                            shadowColor={ Color(this.props.corFundo).lighten(0.2).string() } //adicionando a mesma cor da tela com mais branco
+                            bgColor={this.props.corFundo}
                             radius={100}
                         >
                             <View style={styles.circuloProgressoTexto}>
@@ -543,6 +514,7 @@ const mapStateToProps = state => {
         parquimetro: state.ParquimetroReducer.parquimetro,
         carregandoParquimetro: state.ParquimetroReducer.carregandoParquimetro,
         sessao: state.ParquimetroReducer.sessao,
+        buscandoSessao: state.ParquimetroReducer.buscandoSessao,
         iniciandoSessao: state.ParquimetroReducer.iniciandoSessao,
         finalizandoSessao: state.ParquimetroReducer.finalizandoSessao,
         cartaoId: state.ParquimetroReducer.cartaoId,
@@ -552,6 +524,7 @@ const mapStateToProps = state => {
         porcentagemContador: state.ParquimetroReducer.porcentagemContador,
         tempoContador: state.ParquimetroReducer.tempoContador,
         valorAtual: state.ParquimetroReducer.valorAtual,
+        corFundo: state.ParquimetroReducer.corFundo,
     }
 };
 
@@ -569,4 +542,5 @@ export default connect(mapStateToProps, {
     modificaTempoContador,
     modificaValorAtual,
     finalizarSessao,
+    buscarUltimaSessao,
 })(TelaParquimetro);

@@ -13,6 +13,9 @@ import {
     FINALIZAR_SESSAO_SUCESSO,
     FINALIZAR_SESSAO_EM_ANDAMENTO,
     FINALIZAR_SESSAO_ERRO,
+    BUSCAR_SESSAO_SUCESSO,
+    BUSCAR_SESSAO_EM_ANDAMENTO,
+    MODIFICA_SESSAO_COR_FUNDO
 } from '../actions/types';
 
 const INITIAL_STATE = {
@@ -21,13 +24,15 @@ const INITIAL_STATE = {
     sessao: null,
     iniciandoSessao: false,
     finalizandoSessao: false,
+    buscandoSessao: false,
     cartaoId: null,
     veiculoId: null,
     latitude: null,
     longitude: null,
     porcentagemContador: 0,
     tempoContador: "00:00:00",
-    valorAtual: 0
+    valorAtual: 0,
+    corFundo: '#4988ef',
 }
 
 export default (state = INITIAL_STATE, action) => {
@@ -45,7 +50,11 @@ export default (state = INITIAL_STATE, action) => {
         case INICIAR_SESSAO_EM_ANDAMENTO:
             return { ...state, iniciandoSessao: true}
         case INICIAR_SESSAO_SUCESSO:
-            return { ...state, sessao: action.payload, iniciandoSessao: false}
+            return { ...state, sessao: action.payload, iniciandoSessao: false, corFundo: INITIAL_STATE.corFundo}
+        case BUSCAR_SESSAO_SUCESSO:
+            return { ...state, sessao: action.payload, buscandoSessao: false, corFundo: INITIAL_STATE.corFundo}
+        case BUSCAR_SESSAO_EM_ANDAMENTO:
+            return { ...state, buscandoSessao: true}
         case INICIAR_SESSAO_ERRO:
             return { ...state, iniciandoSessao: false}
         case MODIFICA_SESSAO_PORCENTAGEM_CONTADOR:
@@ -54,6 +63,8 @@ export default (state = INITIAL_STATE, action) => {
             return { ...state, tempoContador: action.payload }
         case MODIFICA_SESSAO_VALOR_ATUAL:
             return { ...state, valorAtual: action.payload }
+        case MODIFICA_SESSAO_COR_FUNDO:
+            return { ...state, corFundo: action.payload }   
         case FINALIZAR_SESSAO_EM_ANDAMENTO:
             return { ...state, finalizandoSessao: true}
         case FINALIZAR_SESSAO_SUCESSO:

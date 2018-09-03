@@ -15,7 +15,11 @@ import {
     FINALIZAR_SESSAO_SUCESSO,
     FINALIZAR_SESSAO_ERRO,
     FINALIZAR_SESSAO_EM_ANDAMENTO,
+    BUSCAR_SESSAO_SUCESSO,
+    BUSCAR_SESSAO_EM_ANDAMENTO,
+    MODIFICA_SESSAO_COR_FUNDO
 } from './types';
+import CronometroParquimetro from '../utils/CronometroParquimetro';
 
 export const carregarParquimetro = (latitude, longitude) => {
 
@@ -38,6 +42,25 @@ export const carregarParquimetro = (latitude, longitude) => {
         }
     }
 }
+
+export const buscarUltimaSessao = ( ) => {
+
+    return async dispatch => {
+        dispatch({ type: BUSCAR_SESSAO_EM_ANDAMENTO });
+        try
+        {
+            const retorno = await API.get('parquimetro',{});
+
+            console.log(retorno.data);
+            buscarUltimaSessaoSucesso(retorno.data, dispatch);
+        }
+        catch(erro)
+        {
+            buscarUltimaSessaoErro(erro.message, dispatch);
+        }
+    }
+}
+
 
 export const iniciarSessao = (latitude, longitude, cartaoId, veiculoId ) => {
 
@@ -141,6 +164,26 @@ export const iniciarSessaoErro = (erro, dispatch) => {
     });
 }
 
+export const buscarUltimaSessaoSucesso = (sessao, dispatch) => {
+    CronometroParquimetro.iniciarCronometroParquimetro();
+    dispatch({
+        type: BUSCAR_SESSAO_SUCESSO,
+        payload: sessao
+    });
+}
+
+export const buscarUltimaSessaoErro = (erro, dispatch) => {
+    console.log(erro);
+    Alert.alert(
+        'Aviso',
+        'Erro ao buscar última sessão!',
+        [
+            {text: 'OK'}
+        ],
+        { cancelable: false }
+    );
+}
+
 export const finalizarSessaoSucesso = (parquimetro, dispatch) => {
     if(dispatch){
         dispatch({
@@ -194,6 +237,7 @@ export const modificaLatitudeLongitude = (latitudeLongitude) => {
 
 
 export const modificaPorcentagemContador = (valor) => {
+    console.log('modificaPorcentagemContador');
     return {
         type: MODIFICA_SESSAO_PORCENTAGEM_CONTADOR,
         payload: valor
@@ -208,6 +252,12 @@ export const modificaTempoContador = (valor) => {
     };
 }
 
+export const modificaCorFundo = (cor) => {
+    return {
+        type: MODIFICA_SESSAO_COR_FUNDO,
+        payload: cor
+    };
+}
 
 export const modificaValorAtual = (valor) => {
     return {
