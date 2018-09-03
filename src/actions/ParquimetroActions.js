@@ -17,7 +17,8 @@ import {
     FINALIZAR_SESSAO_EM_ANDAMENTO,
     BUSCAR_SESSAO_SUCESSO,
     BUSCAR_SESSAO_EM_ANDAMENTO,
-    MODIFICA_SESSAO_COR_FUNDO
+    MODIFICA_SESSAO_COR_FUNDO,
+    MODIFICA_CONSULTA_PLACA
 } from './types';
 import CronometroParquimetro from '../utils/CronometroParquimetro';
 
@@ -52,7 +53,11 @@ export const buscarUltimaSessao = ( ) => {
             const retorno = await API.get('parquimetro',{});
 
             console.log(retorno.data);
-            buscarUltimaSessaoSucesso(retorno.data, dispatch);
+            if(retorno.data && !retorno.data.data_fim){
+                buscarUltimaSessaoSucesso(retorno.data, dispatch);
+            }else{
+                buscarUltimaSessaoSucesso(null, dispatch);
+            }
         }
         catch(erro)
         {
@@ -103,6 +108,7 @@ export const finalizarSessao = () => {
 
             console.log(retorno.data);
             finalizarSessaoSucesso(retorno.data, dispatch);
+            CronometroParquimetro.pausarCronometroParquimetro();
         }
         catch(erro)
         {
@@ -135,6 +141,7 @@ export const carregarParquimetroErro = (erro, dispatch) => {
 }
 
 export const iniciarSessaoSucesso = (parquimetro, dispatch) => {
+    CronometroParquimetro.iniciarCronometroParquimetro();
     if(dispatch){
         dispatch({
             type: INICIAR_SESSAO_SUCESSO,

@@ -99,7 +99,6 @@ class TelaParquimetro extends Component {
 
         this.props.iniciarSessao(latitude,longitude,cartaoId,veiculoId);
 
-        CronometroParquimetro.iniciarCronometroParquimetro();
     }
 
     exibirResumoSessao(){
@@ -130,12 +129,6 @@ class TelaParquimetro extends Component {
     concluirSessao(){
         this.props.finalizarSessao();
         //falta validar se der erro
-
-        //pausar o timer
-        CronometroParquimetro.pausarCronometroParquimetro();
-        this.props.modificaPorcentagemContador(0);
-        this.props.modificaTempoContador("00:00:00");
-        this.props.modificaValorAtual(0);
 
         this.setState({
             exibirResumoSessao: false,

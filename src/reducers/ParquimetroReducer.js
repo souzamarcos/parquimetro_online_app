@@ -68,9 +68,9 @@ export default (state = INITIAL_STATE, action) => {
         case FINALIZAR_SESSAO_EM_ANDAMENTO:
             return { ...state, finalizandoSessao: true}
         case FINALIZAR_SESSAO_SUCESSO:
-            return { ...state, sessao: null, finalizandoSessao: false }
+            return { ...state, sessao: null, finalizandoSessao: false, corFundo: INITIAL_STATE.corFundo, porcentagemContador: INITIAL_STATE.porcentagemContador, tempoContador: INITIAL_STATE.tempoContador,valorAtual: INITIAL_STATE.valorAtual, }
         case FINALIZAR_SESSAO_ERRO:
-            return { ...state, finalizandoSessao: false }
+            return { ...state, finalizandoSessao: false, corFundo: INITIAL_STATE.corFundo}
         default:
             return state;
     }    
