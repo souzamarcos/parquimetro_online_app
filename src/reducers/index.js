@@ -10,6 +10,7 @@ import ParquimetroReducer from './ParquimetroReducer';
 import HistoricoReducer from './HistoricoReducer';
 import ConsultaReducer from './ConsultaReducer';
 import HistoricoGuardaReducer from './HistoricoGuardaReducer';
+import PerguntasReducer from './PerguntasReducer';
 
 export default combineReducers({
     AppReducer,
@@ -22,5 +23,6 @@ export default combineReducers({
     ParquimetroReducer,
     HistoricoReducer,
     ConsultaReducer,
-    HistoricoGuardaReducer
+    HistoricoGuardaReducer,
+    PerguntasReducer
 });

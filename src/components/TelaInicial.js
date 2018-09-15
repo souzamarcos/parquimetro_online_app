@@ -3,7 +3,7 @@ import {
   Text,
   TouchableHighlight,
   StyleSheet,
-  View,
+  ScrollView
 } from 'react-native';
 import { defaultStyles } from '../styles';
 import cores from '../styles/cores';
@@ -12,12 +12,12 @@ export default class TelaInicial extends Component {
 
     render(){
         return (
-            <View style={styles.tela}>
+            <ScrollView style={{ width: '100%' }} contentContainerStyle={styles.tela}>
                 <Text style={styles.title}>
                     Bem Vindo!
                 </Text>
                 <Text style={styles.text}>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                    Esperamos que você tenha uma boa experiência ao usar o aplicativo. Pague o estacionamento rotativo de uma maneira rápida e fácil. Tudo sem nenhuma complicação.
                 </Text>
                 <TouchableHighlight
                     onPress={() => this.props.navigation.navigate('TelaLogin')}
@@ -38,16 +38,17 @@ export default class TelaInicial extends Component {
                         Cadastro
                     </Text>
                 </TouchableHighlight>
-            </View>
+            </ScrollView>
         );
     }
 }
 
 const styles = StyleSheet.create({
     tela: {
-        ...defaultStyles.telaFull,
-        ...defaultStyles.telaCentralizada,
         ...defaultStyles.telaPaddingHorizontalGrande,
+        backgroundColor: cores.branco,
+        flexGrow: 1,
+        justifyContent: 'center',
     },
     title: {
         ...defaultStyles.textTitle,

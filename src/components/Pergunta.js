@@ -33,7 +33,7 @@ class Pergunta extends Component {
                 >
                     <View style={{ flexDirection: 'row', alignItems: 'center'}}>
                         <View style={{ flex: 1}}>
-                            <Text style={styles.tituloTexto}>{this.props.pergunta.titulo}</Text>
+                            <Text style={styles.tituloTexto}>{this.props.pergunta.pergunta}</Text>
                         </View>
                         <View style={{paddingLeft: 15}}>
                             <Text style={styles.tituloTexto}>{this.state.expandido ? "↑" : "↓"}</Text>
@@ -41,7 +41,7 @@ class Pergunta extends Component {
                     </View>
                 </TouchableHighlight>
                 <View>
-                    {this.state.expandido? (<Text style={styles.conteudoTexto}>{this.props.pergunta.descricao}</Text>) : null}
+                    {this.state.expandido? (<Text style={styles.conteudoTexto}>{this.props.pergunta.resposta}</Text>) : null}
                 </View>
             </View >
         );

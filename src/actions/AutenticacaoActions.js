@@ -39,7 +39,7 @@ export const autenticarUsuario = ({ email, senha }) => {
                     password: senha
                 }
             })
-
+            console.log('usuario logado', retorno.data);
             if(_.isEmpty(retorno.data.usuario)){
                 loginUsuarioErro(retorno.data.message, dispatch);
             }else{

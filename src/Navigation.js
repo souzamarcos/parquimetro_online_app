@@ -119,17 +119,13 @@ const Navigation = createStackNavigator({
     TelaCadastroUsuario: {
         screen: TelaCadastroUsuario,
         navigationOptions: {
-            tabBarVisible: false,
-            swipeEnabled: false,
-            header: null
+            title: 'Cadastro'
         }
     },
     TelaLogin: {
         screen: TelaLogin,
         navigationOptions: {
-            tabBarVisible: false,
-            swipeEnabled: false,
-            header: null
+            title: 'Login'
         }
     },
     TelaCompletarCadastroUsuario: {
@@ -191,7 +187,7 @@ const Navigation = createStackNavigator({
         }
     }
 },{
-    initialRouteName : 'TelaLogin',
+    initialRouteName : 'TelaInicial',
     navigationOptions: {
         
     }

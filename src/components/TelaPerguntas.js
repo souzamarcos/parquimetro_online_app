@@ -3,65 +3,28 @@ import {
   StyleSheet,
   ListView,
   ScrollView,
+  RefreshControl
 } from 'react-native';
 import Pergunta from './Pergunta';
-import Cabecalho from './Cabecalho';
-
 import { defaultStyles } from '../styles';
-
-import { withNavigationFocus } from 'react-navigation';
-
 import { connect } from 'react-redux';
-import { alteraTitulo } from '../actions/AppActions';
+import { carregarPerguntas } from '../actions/PerguntasActions';
 
 class TelaPerguntas extends Component {
 
-    constructor(props){
-        super(props);
-
-        this.state = {
-            perguntas: []
-        }
-    }
-
     componentWillMount(){
-        if(this.props.isFocused){
-            this.props.alteraTitulo('Dúvidas Frequentes');
-        }
-        this.criaFonteDados([
-                {
-                    titulo: 'Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet ?',
-                    descricao: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
-                    ativa: false,
-                },
-                {
-                    titulo: 'Lorem ipsum dolor sit amet ?',
-                    descricao: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
-                    ativa: false,
-                },
-                {
-                    titulo: 'Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet ?',
-                    descricao: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididun Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. v Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.t ut labore et dolore magna aliqua.',
-                    ativa: false,
-                },
-                {
-                    titulo: 'Lorem ipsum dolor sit amet ?',
-                    descricao: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
-                    ativa: false,
-                },
-            ]);
+        this.props.carregarPerguntas();
+        this.criaFonteDados([]);
     }
     
     componentWillReceiveProps(nextProps){
-        if(nextProps.isFocused){
-            this.props.alteraTitulo('Dúvidas Frequentes');
-        }
+        this.criaFonteDados(nextProps.perguntas);
     }
 
-    criaFonteDados(conversas) {
+    criaFonteDados(perguntas) {
         const ds = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 });
 
-        this.dataSource = ds.cloneWithRows(conversas);
+        this.dataSource = ds.cloneWithRows(perguntas);
     }
 
     renderRow(pergunta){
@@ -72,11 +35,17 @@ class TelaPerguntas extends Component {
 
     render() {
         return (
-            <ScrollView style={styles.tela}>
+            <ScrollView style={{width: "100%"}} contentContainerStyle={styles.tela}>
                 <ListView
-
+                    enableEmptySections
                     renderRow={this.renderRow}
                     dataSource={this.dataSource}
+                    refreshControl={
+                        <RefreshControl
+                            refreshing={this.props.carregandoPerguntas}
+                            onRefresh={() =>this.props.carregarPerguntas()}
+                        />
+                    }
                     />
             </ScrollView>
         );
@@ -85,10 +54,19 @@ class TelaPerguntas extends Component {
 
 const styles = StyleSheet.create({
     tela: {
-        ...defaultStyles.telaFull,
         ...defaultStyles.telaPaddingPequeno,
-        backgroundColor: '#e6ebee'
+        backgroundColor: '#e6ebee',
+        flexGrow: 1,
+        justifyContent: 'center',
     }
 });
 
-export default connect(null, {alteraTitulo})(withNavigationFocus(TelaPerguntas));
+const mapStateToProps = state => {
+    return {
+        perguntas: state.PerguntasReducer.perguntas,
+        carregandoPerguntas: state.PerguntasReducer.carregandoPerguntas,
+        erro: state.PerguntasReducer.erro,
+    }
+};
+
+export default connect(mapStateToProps, { carregarPerguntas })(TelaPerguntas);

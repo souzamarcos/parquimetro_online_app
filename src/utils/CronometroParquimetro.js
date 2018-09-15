@@ -38,9 +38,9 @@ class CronometroParquimetro {
 
                 Store.dispatch(modificaPorcentagemContador(porcentagemContador));
                 Store.dispatch(modificaTempoContador(tempoContador));
-                Store.dispatch(modificaValorAtual(valorAtual));               
+                Store.dispatch(modificaValorAtual(valorAtual));
 
-                if(porcentagemContador>=75){
+                if(!Store.ParquimetroReducer.buscandoSessao && !Store.ParquimetroReducer.finalizandoSessao && porcentagemContador>=75){
                     Store.dispatch(modificaCorFundo(cores.vermelho));  
                 }
 

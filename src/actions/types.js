@@ -92,3 +92,8 @@ export const MODIFICA_CONSULTA_PLACA = "modifica_consulta_placa";
 export const CARREGAR_HISTORICO_GUARDA_EM_ANDAMENTO = "carregar_historico_guarda_em_andamento";
 export const CARREGAR_HISTORICO_GUARDA_SUCESSO = "carregar_historico_guarda_sucesso";
 export const CARREGAR_HISTORICO_GUARDA_ERRO = "carregar_historico_guarda_erro";
+
+// perguntas frequentes
+export const CARREGAR_PERGUNTAS_EM_ANDAMENTO = "carregar_perguntas_em_andamento";
+export const CARREGAR_PERGUNTAS_SUCESSO = "carregar_perguntas_sucesso";
+export const CARREGAR_PERGUNTAS_ERRO = "carregar_perguntas_erro";

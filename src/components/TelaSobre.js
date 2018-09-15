@@ -18,7 +18,7 @@ class TelaSobre  extends Component {
                         O parquímetro online
                     </Text>
                     <Text style={styles.texto}>
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididun Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. v Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.t ut labore et dolore magna aliqua.
+                        Concebido no ano de 2018, o Parquímetro Online tem como objetivo flexibilizar a forma de pagamentos de estacionamentos rotativos. Fruto da insatisfação de quatro jovens perante diversas experiências negativas em utilizar máquinas de Parquímetros Físicas, o sistema foi construído pensando na praticidade do usuário e em uso de tecnologias modernas. Assim, os amigos de longa data resolveram utilizar os conhecimentos obtidos durante a faculdade montando esta solução que simplifica o processo de pagamento a um simples toque no celular.    
                     </Text>
                 </View>
             </ScrollView>

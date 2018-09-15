@@ -113,8 +113,9 @@ class TelaLogin extends Component {
 
 const styles = StyleSheet.create({
     tela: {
-        ...defaultStyles.telaFull,
         ...defaultStyles.telaPaddingHorizontalGrande,
+        backgroundColor: cores.branco,
+        flexGrow: 1,
         justifyContent: 'center',
     },
     title: {

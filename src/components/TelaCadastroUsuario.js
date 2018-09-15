@@ -8,6 +8,7 @@ import {
   Keyboard,
   ScrollView
 } from 'react-native';
+import Cabecalho from './Cabecalho';
 import { defaultStyles } from '../styles';
 import cores from '../styles/cores';
 import { connect } from 'react-redux';
@@ -25,9 +26,7 @@ class TelaCadastroUsuario extends Component {
         return (
             <ScrollView style={{ width: '100%' }} contentContainerStyle={styles.tela}>
                 <View style={{ width: '100%' }}>
-                    <Text style={styles.title}>
-                        Cadastro
-                    </Text>
+                    <Cabecalho titulo="Pessoal" />
                     <View>
                         <TextInput
                             placeholder="Nome"
@@ -111,8 +110,9 @@ class TelaCadastroUsuario extends Component {
 
 const styles = StyleSheet.create({
     tela: {
-        ...defaultStyles.telaFull,
         ...defaultStyles.telaPaddingHorizontalGrande,
+        backgroundColor: cores.branco,
+        flexGrow: 1,
         justifyContent: 'center',
     },
     title: {
