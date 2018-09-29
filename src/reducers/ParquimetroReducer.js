@@ -4,6 +4,8 @@ import {
     MODIFICA_SESSAO_CARTAO_ID,
     MODIFICA_SESSAO_VEICULO_ID,
     CARREGAR_SESSAO_PARQUIMETRO_EM_ANDAMENTO,
+    CARREGAR_SESSAO_PARQUIMETRO_SUCESSO,
+    CARREGAR_SESSAO_PARQUIMETRO_ERRO,
     INICIAR_SESSAO_SUCESSO,
     INICIAR_SESSAO_ERRO,
     INICIAR_SESSAO_EM_ANDAMENTO,
@@ -15,7 +17,8 @@ import {
     FINALIZAR_SESSAO_ERRO,
     BUSCAR_SESSAO_SUCESSO,
     BUSCAR_SESSAO_EM_ANDAMENTO,
-    MODIFICA_SESSAO_COR_FUNDO
+    MODIFICA_SESSAO_COR_FUNDO,
+    BUSCAR_SESSAO_ERRO,
 } from '../actions/types';
 
 const INITIAL_STATE = {
@@ -41,6 +44,10 @@ export default (state = INITIAL_STATE, action) => {
             return { ...state, parquimetro: action.payload, carregandoParquimetro: false }
         case CARREGAR_SESSAO_PARQUIMETRO_EM_ANDAMENTO:
             return { ...state, carregandoParquimetro: true}
+        case CARREGAR_SESSAO_PARQUIMETRO_SUCESSO:
+            return { ...state, parquimetro: action.payload, carregandoParquimetro: false}
+        case CARREGAR_SESSAO_PARQUIMETRO_ERRO:
+            return { ...state, parquimetro: action.payload, carregandoParquimetro: false}
         case MODIFICA_SESSAO_CARTAO_ID:
             return { ...state, cartaoId: action.payload }
         case MODIFICA_SESSAO_VEICULO_ID:
@@ -55,6 +62,8 @@ export default (state = INITIAL_STATE, action) => {
             return { ...state, sessao: action.payload, buscandoSessao: false, corFundo: INITIAL_STATE.corFundo}
         case BUSCAR_SESSAO_EM_ANDAMENTO:
             return { ...state, buscandoSessao: true}
+        case BUSCAR_SESSAO_ERRO:
+            return { ...state, buscandoSessao: false}
         case INICIAR_SESSAO_ERRO:
             return { ...state, iniciandoSessao: false}
         case MODIFICA_SESSAO_PORCENTAGEM_CONTADOR:

@@ -49,20 +49,27 @@ class TelaParquimetro extends Component {
         this.props.buscarUltimaSessao();
         this.props.carregarCartoes();
         this.props.carregarVeiculos();
+        if(this.props.usuarioLogado && this.props.usuarioLogado.veiculo_padrao){
+            this.props.modificaVeiculoId(this.props.usuarioLogado.veiculo_padrao.id);
+        }
+
+        if(this.props.usuarioLogado && this.props.usuarioLogado.cartao_padrao){
+            this.props.modificaCartaoId(this.props.usuarioLogado.cartao_padrao.id);
+        }
+
         this.geolocation = navigator.geolocation.watchPosition(
             (position) => {
                 this.props.modificaLatitudeLongitude(position.coords);
                 this.props.carregarParquimetro(this.props.latitude, this.props.longitude);
             }, 
             (erro) => {
-                console.log(erro);
+                console.log('erro gps',erro);
             },
             { 
                 enableHighAccuracy: true, 
-                timeout: 10000, 
+                timeout: 1000, 
                 maximumAge: 1000,
-                distanceFilter: 10,
-                enableHighAccuracy: true
+                distanceFilter: 40,
             });
     }
 
@@ -240,11 +247,11 @@ class TelaParquimetro extends Component {
                                 </View>
                             </View>
                             <Text style={styles.telaResumoCartao}>
-                                {this.props.sessao.parquimetro.endereco_completo}
+                                {this.props.sessao.parquimetro && this.props.sessao.parquimetro.endereco_completo}
                             </Text>
                             <View>
                                 <TouchableHighlight
-                                    onPress={() => this.confirmarConclusaoSessao()}
+                                    onPress={() => this.concluirSessao()}
                                     style={styles.botaoBranco}
                                     underlayColor={Color(cores.branco).darken(0.2)}
                                 >
@@ -335,7 +342,7 @@ class TelaParquimetro extends Component {
                         :
                         (
                             <Text style={styles.textoContagem}>
-                                {this.props.parquimetro.endereco_completo}
+                                {this.props.parquimetro && this.props.parquimetro.endereco_completo}
                             </Text>
                         )
                     }
@@ -518,6 +525,7 @@ const mapStateToProps = state => {
         tempoContador: state.ParquimetroReducer.tempoContador,
         valorAtual: state.ParquimetroReducer.valorAtual,
         corFundo: state.ParquimetroReducer.corFundo,
+        usuarioLogado: state.AutenticacaoReducer.usuarioLogado
     }
 };
 

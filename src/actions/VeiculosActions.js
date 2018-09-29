@@ -33,7 +33,7 @@ export const carregarVeiculosSucesso = (veiculos, dispatch) => {
     });
 }
 
-export const carregarVeiculosErro = (erro) => {
+export const carregarVeiculosErro = (erro, dispatch) => {
     dispatch({
         type: CARREGAR_VEICULO_ERRO,
         payload: erro

@@ -63,6 +63,8 @@ export const MODIFICA_SESSAO_LATITUDE_LONGITUDE = "modifica_sessao_latitude_long
 export const MODIFICA_SESSAO_CARTAO_ID = "modifica_sessao_cartao_id";
 export const MODIFICA_SESSAO_VEICULO_ID = "modifica_sessao_veiculo_id";
 export const CARREGAR_SESSAO_PARQUIMETRO_EM_ANDAMENTO = "carregar_sessao_parquimetro_em_andamento";
+export const CARREGAR_SESSAO_PARQUIMETRO_SUCESSO = "carregar_sessao_parquimetro_sucesso";
+export const CARREGAR_SESSAO_PARQUIMETRO_ERRO = "carregar_sessao_parquimetro_erro";
 export const INICIAR_SESSAO_SUCESSO = "iniciar_sessao_sucesso";
 export const INICIAR_SESSAO_ERRO = "iniciar_sessao_erro";
 export const INICIAR_SESSAO_EM_ANDAMENTO = "iniciar_sessao_em_andamento";
@@ -74,6 +76,7 @@ export const FINALIZAR_SESSAO_ERRO = "finalizar_sessao_erro";
 export const FINALIZAR_SESSAO_EM_ANDAMENTO = "finalizar_sessao_em_andamento";
 export const BUSCAR_SESSAO_SUCESSO = "buscar_sessao_sucesso";
 export const BUSCAR_SESSAO_EM_ANDAMENTO = "buscar_sessao_em_andamento";
+export const BUSCAR_SESSAO_ERRO = "buscar_sessao_erro";
 export const MODIFICA_SESSAO_COR_FUNDO = "modifica_sessao_cor_fundo";
 
 

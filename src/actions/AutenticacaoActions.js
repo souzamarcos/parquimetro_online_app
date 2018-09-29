@@ -33,13 +33,14 @@ export const autenticarUsuario = ({ email, senha }) => {
         dispatch({ type: LOGIN_EM_ANDAMENTO });
         try
         {
+            console.log('autenticarUsuario');
             const retorno = await API.post('usuario/login', {
                 usuario: {
                     email,
                     password: senha
                 }
             })
-            console.log('usuario logado', retorno.data);
+            console.log('usuario',retorno.data);
             if(_.isEmpty(retorno.data.usuario)){
                 loginUsuarioErro(retorno.data.message, dispatch);
             }else{
@@ -74,7 +75,7 @@ const loginUsuarioErro = (mensagem, dispatch) => {
 }
 
 export const deslogarUsuario = () => {
-    NavigationService.navigate('TelaLogin');
+    NavigationService.navigate('TelaInicial');
     return {
         type: DESLOGAR_USUARIO,
     }

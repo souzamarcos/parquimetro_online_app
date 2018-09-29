@@ -6,6 +6,8 @@ import {
     MODIFICA_SESSAO_CARTAO_ID,
     MODIFICA_SESSAO_VEICULO_ID,
     CARREGAR_SESSAO_PARQUIMETRO_EM_ANDAMENTO,
+    CARREGAR_SESSAO_PARQUIMETRO_SUCESSO,
+    CARREGAR_SESSAO_PARQUIMETRO_ERRO,
     INICIAR_SESSAO_SUCESSO,
     INICIAR_SESSAO_ERRO,
     INICIAR_SESSAO_EM_ANDAMENTO,
@@ -17,6 +19,7 @@ import {
     FINALIZAR_SESSAO_EM_ANDAMENTO,
     BUSCAR_SESSAO_SUCESSO,
     BUSCAR_SESSAO_EM_ANDAMENTO,
+    BUSCAR_SESSAO_ERRO,
     MODIFICA_SESSAO_COR_FUNDO,
     MODIFICA_CONSULTA_PLACA
 } from './types';
@@ -28,6 +31,7 @@ export const carregarParquimetro = (latitude, longitude) => {
         dispatch({ type: CARREGAR_SESSAO_PARQUIMETRO_EM_ANDAMENTO });
         try
         {
+            console.log('carregarParquimetro');
             const retorno = await API.post('parquimetro/verificar-endereco',{
                 sessao: {
                     latitude,
@@ -38,8 +42,7 @@ export const carregarParquimetro = (latitude, longitude) => {
         }
         catch(erro)
         {
-            //carregarParquimetroErro(erro.message, dispatch);
-            dispatch({ type: null});
+            dispatch(carregarParquimetroErro(erro.message));
         }
     }
 }
@@ -47,12 +50,13 @@ export const carregarParquimetro = (latitude, longitude) => {
 export const buscarUltimaSessao = ( ) => {
 
     return async dispatch => {
+        console.log('buscarUltimaSessao');
         dispatch({ type: BUSCAR_SESSAO_EM_ANDAMENTO });
         try
         {
             const retorno = await API.get('parquimetro',{});
 
-            console.log(retorno.data);
+            console.log('sessao', retorno.data);
             if(retorno.data && !retorno.data.data_fim){
                 buscarUltimaSessaoSucesso(retorno.data, dispatch);
             }else{
@@ -61,6 +65,7 @@ export const buscarUltimaSessao = ( ) => {
         }
         catch(erro)
         {
+            console.log('erro buscarUltimaSessao',erro);
             buscarUltimaSessaoErro(erro.message, dispatch);
         }
     }
@@ -120,23 +125,16 @@ export const finalizarSessao = () => {
 
 export const carregarParquimetroSucesso = (parquimetro, dispatch) => {
     dispatch({
-        type: MODIFICA_SESSAO_PARQUIMETRO,
+        type: CARREGAR_SESSAO_PARQUIMETRO_SUCESSO,
         payload: parquimetro
     });
 }
 
 //melhorar pois não precisa limpar o parquimetro da sessão
-export const carregarParquimetroErro = (erro, dispatch) => {
-    if(dispatch){
-        dispatch({
-            type: MODIFICA_SESSAO_PARQUIMETRO,
-            payload: null
-        });
-    }else{
-        return {
-            type: MODIFICA_SESSAO_PARQUIMETRO,
-            payload: null
-        }
+export const carregarParquimetroErro = (erro) => {
+    return {
+        type: CARREGAR_SESSAO_PARQUIMETRO_ERRO,
+        payload: erro
     }
 }
 
@@ -181,14 +179,10 @@ export const buscarUltimaSessaoSucesso = (sessao, dispatch) => {
 
 export const buscarUltimaSessaoErro = (erro, dispatch) => {
     console.log(erro);
-    Alert.alert(
-        'Aviso',
-        'Erro ao buscar última sessão!',
-        [
-            {text: 'OK'}
-        ],
-        { cancelable: false }
-    );
+    dispatch({
+        type: BUSCAR_SESSAO_ERRO,
+        payload: erro
+    });
 }
 
 export const finalizarSessaoSucesso = (parquimetro, dispatch) => {

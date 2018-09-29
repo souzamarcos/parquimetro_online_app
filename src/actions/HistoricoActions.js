@@ -21,7 +21,7 @@ export const carregarHistorico = () => {
         }
         catch(erro)
         {
-            carregarHistoricoErro(erro.message, dispatch);
+            dispatch(carregarHistoricoErro(erro.message));
         }
     }
 }
@@ -34,8 +34,8 @@ export const carregarHistoricoSucesso = (historico, dispatch) => {
 }
 
 export const carregarHistoricoErro = (erro) => {
-    dispatch({
+    return {
         type: CARREGAR_HISTORICO_ERRO,
         payload: erro
-    });
+    };
 }

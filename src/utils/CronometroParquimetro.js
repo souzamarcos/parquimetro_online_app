@@ -9,7 +9,7 @@ import _ from 'lodash';
 import Moment, { duration } from 'moment';
 import cores from '../styles/cores';
 import BackgroundTimer from 'react-native-background-timer';
-import Store from '../Store';
+import { Store } from '../Store';
 
 class CronometroParquimetro {
 
@@ -27,7 +27,7 @@ class CronometroParquimetro {
                 
                 let tempoPercorrido = Moment.utc(duracaoPercorrida.as('milliseconds'));
 
-                let tempoMaximoMinutos = sessao.grupo_parquimetro.tempo_limite * 60; //corrigir pegar tempo máximo do parquimetro
+                let tempoMaximoMinutos = sessao.grupo_parquimetro.tempo_limite; //corrigir pegar tempo máximo do parquimetro
                 let minutosPercorridos = duracaoPercorrida.as('minutes');
 
                 let porcentagemContador = (minutosPercorridos / tempoMaximoMinutos) * 100;
@@ -40,7 +40,10 @@ class CronometroParquimetro {
                 Store.dispatch(modificaTempoContador(tempoContador));
                 Store.dispatch(modificaValorAtual(valorAtual));
 
-                if(!Store.ParquimetroReducer.buscandoSessao && !Store.ParquimetroReducer.finalizandoSessao && porcentagemContador>=75){
+                const state = Store.getState();
+                
+                console.log(state.ParquimetroReducer);
+                if(!state.ParquimetroReducer.buscandoSessao && !state.ParquimetroReducer.finalizandoSessao && (porcentagemContador>=75 && porcentagemContador < 100)){
                     Store.dispatch(modificaCorFundo(cores.vermelho));  
                 }
 
