@@ -11,6 +11,11 @@ import { PersistGate } from 'redux-persist/integration/react';
 import Navigation from './Navigation';
 import NavigationService from './NavigationService';
 
+import * as moment from 'moment';
+import 'moment/locale/pt-br';
+
+moment.locale('pt-BR');
+
 
 class App extends Component {
     render() {

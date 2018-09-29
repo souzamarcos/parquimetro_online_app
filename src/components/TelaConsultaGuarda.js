@@ -32,7 +32,7 @@ class TelaConsultaGuarda extends Component {
 
         this.props.consultarPlaca(this.props.placa);
     }
-
+    
     render(){
         return (
             <ScrollView contentContainerStyle={styles.tela}>

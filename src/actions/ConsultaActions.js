@@ -21,31 +21,29 @@ export const consultarPlaca = (placa) => {
             });
 
             //corrigir depois que mudar na api ##########
-
-            console.log(_.head(retorno.data));
-            consultarPlacaSucesso(_.head(retorno.data), dispatch);
+            dispatch(consultarPlacaSucesso(retorno.data));
 
             NavigationService.navigate('TelaRetornoConsultaGuarda');
         }
         catch(erro)
         {
-            consultarPlacaErro(erro.message, dispatch);
+            dispatch(consultarPlacaErro(erro.message));
         }
     }
 }
 
-export const consultarPlacaSucesso = (sessao, dispatch) => {
-    dispatch({
+export const consultarPlacaSucesso = (sessao) => {
+    return {
         type: CONSULTA_PLACA_SUCESSO,
         payload: sessao
-    });
+    };
 }
 
 export const consultarPlacaErro = (erro) => {
-    dispatch({
+    return {
         type: CONSULTA_PLACA_ERRO,
         payload: erro
-    });
+    };
 }
 
 export const modificaPlaca = (placa) => {
