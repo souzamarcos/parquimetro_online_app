@@ -10,6 +10,7 @@ import { PersistGate } from 'redux-persist/integration/react';
 
 import Navigation from './Navigation';
 import NavigationService from './NavigationService';
+import TelaCarregamento from './components/TelaCarregamento';
 
 import * as moment from 'moment';
 import 'moment/locale/pt-br';
@@ -21,7 +22,7 @@ class App extends Component {
     render() {
         return (
             <Provider store={Store}>
-                <PersistGate loading={(<View><Text>Carregando</Text></View>)} persistor={Persistor}>
+                <PersistGate loading={(<TelaCarregamento />)} persistor={Persistor}>
                     <Navigation ref={navigatorRef => {
                             NavigationService.setTopLevelNavigator(navigatorRef);
                         }}
