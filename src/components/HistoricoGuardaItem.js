@@ -40,14 +40,12 @@ class HistoricoGuardaItem extends Component {
                                 <Text style={styles.tituloTexto}>{this.props.consulta.placa}</Text>
                             </View>
                             <View style={{paddingLeft: 15}}>
-                                <Text style={styles.valor}>
-                                    {
-                                        this.props.consulta.sessao_id ? 
-                                        <Image style={styles.icone} source={require('../imgs/icone_parquimetro_sucesso.png')} />
-                                        :
-                                        <Image style={styles.icone} source={require('../imgs/icone_parquimetro_erro.png')} />                                           
-                                    }
-                                </Text>
+                                {
+                                    this.props.consulta.sessao_id ? 
+                                    <Image style={styles.icone} source={require('../imgs/icone_parquimetro_sucesso.png')} />
+                                    :
+                                    <Image style={styles.icone} source={require('../imgs/icone_parquimetro_erro.png')} />                                           
+                                }
                             </View>
                         </View>
                     </View>
@@ -90,14 +88,10 @@ const styles = StyleSheet.create({
         fontSize: 11,
     },
     icone: {
-        width: 100,
-        height: 100,
+        width: 30,
+        height: 30,
     },
     duracao: {
-        color: '#6e868e',
-    },
-    valor: {
-        fontSize: 20,
         color: '#6e868e',
     },
     rua: {
