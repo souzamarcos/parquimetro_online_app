@@ -36,7 +36,7 @@ Store.subscribe(() => {
     const { usuarioLogado } =  Store.getState().AutenticacaoReducer;
 
 
-    Api.defaults.headers.common['Authorization'] = _.isEmpty(usuarioLogado) ? null : `${usuarioLogado.token}`;
+    Api.defaults.headers.common['Authorization'] = _.isEmpty(usuarioLogado) ? null : `Bearer ${usuarioLogado.token}`;
 
 });
 

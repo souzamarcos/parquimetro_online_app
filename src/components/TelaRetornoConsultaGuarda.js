@@ -14,35 +14,27 @@ import { connect } from 'react-redux';
 
 class TelaRetornoConsultaGuarda extends Component {
 
-    sessaoPaga(){
-        return this.props.sessao && !this.props.sessao.data_fim;
-    }
-
-    ultimaConsulta(){
-        return this.props.sessao ? this.props.sessao.ultima_consulta : null
-    }
-
     render(){
         return (
             <ScrollView contentContainerStyle={styles.tela}>
                 <Cabecalho 
                     titulo={
-                    this.sessaoPaga() ?
+                    this.props.sessao ?
                         'Consulta Sucesso' :
                         'Consulta Erro'
                     } 
                 style={styles.cabecalho} />
-                <Text style={[styles.title, { color: this.sessaoPaga() ? cores.verde : cores.vermelho} ]}>
+                <Text style={[styles.title, { color: this.props.sessao ? cores.verde : cores.vermelho} ]}>
                     {
-                        this.sessaoPaga() ?
+                        this.props.sessao ?
                         'Pagamento registrado' :
                         'Pagamento não registrado'
                     }
                 </Text>
                 {
-                    this.sessaoPaga() ?
+                    this.props.sessao ?
                         <Text style={styles.text}>
-                            O pagamento do veículo com placa {(this.props.placa || "").toUpperCase()} foi registrado no parquímetro localizado em Av. Paulo de Frontin - Aterrado - Volta Redonda.
+                            O pagamento do veículo com placa {(this.props.placa || "").toUpperCase()} foi registrado no parquímetro localizado em {this.props.sessao.parquimetro.endereco_completo}
                         </Text>
                     :
                         <Text style={styles.text}>
@@ -50,13 +42,13 @@ class TelaRetornoConsultaGuarda extends Component {
                         </Text>
                 }
                 {
-                    this.ultimaConsulta() &&
+                    this.props.ultimaConsulta &&
                     <View>
                         <Text style={styles.ultimaConsulta}>
                             Ultima consulta:
                         </Text>
                         <Text style={styles.text}>
-                            { Moment().to(Moment(this.ultimaConsulta().data)) }
+                            { Moment().to(Moment(this.props.ultimaConsulta.data)) }
                         </Text>
                     </View>
                 }
@@ -119,6 +111,7 @@ const mapStateToProps = state => {
     return {
         placa: state.ConsultaReducer.placa,
         sessao: state.ConsultaReducer.sessao,
+        ultimaConsulta: state.ConsultaReducer.ultimaConsulta,
         carregandoSessao: state.ConsultaReducer.carregandoSessao,
         erro: state.ConsultaReducer.erro,
     }

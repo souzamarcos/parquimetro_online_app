@@ -21,6 +21,8 @@ export const consultarPlaca = (placa) => {
             });
 
             //corrigir depois que mudar na api ##########
+
+            console.log(retorno.data);
             dispatch(consultarPlacaSucesso(retorno.data));
 
             NavigationService.navigate('TelaRetornoConsultaGuarda');

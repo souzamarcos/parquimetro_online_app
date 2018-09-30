@@ -7,6 +7,7 @@ import {
   Image,
 } from 'react-native';
 import _ from 'lodash';
+import Moment from 'moment';
 import cores from '../styles/cores';
 
 class HistoricoGuardaItem extends Component {
@@ -34,29 +35,30 @@ class HistoricoGuardaItem extends Component {
                         <View style={{ flexDirection: 'row', alignItems: 'center'}}>
                             <View style={{ flex: 1}}>
                                 <View style={{ flexDirection: 'row', alignItems: 'center'}}>
-                                    {/* <Text style={styles.data}>{this.props.consulta.data} </Text> */}
+                                    <Text style={styles.data}>{Moment(this.props.consulta.data).format('DD/MM/YYYY HH:mm:ss')} </Text>
                                 </View>
                                 <Text style={styles.tituloTexto}>{this.props.consulta.placa}</Text>
                             </View>
                             <View style={{paddingLeft: 15}}>
                                 <Text style={styles.valor}>
                                     {
-                                        _.isEmpty(this.props.consulta.sessao) ? 
-                                            <Image style={styles.icone} source={require('../imgs/icone_parquimetro_erro.png')} />
+                                        this.props.consulta.sessao_id ? 
+                                        <Image style={styles.icone} source={require('../imgs/icone_parquimetro_sucesso.png')} />
                                         :
-                                            <Image style={styles.icone} source={require('../imgs/icone_parquimetro_sucesso.png')} />
-                                    }</Text>
+                                        <Image style={styles.icone} source={require('../imgs/icone_parquimetro_erro.png')} />                                           
+                                    }
+                                </Text>
                             </View>
                         </View>
                     </View>
                 </TouchableHighlight>
-                {this.state.expandido && !_.isEmpty(this.props.consulta.sessao) ? 
+                {this.state.expandido && this.props.consulta.sessao ? 
                     (
                         <View style={styles.detalhes}>
-                            <Text style={styles.rua}>{this.props.consulta.sessao.rua}</Text>
-                            <Text style={styles.horario}>{this.props.consulta.sessao.horaInicio} - {this.props.consulta.sessao.horaFim}</Text>
-                            <Text style={styles.veiculoLabel}>Veículo:</Text>
-                            <Text style={styles.veiculo}>{this.props.consulta.sessao.placa}</Text>
+                            <Text style={styles.veiculoLabel}>Local:</Text>
+                            <Text style={styles.rua}>{this.props.consulta.parquimetro.endereco_completo}</Text>
+                            <Text style={styles.veiculoLabel}>Período:</Text>
+                            <Text style={styles.horario}>{Moment(this.props.consulta.sessao.data_inicio).format('DD/MM/YYYY HH:mm:ss')} - {this.props.consulta.sessao.data_fim ? Moment(this.props.consulta.sessao.data_fim).format('DD/MM/YYYY HH:mm:ss') : "Contando ..."}</Text>
                         </View>
                     ) : null
                 }
@@ -84,7 +86,8 @@ const styles = StyleSheet.create({
         paddingBottom: 15
     },
     data:{
-        color: cores.azul,
+        color: cores.cinza,
+        fontSize: 11,
     },
     icone: {
         width: 100,
