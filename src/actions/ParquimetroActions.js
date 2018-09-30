@@ -23,7 +23,9 @@ import {
     MODIFICA_SESSAO_COR_FUNDO,
     MODIFICA_CONSULTA_PLACA
 } from './types';
+import Moment from 'moment';
 import CronometroParquimetro from '../utils/CronometroParquimetro';
+import NotificationService from '../utils/NotificationService'
 
 export const carregarParquimetro = (latitude, longitude) => {
 
@@ -56,8 +58,17 @@ export const buscarUltimaSessao = ( ) => {
         {
             const retorno = await API.get('parquimetro',{});
 
-            console.log('sessao', retorno.data);
             if(retorno.data && !retorno.data.data_fim){
+                
+                try{
+                    //NotificationService.CancelarNotificacaoDoTempoDaSessao();
+                    console.log('data sessao', retorno.data);
+                    const data_limite = Moment(retorno.data.data_inicio).add(retorno.data.grupo_parquimetro.tempo_limite - 30, 'minutes').toDate();
+                    NotificationService.CriarNotificacaoDoTempoDaSessao(data_limite);
+                }catch(e){
+                    console.log('erro ao criar notificação')
+                }
+
                 buscarUltimaSessaoSucesso(retorno.data, dispatch);
             }else{
                 buscarUltimaSessaoSucesso(null, dispatch);
@@ -76,6 +87,7 @@ export const iniciarSessao = (latitude, longitude, cartaoId, veiculoId ) => {
 
     return async dispatch => {
         dispatch({ type: INICIAR_SESSAO_EM_ANDAMENTO });
+        
         try
         {
             const retorno = await API.post('parquimetro/iniciar',{
@@ -93,7 +105,15 @@ export const iniciarSessao = (latitude, longitude, cartaoId, veiculoId ) => {
                 }
             });
 
-            console.log(retorno.data);
+            try{
+                NotificationService.CancelarNotificacaoDoTempoDaSessao();
+                console.log('data sessao', retorno.data);
+                const data_limite = Moment(retorno.data.data_inicio).add(retorno.data.grupo_parquimetro.tempo_limite - 30, 'minutes').toDate();
+                NotificationService.CriarNotificacaoDoTempoDaSessao(data_limite);
+            }catch(e){
+                console.log('erro ao criar notificação')
+            }
+
             iniciarSessaoSucesso(retorno.data, dispatch);
         }
         catch(erro)
@@ -114,6 +134,11 @@ export const finalizarSessao = () => {
             console.log(retorno.data);
             finalizarSessaoSucesso(retorno.data, dispatch);
             CronometroParquimetro.pausarCronometroParquimetro();
+            try{
+                NotificationService.CancelarNotificacaoDoTempoDaSessao();
+            }catch(e){
+                console.log('erro ao cancelar notificação')
+            }
         }
         catch(erro)
         {
@@ -238,7 +263,6 @@ export const modificaLatitudeLongitude = (latitudeLongitude) => {
 
 
 export const modificaPorcentagemContador = (valor) => {
-    console.log('modificaPorcentagemContador');
     return {
         type: MODIFICA_SESSAO_PORCENTAGEM_CONTADOR,
         payload: valor

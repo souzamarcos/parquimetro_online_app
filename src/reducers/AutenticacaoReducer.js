@@ -12,7 +12,7 @@ import {
 
 const INITIAL_STATE = {
     usuarioLogado: null,
-    email: 'marcosguarda@teste.com.br',
+    email: 'marcos@teste.com.br',
     senha: '123456',
     erroCadastro: '',
     erroLogin: '',

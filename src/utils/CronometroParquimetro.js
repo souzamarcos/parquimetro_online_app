@@ -3,7 +3,8 @@ import {
     modificaTempoContador,
     modificaValorAtual,
     modificaCorFundo,
-    finalizarSessao
+    finalizarSessao,
+    buscarUltimaSessao
  } from '../actions/ParquimetroActions';
 import _ from 'lodash';
 import Moment, { duration } from 'moment';
@@ -18,6 +19,7 @@ class CronometroParquimetro {
             const { sessao } =  Store.getState().ParquimetroReducer;
             //corrigir contador
             if(!_.isEmpty(sessao)){
+
                 let duracaoPercorrida = null;
                 if(Moment() < Moment(sessao.data_inicio)){
                     duracaoPercorrida = duration(Moment().diff(Moment()));
@@ -33,8 +35,6 @@ class CronometroParquimetro {
                 let porcentagemContador = (minutosPercorridos / tempoMaximoMinutos) * 100;
                 let tempoContador = tempoPercorrido != null ? tempoPercorrido.format('HH:mm:ss') : "";
                 let valorAtual = _.round(sessao.grupo_parquimetro.valor_minuto * minutosPercorridos, 2);//corrigir pegar preço do parquimetro
-                
-                console.log(porcentagemContador,tempoContador,valorAtual);
 
                 Store.dispatch(modificaPorcentagemContador(porcentagemContador));
                 Store.dispatch(modificaTempoContador(tempoContador));
@@ -42,7 +42,6 @@ class CronometroParquimetro {
 
                 const state = Store.getState();
                 
-                console.log(state.ParquimetroReducer);
                 if(!state.ParquimetroReducer.buscandoSessao && !state.ParquimetroReducer.finalizandoSessao && (porcentagemContador>=75 && porcentagemContador < 100)){
                     Store.dispatch(modificaCorFundo(cores.vermelho));  
                 }
