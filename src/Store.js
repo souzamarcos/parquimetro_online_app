@@ -11,9 +11,9 @@ import NavigationService from './NavigationService';
 const persistConfig = {
     key: 'root',
     storage,
-    whitelist: ['AutenticacaoReducer']
-    //version: 1,
-    //stateReconciler: hardSet,
+    whitelist: ['AutenticacaoReducer'],
+    version: 1,
+    stateReconciler: hardSet,
 };
 
 const persistedReducer = persistReducer(persistConfig, reducers);

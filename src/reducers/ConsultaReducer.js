@@ -20,7 +20,7 @@ export default (state = INITIAL_STATE, action) => {
         case CONSULTA_PLACA_EM_ANDAMENTO:
             return { ...state, carregandoSessao: true, erro: null }
         case CONSULTA_PLACA_SUCESSO:
-            return { ...state, sessao: action.payload.sessao, ultimaConsulta: action.payload.ultimaConsulta , carregandoSessao: false, erro: null, placa: INITIAL_STATE.placa }
+            return { ...state, sessao: action.payload.sessao, ultimaConsulta: action.payload.ultima_consulta , carregandoSessao: false, erro: null }
         case CONSULTA_PLACA_ERRO:
             return { ...state, erro: action.payload , carregandoSessao: false }
         

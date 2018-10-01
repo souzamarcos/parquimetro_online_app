@@ -64,6 +64,7 @@ export const buscarUltimaSessao = ( ) => {
                     //NotificationService.CancelarNotificacaoDoTempoDaSessao();
                     console.log('data sessao', retorno.data);
                     const data_limite = Moment(retorno.data.data_inicio).add(retorno.data.grupo_parquimetro.tempo_limite - 30, 'minutes').toDate();
+                    //const data_limite = Moment(retorno.data.data_inicio).add(5, 'minutes').toDate();
                     NotificationService.CriarNotificacaoDoTempoDaSessao(data_limite);
                 }catch(e){
                     console.log('erro ao criar notificação')
@@ -109,6 +110,7 @@ export const iniciarSessao = (latitude, longitude, cartaoId, veiculoId ) => {
                 NotificationService.CancelarNotificacaoDoTempoDaSessao();
                 console.log('data sessao', retorno.data);
                 const data_limite = Moment(retorno.data.data_inicio).add(retorno.data.grupo_parquimetro.tempo_limite - 30, 'minutes').toDate();
+                //const data_limite = Moment(retorno.data.data_inicio).add(5, 'minutes').toDate();
                 NotificationService.CriarNotificacaoDoTempoDaSessao(data_limite);
             }catch(e){
                 console.log('erro ao criar notificação')

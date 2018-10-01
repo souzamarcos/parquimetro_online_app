@@ -12,9 +12,20 @@ import cores from '../styles/cores';
 import Cabecalho from './Cabecalho';
 import { connect } from 'react-redux';
 
+import { modificaPlaca } from '../actions/ConsultaActions';
+
 class TelaRetornoConsultaGuarda extends Component {
 
+    constructor(props){
+        super(props);
+
+        this.state = {
+            placa: props.placa
+        };
+    }
+
     render(){
+        console.log(this.props);
         return (
             <ScrollView contentContainerStyle={styles.tela}>
                 <Cabecalho 
@@ -34,11 +45,11 @@ class TelaRetornoConsultaGuarda extends Component {
                 {
                     this.props.sessao ?
                         <Text style={styles.text}>
-                            O pagamento do veículo com placa {(this.props.placa || "").toUpperCase()} foi registrado no parquímetro localizado em {this.props.sessao.parquimetro.endereco_completo}
+                            O pagamento do veículo com placa {(this.state.placa || "").toUpperCase()} foi registrado no parquímetro localizado em {this.props.sessao.parquimetro.endereco_completo}
                         </Text>
                     :
                         <Text style={styles.text}>
-                            O pagamento do veículo com placa {(this.props.placa || "").toUpperCase()} não foi registrado.
+                            O pagamento do veículo com placa {(this.state.placa || "").toUpperCase()} não foi registrado.
                         </Text>
                 }
                 {
@@ -53,7 +64,7 @@ class TelaRetornoConsultaGuarda extends Component {
                     </View>
                 }
                 <TouchableHighlight
-                    onPress={() => this.props.navigation.navigate('TelaConsultaGuarda')}
+                    onPress={() => { this.props.navigation.navigate('TelaConsultaGuarda'); this.props.modificaPlaca(''); }}
                     style={styles.botaoVerde}
                     underlayColor="rgba(0, 0, 0, 0.05)"
                 >
@@ -117,4 +128,4 @@ const mapStateToProps = state => {
     }
 };
 
-export default connect(mapStateToProps, {  })(TelaRetornoConsultaGuarda);
+export default connect(mapStateToProps, { modificaPlaca })(TelaRetornoConsultaGuarda);
