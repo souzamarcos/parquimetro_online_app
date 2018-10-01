@@ -56,7 +56,7 @@ class TelaRetornoConsultaGuarda extends Component {
                     this.props.ultimaConsulta &&
                     <View>
                         <Text style={styles.ultimaConsulta}>
-                            Ultima consulta:
+                            Última consulta:
                         </Text>
                         <Text style={styles.text}>
                             { Moment().to(Moment(this.props.ultimaConsulta.data)) }
