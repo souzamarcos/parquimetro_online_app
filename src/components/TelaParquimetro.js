@@ -63,7 +63,7 @@ class TelaParquimetro extends Component {
                 this.props.carregarParquimetro(this.props.latitude, this.props.longitude);
             }, 
             (erro) => {
-                console.log('erro gps',erro);
+                this.props.carregarParquimetroErro('Erro ao carregar localização do gps');
             },
             { 
                 enableHighAccuracy: true, 

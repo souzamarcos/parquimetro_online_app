@@ -27,3 +27,10 @@ adb shell input keyevent 82
 ```
 adb shell input keyevent 46 46
 ```
+
+
+Se der erro de .MainActivity, executar o código:
+
+```
+adb uninstall com.appname
+```

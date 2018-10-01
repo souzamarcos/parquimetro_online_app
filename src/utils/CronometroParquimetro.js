@@ -42,7 +42,7 @@ class CronometroParquimetro {
 
                 const state = Store.getState();
                 
-                if(!state.ParquimetroReducer.buscandoSessao && !state.ParquimetroReducer.finalizandoSessao && (porcentagemContador>=75 && porcentagemContador < 100)){
+                if(!state.ParquimetroReducer.buscandoSessao && !state.ParquimetroReducer.finalizandoSessao && (sessao.grupo_parquimetro.tempo_limite - (minutosPercorridos || 0) <= 30)){
                     Store.dispatch(modificaCorFundo(cores.vermelho));  
                 }
 
