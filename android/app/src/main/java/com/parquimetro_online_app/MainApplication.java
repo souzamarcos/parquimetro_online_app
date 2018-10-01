@@ -1,4 +1,4 @@
-package com.parquimetro_online_app;
+package com.parquimetroonline;
 
 import android.app.Application;
 
