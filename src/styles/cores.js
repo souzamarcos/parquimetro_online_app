@@ -8,6 +8,8 @@ const cores = {
     branco: '#fff',
     vermelho: '#f44a39',
 
+    telaParquimetroContagemAzul: '#4988ef',
+
     //botao
     botaoBackgroundColor: '#5d5d5d',
     botaoTextColor: '#fff',

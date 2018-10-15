@@ -26,6 +26,12 @@ import { TextInputMask } from 'react-native-masked-text';
 
 class TelaFormCartao  extends Component {  
 
+    static navigationOptions = ({ navigation }) => {
+        return {
+            title: navigation.getParam('titulo', 'Adicionar Cartão'),
+        };
+    };
+
     constructor(props){
         super(props)
     }

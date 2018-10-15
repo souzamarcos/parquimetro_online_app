@@ -49,6 +49,7 @@ export const EXCLUIR_CARTAO_ERRO = "excluir_cartao_erro";
 
 // cadastro usuario
 export const MODIFICA_CADASTRO_USUARIO_NOME = "modifica_cadastro_usuario_nome";
+export const MODIFICA_CADASTRO_USUARIO_SOBRENOME = "modifica_cadastro_usuario_sobrenome";
 export const MODIFICA_CADASTRO_USUARIO_EMAIL = "modifica_cadastro_usuario_email";
 export const MODIFICA_CADASTRO_USUARIO_CPF = "modifica_cadastro_usuario_cpf";
 export const MODIFICA_CADASTRO_USUARIO_SENHA = "modifica_cadastro_usuario_senha";

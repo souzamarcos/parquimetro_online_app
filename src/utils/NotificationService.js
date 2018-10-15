@@ -1,4 +1,5 @@
 import PushNotification from 'react-native-push-notification';
+import cores from '../styles/cores';
 
 PushNotification.configure({
 
@@ -50,7 +51,7 @@ const CriarNotificacaoDoTempoDaSessao = (data) => {
         smallIcon: "ic_notification", // (optional) default: "ic_notification" with fallback for "ic_launcher"
         //bigText: "Não se esqueça do parquímetro, o seu tempo está acabando.", // (optional) default: "message" prop
         //subText: "This is a subText", // (optional) default: none
-        color: "blue", // (optional) default: system default
+        color: cores.azul, // (optional) default: system default
         vibrate: true, // (optional) default: true
         vibration: 300, // vibration length in milliseconds, ignored if vibrate=false, default: 1000
         //tag: 'some_tag', // (optional) add tag to message

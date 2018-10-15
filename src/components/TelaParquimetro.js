@@ -40,7 +40,7 @@ class TelaParquimetro extends Component {
         super(props);
 
         this.state = {
-            telaContagemCor: '#4988ef',
+            telaContagemCor: cores.telaParquimetroContagemAzul,
             exibirResumoSessao: false,
         }
     }
@@ -444,7 +444,7 @@ const styles = StyleSheet.create({
         paddingVertical: 20,
     },
     parteSuperior: {
-        backgroundColor: '#4988ef',
+        backgroundColor: cores.telaParquimetroContagemAzul,
         paddingBottom: 100
     },
     parteInferior: {

@@ -1,5 +1,6 @@
 import { 
     MODIFICA_CADASTRO_USUARIO_NOME,
+    MODIFICA_CADASTRO_USUARIO_SOBRENOME,
     MODIFICA_CADASTRO_USUARIO_EMAIL,
     MODIFICA_CADASTRO_USUARIO_CPF,
     MODIFICA_CADASTRO_USUARIO_SENHA,
@@ -10,6 +11,7 @@ import {
 
 const INITIAL_STATE = {
     nome: '',
+    sobrenome: '',
     email: '',
     cpf: '',
     senha: '',
@@ -21,6 +23,8 @@ export default (state = INITIAL_STATE, action) => {
     switch(action.type) {
         case MODIFICA_CADASTRO_USUARIO_NOME:
             return { ...state, nome: action.payload }
+        case MODIFICA_CADASTRO_USUARIO_SOBRENOME:
+            return { ...state, sobrenome: action.payload }
         case MODIFICA_CADASTRO_USUARIO_EMAIL:
             return { ...state, email: action.payload }
         case MODIFICA_CADASTRO_USUARIO_CPF:

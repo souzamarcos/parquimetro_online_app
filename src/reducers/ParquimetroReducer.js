@@ -21,6 +21,8 @@ import {
     BUSCAR_SESSAO_ERRO,
 } from '../actions/types';
 
+import cores from '../styles/cores';
+
 const INITIAL_STATE = {
     parquimetro: null,
     carregandoParquimetro: true,
@@ -35,7 +37,7 @@ const INITIAL_STATE = {
     porcentagemContador: 0,
     tempoContador: "00:00:00",
     valorAtual: 0,
-    corFundo: '#4988ef',
+    corFundo: cores.telaParquimetroContagemAzul,
 }
 
 export default (state = INITIAL_STATE, action) => {

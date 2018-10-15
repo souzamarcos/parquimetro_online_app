@@ -6,13 +6,14 @@ import {
   StyleSheet,
   View,
   Keyboard,
-  ScrollView
+  ScrollView,
+  ActivityIndicator
 } from 'react-native';
 import Cabecalho from './Cabecalho';
 import { defaultStyles } from '../styles';
 import cores from '../styles/cores';
 import { connect } from 'react-redux';
-import { modificaNome, modificaEmail, modificaCpf, modificaSenha, cadastrarUsuario } from '../actions/CadastroUsuarioActions'
+import { modificaNome, modificaSobrenome, modificaEmail, modificaCpf, modificaSenha, cadastrarUsuario } from '../actions/CadastroUsuarioActions'
 import { renderErro } from '../utils/Erro';
 import { TextInputMask } from 'react-native-masked-text';
 
@@ -20,6 +21,11 @@ class TelaCadastroUsuario extends Component {
 
     componentDidMount() {
         Keyboard.dismiss();
+    }
+
+    cadastrarUsuario(){
+        const {nome, sobrenome, email, cpf, senha} = this.props;
+        this.props.cadastrarUsuario(nome, sobrenome, email, cpf, senha);
     }
 
     render(){
@@ -36,6 +42,14 @@ class TelaCadastroUsuario extends Component {
                             underlineColorAndroid="#5d5d5d"
                         />
                         { renderErro(this.props.erro, 'nome')}
+                        <TextInput
+                            placeholder="Sobrenome"
+                            style={styles.input}
+                            onChangeText={(sobrenome) => this.props.modificaSobrenome(sobrenome)}
+                            value={this.props.sobrenome}
+                            underlineColorAndroid="#5d5d5d"
+                        />
+                        { renderErro(this.props.erro, 'sobrenome')}
                         <TextInput
                             placeholder="E-mail"
                             style={styles.input}
@@ -72,7 +86,7 @@ class TelaCadastroUsuario extends Component {
                         (
                             <View>
                                 <TouchableHighlight
-                                    onPress={() => this.props.navigation.push('TelaCompletarCadastroUsuario')}
+                                    onPress={() => this.cadastrarUsuario() }
                                     style={styles.botaoVerde}
                                     underlayColor="rgba(0, 0, 0, 0.05)"
                                 >
@@ -162,6 +176,7 @@ const styles = StyleSheet.create({
 const mapStateToProps = state => {
     return {
         nome: state.CadastroUsuarioReducer.nome,
+        sobrenome: state.CadastroUsuarioReducer.sobrenome,
         email: state.CadastroUsuarioReducer.email,
         cpf: state.CadastroUsuarioReducer.cpf,
         senha: state.CadastroUsuarioReducer.senha,
@@ -169,4 +184,4 @@ const mapStateToProps = state => {
     }
 }
 
-export default connect(mapStateToProps, { modificaNome, modificaEmail, modificaCpf, modificaSenha, cadastrarUsuario })(TelaCadastroUsuario);
+export default connect(mapStateToProps, { modificaNome, modificaSobrenome, modificaEmail, modificaCpf, modificaSenha, cadastrarUsuario })(TelaCadastroUsuario);

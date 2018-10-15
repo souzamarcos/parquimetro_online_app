@@ -60,15 +60,15 @@ export const buscarUltimaSessao = ( ) => {
 
             if(retorno.data && !retorno.data.data_fim){
                 
-                try{
-                    //NotificationService.CancelarNotificacaoDoTempoDaSessao();
-                    console.log('data sessao', retorno.data);
-                    const data_limite = Moment(retorno.data.data_inicio).add(retorno.data.grupo_parquimetro.tempo_limite - 30, 'minutes').toDate();
-                    //const data_limite = Moment(retorno.data.data_inicio).add(5, 'minutes').toDate();
-                    NotificationService.CriarNotificacaoDoTempoDaSessao(data_limite);
-                }catch(e){
-                    console.log('erro ao criar notificação')
-                }
+                // try{
+                //     //NotificationService.CancelarNotificacaoDoTempoDaSessao();
+                //     console.log('data sessao', retorno.data);
+                //     const data_limite = Moment(retorno.data.data_inicio).add(retorno.data.grupo_parquimetro.tempo_limite - 30, 'minutes').toDate();
+                //     //const data_limite = Moment(retorno.data.data_inicio).add(5, 'minutes').toDate();
+                //     NotificationService.CriarNotificacaoDoTempoDaSessao(data_limite);
+                // }catch(e){
+                //     console.log('erro ao criar notificação')
+                // }
 
                 buscarUltimaSessaoSucesso(retorno.data, dispatch);
             }else{

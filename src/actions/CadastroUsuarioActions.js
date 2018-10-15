@@ -1,6 +1,7 @@
 import API  from '../Api';
 import { 
     MODIFICA_CADASTRO_USUARIO_NOME,
+    MODIFICA_CADASTRO_USUARIO_SOBRENOME,
     MODIFICA_CADASTRO_USUARIO_EMAIL,
     MODIFICA_CADASTRO_USUARIO_CPF,
     MODIFICA_CADASTRO_USUARIO_SENHA,
@@ -8,10 +9,11 @@ import {
     SALVAR_CADASTRO_USUARIO_SUCESSO,
     SALVAR_CADASTRO_USUARIO_ERRO,
 } from './types';
+import { loginUsuarioSucesso } from './AutenticacaoActions'
 
 import NavigationService from '../NavigationService';
 
-export const cadastrarUsuario = (nome, email, cpf, senha) => {
+export const cadastrarUsuario = (nome, sobrenome, email, cpf, senha) => {
 
     return async dispatch => {
         dispatch({ type: SALVAR_CADASTRO_USUARIO_EM_ANDAMENTO });
@@ -20,12 +22,14 @@ export const cadastrarUsuario = (nome, email, cpf, senha) => {
             const retorno = await API.post('usuario/novo',{
                 cartao: {
                     nome,
+                    sobrenome,
                     email,
                     cpf,
                     password: senha,
                     password_confirmation: senha
                 }
             });
+            console.log(retorno.data);
             cadastrarUsuarioSucesso(retorno.data, dispatch);
         }
         catch(erro)
@@ -38,6 +42,13 @@ export const cadastrarUsuario = (nome, email, cpf, senha) => {
 export const modificaNome = (nome) => {
     return {
         type: MODIFICA_CADASTRO_USUARIO_NOME,
+        payload: nome
+    }
+}
+
+export const modificaSobrenome = (nome) => {
+    return {
+        type: MODIFICA_CADASTRO_USUARIO_SOBRENOME,
         payload: nome
     }
 }
@@ -63,12 +74,12 @@ export const modificaSenha = (senha) => {
     }
 }
 
-export const cadastrarUsuarioSucesso = (cartaos, dispatch) => {
+export const cadastrarUsuarioSucesso = (usuario, dispatch) => {
     dispatch({
         type: SALVAR_CADASTRO_USUARIO_SUCESSO,
-        payload: cartaos
+        payload: usuario
     });
-    NavigationService.navigate('TelaInicial');
+    dispatch(loginUsuarioSucesso(usuario, dispatch));
 }
 
 export const cadastrarUsuarioErro = (erro, dispatch) => {

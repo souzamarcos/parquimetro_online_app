@@ -44,6 +44,8 @@ class CronometroParquimetro {
                 
                 if(!state.ParquimetroReducer.buscandoSessao && !state.ParquimetroReducer.finalizandoSessao && (sessao.grupo_parquimetro.tempo_limite - (minutosPercorridos || 0) <= 30)){
                     Store.dispatch(modificaCorFundo(cores.vermelho));  
+                }else{
+                    Store.dispatch(modificaCorFundo(cores.telaParquimetroContagemAzul)); 
                 }
 
                 if(porcentagemContador>=100){

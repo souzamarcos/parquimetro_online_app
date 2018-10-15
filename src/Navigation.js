@@ -162,11 +162,6 @@ const Navigation = createStackNavigator({
     },
     TelaFormCartao: {
         screen: TelaFormCartao,
-        navigationOptions: {
-            title: 'Cartão',
-            swipeEnabled: false,
-            tabBarVisible: true,
-        }
     },
     TelaMinhaConta: {
         screen: TelaMinhaConta,
