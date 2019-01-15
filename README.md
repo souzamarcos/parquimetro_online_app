@@ -16,6 +16,20 @@ Para rodar o projeto em Android, abra o simulador do Android Studio ou conecte o
 react-native run-android
 ```
 
+Utilize um dos usuários de teste abaixo. O aplicativo funciona de forma diferente para cada um deles.
+
+-Usuário motorista (paga o parquímetro)
+```
+e-mail: marcos@teste.com.br
+senha: 123456
+```
+
+-Usuário guarda (controla os pagamentos)
+```
+e-mail: marcosguarda@teste.com.br
+senha: 123456
+```
+
 Caso utilize o celular para rodar o aplicativo você pode abrir uma nova janela do prompt de comando e executar os seguintes códigos durante o tempo que o aplicativo está rodando:
 
 - Exibir menu de configuração do modo de depuração
